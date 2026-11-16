@@ -200,8 +200,34 @@ class ImportTask extends BuildTask
         $this->destinations($output);
         $this->categories($output);
         $this->faqs($output);
+        $this->cleanPrograms($output);
         $output->writeln('Gotovo.');
         return 0;
+    }
+
+    /**
+     * Program sa starog sajta: bez podebljanog kurziva i bez tabele usluga (ide u Obuhvata/Ne obuhvata).
+     * Dira samo programe koji još imaju oznake starog sajta, ne ono što je agencija uredila u adminu.
+     */
+    private function cleanPrograms(PolyOutput $output): void
+    {
+        foreach (Trip::get() as $trip) {
+            $html = (string) $trip->Program;
+            $fromOldSite = str_contains($html, '<strong><em>') || preg_match('/<table\b[^>]*>.*obuh/isu', $html);
+            if (!$fromOldSite) {
+                continue;
+            }
+            $clean = ProgramCleaner::clean($html);
+            $trip->Program = $clean['html'];
+            if ($clean['includes'] !== '') {
+                $trip->Includes = $clean['includes'];
+            }
+            if ($clean['excludes'] !== '') {
+                $trip->Excludes = $clean['excludes'];
+            }
+            $trip->write();
+            $output->writeln('Očišćen program: ' . $trip->Title);
+        }
     }
 
     /** Koordinate za mapu ruta (samo gdje još nisu upisane). */
