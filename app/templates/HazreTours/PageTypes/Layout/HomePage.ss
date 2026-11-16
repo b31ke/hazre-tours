@@ -122,12 +122,19 @@
             <h2 id="cats-h">Pronađite svoju sljedeću destinaciju</h2>
             <p>Izaberite temu i pogledajte sva putovanja iz te ponude.</p>
         </div>
-        <div class="cats">
+        <div class="bento">
             <% loop $HomeCategories %>
-            <a class="cat" href="$Link">
-                <% with $CoverTrip %><img src="$CardImageURL" alt="" loading="lazy" class="<% if $PosterIsFlyer %>flyer<% end_if %>"><% end_with %>
-                <span class="cat-t">$Title</span>
-                <span class="cat-n">$TripCount <% if $TripCount == 1 %>putovanje<% else %>putovanja<% end_if %></span>
+            <a class="tile t-$Pos<% if not $TileImageURL %> no-img<% end_if %>" href="$Link">
+                <% if $TileImageURL %><img class="tile-bg" src="$TileImageURL" alt="" loading="lazy"><% end_if %>
+                <span class="tile-count">$TripCount <% if $TripCount == 1 %>polazak<% else_if $TripCount < 5 %>polaska<% else %>polazaka<% end_if %></span>
+                <span class="tile-body">
+                    <span class="tile-title">$Title</span>
+                    <% if $Pos == 1 %><span class="tile-list"><% loop $TopTrips %><span>$Title</span><% end_loop %></span><% end_if %>
+                    <span class="tile-row">
+                        <span class="tile-from">od <b>$MinPrice KM</b></span>
+                        <span class="tile-go">Pogledaj <span aria-hidden="true">→</span></span>
+                    </span>
+                </span>
             </a>
             <% end_loop %>
         </div>

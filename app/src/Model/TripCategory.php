@@ -36,6 +36,12 @@ class TripCategory extends DataObject
         'Sort' => 'Int',
     ];
 
+    private static array $has_one = [
+        'Image' => \SilverStripe\Assets\Image::class,
+    ];
+
+    private static array $owns = ['Image'];
+
     private static array $belongs_many_many = [
         'Trips' => Trip::class,
     ];
@@ -54,6 +60,9 @@ class TripCategory extends DataObject
         return FieldList::create(
             TextField::create('Title', 'Naziv')->setDescription('Npr. "Advent", "Nova godina", "Ljetovanje Turska".'),
             TextareaField::create('Intro', 'Kratak tekst na stranici kategorije')->setRows(3),
+            \SilverStripe\AssetAdmin\Forms\UploadField::create('Image', 'Slika pločice')
+                ->setFolderName('teme')->setAllowedFileCategories('image/supported')
+                ->setDescription('Fotografija koja predstavlja temu (vodoravna, najmanje 1600 px širine). Prazno = plakat jednog od aranžmana.'),
             CheckboxField::create('ShowOnHome', 'Prikaži pločicu na početnoj'),
             NumericField::create('Sort', 'Redoslijed')->setDescription('Manji broj ide prvi.'),
             TextField::create('URLSegment', 'Adresa')->setDescription('hazretours.ba/putovanja/… Prazno = iz naziva.'),
@@ -91,9 +100,44 @@ class TripCategory extends DataObject
         return $this->LiveTrips()->count();
     }
 
-    /** Slika pločice: plakat prvog aranžmana. */
+    /** Aranžman čija slika ide na pločicu (početna bira različite za svaku temu). */
+    public ?Trip $coverOverride = null;
+
+    /** Slika pločice: izabrani aranžman ili plakat prvog aranžmana. */
     public function CoverTrip(): ?Trip
     {
-        return $this->LiveTrips()->first();
+        return $this->coverOverride ?? $this->LiveTrips()->first();
+    }
+
+    /** Fotografija teme za pločicu (webp, do 1400 px), pamti se u kešu kao i plakati. */
+    public function TileImageURL(): string
+    {
+        if (!$this->ImageID || !($img = $this->Image())->exists()) {
+            return '';
+        }
+        $cache = \SilverStripe\Core\Injector\Injector::inst()->get(\Psr\SimpleCache\CacheInterface::class . '.hazreImages');
+        $key = 'cat' . $img->ID . '_' . strtotime((string) $img->LastEdited) . '_' . substr((string) $img->FileHash, 0, 10);
+        $url = $cache->get($key);
+        if (!is_string($url) || $url === '') {
+            $scaled = $img->ScaleMaxWidth(1400);
+            $url = (string) (($scaled?->Convert('webp') ?: $scaled)?->getURL() ?? '');
+            if ($url !== '') {
+                $cache->set($key, $url);
+            }
+        }
+        return $url;
+    }
+
+    /** Najniža cijena u temi (za "od … KM" na pločici). */
+    public function MinPrice(): int
+    {
+        $prices = array_map(fn (Trip $t) => $t->MinPrice(), $this->LiveTrips()->toArray());
+        return $prices ? min($prices) : 0;
+    }
+
+    /** Nazivi prva tri putovanja (za veliku pločicu). */
+    public function TopTrips()
+    {
+        return $this->LiveTrips()->limit(3);
     }
 }

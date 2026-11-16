@@ -201,6 +201,7 @@ class ImportTask extends BuildTask
         $this->categories($output);
         $this->faqs($output);
         $this->cleanPrograms($output);
+        $this->categoryImages($output);
         $output->writeln('Gotovo.');
         return 0;
     }
@@ -258,6 +259,45 @@ class ImportTask extends BuildTask
                 }
             }
             $output->writeln("Kategorija: $title");
+        }
+    }
+
+    /**
+     * Pozadinske fotografije tema sa Unsplasha (adrese slika s njihovog CDN-a) (besplatna licenca, dozvoljeno i za komercijalnu upotrebu).
+     * Postavlja se samo tema koja još nema sliku, pa ne dira ono što agencija sama postavi.
+     */
+    private const CATEGORY_IMAGES = [
+        'Advent' => ['photo-1766086893303-1494a76d1980', 'advent-bozicni-sajam'],
+        'Shopping' => ['photo-1758274251589-fb70a3654a1b', 'shopping-kese'],
+        'Istanbul' => ['photo-1636537511494-c3e558e0702b', 'istanbul-djevojacka-kula'],
+        'Nova godina' => ['photo-1783231754573-b5f6672c70ac', 'nova-godina-vatromet'],
+        'Zimovanje' => ['photo-1762746445663-67887f9183d0', 'zimovanje-skijaliste'],
+        'Vikend putovanja' => ['photo-1541849546-216549ae216d', 'vikend-prag'],
+    ];
+
+    private function categoryImages(PolyOutput $output): void
+    {
+        foreach (self::CATEGORY_IMAGES as $title => [$photoId, $fileName]) {
+            $cat = \HazreTours\Model\TripCategory::get()->filter('Title', $title)->first();
+            if (!$cat || $cat->ImageID) {
+                continue;
+            }
+            $existing = Image::get()->filter('Name', $fileName . '.jpg')->first();
+            if (!$existing) {
+                $bytes = $this->fetch('https://images.unsplash.com/' . $photoId . '?w=1920&q=80&fm=jpg&fit=max');
+                if ($bytes === null || @getimagesizefromstring($bytes) === false) {
+                    $output->writeln("Slika za temu $title nije preuzeta");
+                    continue;
+                }
+                $existing = Image::create();
+                $existing->setFromString($bytes, 'teme/' . $fileName . '.jpg');
+                $existing->Title = $title . ' (Unsplash)';
+                $existing->write();
+                $existing->publishSingle();
+            }
+            $cat->ImageID = $existing->ID;
+            $cat->write();
+            $output->writeln("Slika teme: $title");
         }
     }
 

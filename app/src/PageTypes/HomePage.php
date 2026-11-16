@@ -144,8 +144,29 @@ class HomePage extends Page
 
     public function HomeCategories(): ArrayList
     {
-        $cats = array_filter(TripCategory::get()->filter('ShowOnHome', true)->toArray(), fn (TripCategory $c) => $c->getTripCount() > 0);
-        return ArrayList::create(array_values($cats));
+        $cats = array_values(array_filter(TripCategory::get()->filter('ShowOnHome', true)->toArray(), fn (TripCategory $c) => $c->getTripCount() > 0));
+        // svaka tema dobija drugu sliku (ne tri puta isti Graz): prvi aranžman teme čija destinacija još nije iskorištena
+        $usedTrips = [];
+        $usedDest = [];
+        foreach ($cats as $cat) {
+            $pick = null;
+            foreach ([true, false] as $strict) {
+                foreach ($cat->LiveTrips() as $trip) {
+                    $dest = $trip->DestinationName ?: $trip->Title;
+                    if (!$trip->PosterID || isset($usedTrips[$trip->ID]) || ($strict && isset($usedDest[$dest]))) {
+                        continue;
+                    }
+                    $pick = $trip;
+                    break 2;
+                }
+            }
+            if ($pick) {
+                $cat->coverOverride = $pick;
+                $usedTrips[$pick->ID] = true;
+                $usedDest[$pick->DestinationName ?: $pick->Title] = true;
+            }
+        }
+        return ArrayList::create($cats);
     }
 
     public function SearchMonths(): ArrayList
