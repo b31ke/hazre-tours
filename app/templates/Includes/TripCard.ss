@@ -1,4 +1,4 @@
-<article class="card<% if $SoldOut %> is-full<% end_if %><% if $PosterIsFlyer %> is-flyer<% end_if %>" data-type="$Type" data-months="$MonthsData" data-from="$DeparturesData" data-cats="$CategoriesData" data-search="$Title.LowerCase $Highlight.LowerCase $DestinationName.LowerCase">
+<article class="card<% if $SoldOut %> is-full<% end_if %><% if $PosterIsFlyer %> is-flyer<% end_if %>" <% if $HomeRank %>data-pick="$HomeRank" <% end_if %>data-type="$Type" data-months="$MonthsData" data-from="$DeparturesData" data-cats="$CategoriesData" data-search="$Title.LowerCase $Highlight.LowerCase $DestinationName.LowerCase">
     <%-- mekani sjaj iza kartice u bojama plakata (vidi se pri prelazu mišem) --%>
     <% if $CardImageURL %><img class="card-glow" src="$CardImageURL" alt="" aria-hidden="true" loading="lazy" decoding="async"><% end_if %>
     <a class="card-photo" href="$Link" tabindex="-1" aria-hidden="true">

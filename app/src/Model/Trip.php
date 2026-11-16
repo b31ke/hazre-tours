@@ -94,6 +94,8 @@ class Trip extends DataObject
         'DestinationLng' => 'Decimal(9,5)',
         'PosterIsFlyer' => 'Boolean(1)',
         'Featured' => 'Boolean',
+        'ShowOnHome' => 'Boolean',
+        'HomeSort' => 'Int',
         'Active' => 'Boolean(1)',
     ];
 
@@ -133,6 +135,7 @@ class Trip extends DataObject
         'NextTermLabel' => 'Sljedeći polazak',
         'PriceLabel' => 'Cijena',
         'Active.Nice' => 'Na sajtu',
+        'HomeLabel' => 'Na početnoj',
     ];
 
     private static array $searchable_fields = ['Title', 'Type', 'Active'];
@@ -156,7 +159,10 @@ class Trip extends DataObject
             TextareaField::create('Summary', 'Kratak opis')->setRows(3)->setDescription('2–3 rečenice na vrhu stranice aranžmana i u pregledu linka (Viber, Facebook).'),
             TextField::create('Departures', 'Mjesta polaska')->setDescription('Odvojena zarezom: ' . implode(', ', self::CITIES)),
             TextField::create('Badge', 'Oznaka na slici')->setDescription('Nije obavezno. Npr. "Novo" ili "Avans do 08.12.".'),
-            CheckboxField::create('Featured', 'Istakni na početnoj (prvi u nizu)'),
+            CheckboxField::create('ShowOnHome', 'Prikaži na početnoj')
+                ->setDescription('Na početnoj su dva reda (najviše 8 aranžmana). Ako nijedan nije označen, prikazuje se 8 najbližih polazaka.'),
+            NumericField::create('HomeSort', 'Redoslijed na početnoj')->setDescription('1 = prvi. Prazno = po datumu polaska.'),
+            CheckboxField::create('Featured', 'Istakni (prvi u svim listama i u vrhu početne)'),
             CheckboxField::create('Active', 'Prikaži na sajtu'),
         ];
         if ($this->isInDB()) {
@@ -248,6 +254,19 @@ class Trip extends DataObject
 
     /** Već izračunati linkovi slika po širini. */
     private array $imageCache = [];
+
+    /** Mjesto na početnoj (1–8) u ovom prikazu; 0 = nije u dva reda na početnoj. Postavlja HomePage::GridTrips. */
+    public int $homeRank = 0;
+
+    public function HomeRank(): int
+    {
+        return $this->homeRank;
+    }
+
+    public function getHomeLabel(): string
+    {
+        return $this->ShowOnHome ? ('Da' . ($this->HomeSort ? ' (' . $this->HomeSort . '.)' : '')) : '';
+    }
 
     /** Aktivni aranžmani s budućim terminom: istaknuti prvi, pa po prvom polasku. */
     public static function liveList(?SS_List $source = null): ArrayList

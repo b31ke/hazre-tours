@@ -70,6 +70,40 @@ class HomePage extends Page
         return Trip::liveList();
     }
 
+    /** Koliko aranžmana stane u dva reda na početnoj (4 u redu na velikom ekranu). */
+    public const HOME_LIMIT = 8;
+
+    /**
+     * Svi aktivni aranžmani za mrežu na početnoj: prvo izabrani u adminu ("Prikaži na početnoj", po redoslijedu),
+     * pa ostali. Prvih 8 dobije mjesto (homeRank) i vidljivo je; ostali se pojave tek kad posjetilac filtrira ili traži.
+     */
+    public function GridTrips(): ArrayList
+    {
+        $all = Trip::liveList()->toArray();
+        $picked = array_values(array_filter($all, fn (Trip $t) => $t->ShowOnHome));
+        if ($picked) {
+            usort($picked, fn (Trip $a, Trip $b) => [$a->HomeSort ?: 999, $a->NextTerm()->StartDate] <=> [$b->HomeSort ?: 999, $b->NextTerm()->StartDate]);
+        } else {
+            $picked = $all;
+        }
+        $picked = array_slice($picked, 0, self::HOME_LIMIT);
+        $ids = [];
+        foreach ($picked as $i => $t) {
+            $t->homeRank = $i + 1;
+            $ids[$t->ID] = true;
+        }
+        $rest = array_values(array_filter($all, fn (Trip $t) => !isset($ids[$t->ID])));
+        foreach ($rest as $t) {
+            $t->homeRank = 0;
+        }
+        return ArrayList::create(array_merge($picked, $rest));
+    }
+
+    public function AllTripsCount(): int
+    {
+        return Trip::liveList()->count();
+    }
+
     /**
      * Kolaž u vrhu: tri različite destinacije sa slikom (najbliži polazak prvi),
      * da se ne ponove npr. dva Istanbula.

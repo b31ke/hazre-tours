@@ -106,10 +106,11 @@
             <label><span>Polazak iz</span><select id="s-from"><option value="">Bilo gdje</option><% loop $SearchCities %><option>$Name</option><% end_loop %></select></label>
         </div>
         <p class="result-note" id="result-note" hidden></p>
-        <div class="grid" id="grid">
-            <% loop $UpcomingTrips %><% include TripCard %><% end_loop %>
+        <div class="grid home-grid" id="grid">
+            <% loop $GridTrips %><% include TripCard %><% end_loop %>
             <div class="empty" id="empty"<% if $UpcomingTrips.Count %> hidden<% end_if %>>Za ovaj izbor trenutno nemamo polazak. <a href="putovanje-po-mjeri">Pošaljite upit za putovanje po mjeri →</a></div>
         </div>
+        <% if $AllTripsCount > 4 %><div class="all-trips"><a class="btn btn-ghost btn-lg" href="putovanja">Pogledaj sva putovanja ($AllTripsCount)</a></div><% end_if %>
         <% if $Content %><div class="typo home-text">$Content</div><% end_if %>
     </div>
 </section>

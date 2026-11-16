@@ -93,6 +93,8 @@
       });
       empty.hidden = shown > 0;
       const filtered = q || st.month || st.from;
+      // bez filtera početna pokazuje samo izabrane (dva reda); s filterom traži kroz sva putovanja
+      grid.classList.toggle('filtering', !!(filtered || st.cat || st.type !== 'sve'));
       note.hidden = !filtered;
       if (filtered) note.innerHTML = 'Pronađeno: <b>' + shown + '</b> ' + (shown === 1 ? 'aranžman' : 'aranžmana') + '. <button type="button" id="clear">Poništi filter</button>';
     };
