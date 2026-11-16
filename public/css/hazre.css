@@ -756,12 +756,11 @@ details[open] > summary i::after { rotate: 0deg; }
 @keyframes bus-drive { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 160px)); } }
 @media (prefers-reduced-motion: reduce) { .road-bus { animation: none; left: 8%; } }
 
-/* Traka i meni centrirani: meni tačno na sredini između loga i desne ivice (iste širine), traka u sredini */
+/* Traka i zaglavlje centrirani: logo i meni zajedno na sredini, ispod centrirane trake */
 @media (min-width: 1341px) {
-  .head-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; }
-  .logo { justify-self: start; }
-  .head-actions { justify-self: end; }
-  .main-nav { margin: 0; justify-self: center; }
+  .head-row { display: flex; justify-content: center; gap: clamp(28px, 4vw, 64px); }
+  .main-nav { margin: 0; }
+  .head-actions { display: none; }
   .main-nav > ul { gap: 6px; }
 }
 .topbar-in { justify-content: center; gap: 8px 28px; }
