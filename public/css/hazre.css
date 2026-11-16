@@ -90,7 +90,8 @@ button { font: inherit; color: inherit; }
 .site-head { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--line); transition: box-shadow .2s; }
 .site-head.scrolled { box-shadow: 0 4px 18px rgba(31, 42, 51, .08); }
 .head-row { display: flex; align-items: center; gap: 20px; height: var(--head-h); }
-.logo img { height: 58px; width: auto; }
+.logo { flex: none; display: block; line-height: 0; }
+.logo img { height: 58px; width: auto; max-width: none; object-fit: contain; }
 @media (max-width: 480px) { .logo img { height: 46px; } }
 .main-nav { margin-left: auto; }
 .main-nav > ul { list-style: none; display: flex; gap: 2px; margin: 0; padding: 0; align-items: center; }
@@ -386,7 +387,7 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-grid > div { display: grid; gap: 8px; align-content: start; }
 .foot-grid a { text-decoration: none; color: #D3DCF2; }
 .foot-grid a:hover { color: var(--orange); }
-.foot-brand img { height: 70px; width: auto; background: #fff; padding: 8px 14px; border-radius: 12px; box-sizing: content-box; }
+.foot-brand img { height: 70px; width: auto; max-width: none; object-fit: contain; background: #fff; padding: 8px 14px; border-radius: 12px; box-sizing: content-box; }
 .foot-brand p { margin-top: 8px; max-width: 32ch; }
 .foot-h { font: 600 14px var(--head); text-transform: uppercase; letter-spacing: .06em; color: #fff; margin-bottom: 6px; }
 .site-foot .muted { color: #A9B6DA; }
