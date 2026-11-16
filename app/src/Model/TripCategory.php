@@ -78,9 +78,12 @@ class TripCategory extends DataObject
     }
 
     /** Aktivni aranžmani s budućim terminom, po prvom polasku. */
+    private ?\SilverStripe\Model\List\ArrayList $liveCache = null;
+
+    /** Izračuna se jednom po stranici (meni, pločica, podnožje). */
     public function LiveTrips(): \SilverStripe\Model\List\ArrayList
     {
-        return Trip::liveList($this->Trips());
+        return $this->liveCache ??= Trip::liveList($this->Trips());
     }
 
     public function getTripCount(): int

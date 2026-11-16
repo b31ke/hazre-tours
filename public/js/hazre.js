@@ -77,7 +77,8 @@
     const note = $('#result-note');
     const empty = $('#empty');
     const panel = $('#filter-panel');
-    const st = { type: 'sve', q: '', month: '', from: '' };
+    const st = { type: 'sve', cat: '', q: '', month: '', from: '' };
+    const tabs = $$('.cat-tabs .ct');
     const apply = () => {
       const q = st.q.trim().toLowerCase();
       let shown = 0;
@@ -85,12 +86,13 @@
         const ok = (st.type === 'sve' || c.dataset.type === st.type)
           && (!q || c.dataset.search.includes(q) || (c.dataset.cats || '').includes(q))
           && (!st.month || c.dataset.months.split('|').includes(st.month))
-          && (!st.from || c.dataset.from.split('|').includes(st.from));
+          && (!st.from || c.dataset.from.split('|').includes(st.from))
+          && (!st.cat || (c.dataset.cats || '').split('|').includes(st.cat));
         c.hidden = !ok;
         if (ok) shown++;
       });
       empty.hidden = shown > 0;
-      const filtered = q || st.month || st.from || st.type !== 'sve';
+      const filtered = q || st.month || st.from;
       note.hidden = !filtered;
       if (filtered) note.innerHTML = 'Pronađeno: <b>' + shown + '</b> ' + (shown === 1 ? 'aranžman' : 'aranžmana') + '. <button type="button" id="clear">Poništi filter</button>';
     };
@@ -101,6 +103,14 @@
       st.from = ($('#s-from') || {}).value || '';
       apply();
     };
+    // Tabovi kategorija: aktivan je jedan; "Jednodnevni izleti" filtrira po vrsti, ostali po kategoriji
+    tabs.forEach(b => b.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-pressed', String(t === b)));
+      st.cat = b.dataset.cat || '';
+      st.type = b.dataset.type || 'sve';
+      if ($('#s-type')) $('#s-type').value = st.type;
+      apply();
+    }));
     const fbtn = $('#filter-btn');
     fbtn && fbtn.addEventListener('click', () => {
       const open = panel.hidden;
@@ -114,6 +124,8 @@
       if (e.target.id !== 'clear') return;
       $$('#filter-panel select').forEach(s => { s.selectedIndex = 0; });
       if ($('#s-q')) $('#s-q').value = '';
+      tabs.forEach((t, i) => t.setAttribute('aria-pressed', String(i === 0)));
+      st.cat = '';
       read();
     });
     const vrsta = new URLSearchParams(location.search).get('vrsta');

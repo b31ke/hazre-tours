@@ -1,0 +1,10 @@
+---
+Name: hazre-cache
+---
+# Keš za linkove smanjenih slika (plakati): obrada slike traje ~100 ms, a stranica ih prikazuje desetak.
+# Ključ sadrži vrijeme izmjene slike, pa nova slika odmah dobije novi link.
+SilverStripe\Core\Injector\Injector:
+  Psr\SimpleCache\CacheInterface.hazreImages:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: 'hazreImages'

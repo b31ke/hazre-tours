@@ -32,7 +32,7 @@ class TripController extends PageController
             'Title' => $trip->Title,
             'MetaTitle' => $trip->Title . ' | Hazre Tours',
             'MetaDescriptionText' => $trip->Summary ?: $trip->Highlight,
-            'OgImage' => $trip->Poster()->exists() ? $trip->Poster()->FillMax(1200, 630)?->getAbsoluteURL() : '',
+            'OgImage' => $trip->OgImageURL(),
         ])->renderWith(['TripPage', 'Page']);
     }
 

@@ -110,6 +110,22 @@ class TripTerm extends DataObject
         return $this->Label();
     }
 
+    /** Aranžman ovog termina, već učitan (bez novog upita u bazu). */
+    private ?Trip $tripObject = null;
+
+    public function setTripObject(Trip $trip): void
+    {
+        $this->tripObject = $trip;
+    }
+
+    public function Trip(): Trip
+    {
+        if ($this->tripObject === null || (int) $this->tripObject->ID !== (int) $this->TripID) {
+            $this->tripObject = $this->getComponent('Trip');
+        }
+        return $this->tripObject;
+    }
+
     public function EffectivePrice(): int
     {
         return (int) ($this->Price ?: $this->Trip()->Price);

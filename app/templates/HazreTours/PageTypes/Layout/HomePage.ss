@@ -16,17 +16,10 @@
             <% if $HeroEyebrow %><p class="hero-kicker">$HeroEyebrow</p><% end_if %>
             <h1 id="hero-h">$HeroTitleHTML</h1>
             <% if $HeroLead %><p class="hero-lead">$HeroLead</p><% end_if %>
-            <form class="search-bar" id="search" role="search" action="putovanja">
-                <label class="sr" for="s-q">Pronađi svoje putovanje</label>
-                <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off">
-                <button class="btn btn-orange" type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Traži</span></button>
-            </form>
-            <% if $HomeCategories.Count %>
-            <div class="quick" aria-label="Brzi izbor">
-                <span>Popularno:</span>
-                <% loop $HomeCategories.Limit(5) %><a href="$Link">$Title</a><% end_loop %>
+            <div class="hero-btns">
+                <a class="btn btn-orange btn-lg" href="#aranzmani">Pogledaj ponudu</a>
+                <a class="btn btn-ghost btn-lg" href="putovanje-po-mjeri">Putovanje po mjeri</a>
             </div>
-            <% end_if %>
             <ul class="trust">
                 <li><b>Od 2008.</b> na putu</li>
                 <li><b>Vlastiti</b> autobusi</li>
@@ -65,10 +58,22 @@
 
 <section class="block" id="aranzmani" aria-labelledby="ar-h">
     <div class="wrap">
-        <div class="center-head">
-            <h2 id="ar-h">Pogledajte aktuelne aranžmane i rezervišite svoje sljedeće putovanje</h2>
-            <button class="btn btn-orange btn-sm" type="button" id="filter-btn" aria-expanded="false" aria-controls="filter-panel">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>Filtriraj
+        <div class="finder">
+            <p class="script-title" aria-hidden="true">Pronađi, rezerviši, spakuj kofer</p>
+            <h2 id="ar-h" class="sr">Aktuelni aranžmani</h2>
+            <form class="search-bar wide" id="search" role="search" action="putovanja">
+                <label class="sr" for="s-q">Pronađi svoje putovanje</label>
+                <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off">
+                <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+            </form>
+            <p class="tagline">svako putovanje je <span class="mark">nova priča<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 50 3, 120 2, 197 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></p>
+            <div class="cat-tabs" role="group" aria-label="Kategorije putovanja">
+                <button type="button" class="ct" data-cat="" aria-pressed="true">Sve ponude</button>
+                <button type="button" class="ct" data-type="jednodnevni" aria-pressed="false">Jednodnevni izleti</button>
+                <% loop $MenuCategories %><button type="button" class="ct" data-cat="$URLSegment" aria-pressed="false">$Title</button><% end_loop %>
+            </div>
+            <button class="filter-link" type="button" id="filter-btn" aria-expanded="false" aria-controls="filter-panel">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>Još filtera: mjesec i mjesto polaska
             </button>
         </div>
         <div class="filter-panel" id="filter-panel" hidden>

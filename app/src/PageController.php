@@ -56,9 +56,12 @@ namespace {
             return json_encode($rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP);
         }
 
+        private ?ArrayList $menuCategories = null;
+
+        /** Kategorije s bar jednim polaskom (meni, podnožje), izračunate jednom po stranici. */
         public function MenuCategories()
         {
-            return ArrayList::create(array_values(array_filter(TripCategory::get()->toArray(), fn ($c) => $c->getTripCount() > 0)));
+            return $this->menuCategories ??= ArrayList::create(array_values(array_filter(TripCategory::get()->toArray(), fn ($c) => $c->getTripCount() > 0)));
         }
 
         public function InquiryToken(): string

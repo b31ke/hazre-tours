@@ -240,13 +240,58 @@ class Trip extends DataObject
         $this->URLSegment = $slug;
     }
 
+    /** Lista aktivnih aranžmana se računa jednom po zahtjevu (meni, kartice, pretraga i forma je dijele). */
+    private static ?array $liveCache = null;
+
+    /** Budući termini ovog aranžmana, učitani jednom (kartica ih koristi desetak puta). */
+    private ?array $upcomingCache = null;
+
+    /** Već izračunati linkovi slika po širini. */
+    private array $imageCache = [];
+
     /** Aktivni aranžmani s budućim terminom: istaknuti prvi, pa po prvom polasku. */
     public static function liveList(?SS_List $source = null): ArrayList
     {
-        $source ??= self::get();
-        $trips = array_filter($source->filter('Active', true)->toArray(), fn (Trip $t) => $t->NextTerm() !== null);
-        usort($trips, fn (Trip $a, Trip $b) => [$b->Featured, $a->NextTerm()->StartDate] <=> [$a->Featured, $b->NextTerm()->StartDate]);
-        return ArrayList::create(array_values($trips));
+        if (self::$liveCache === null) {
+            $trips = self::get()->filter('Active', true)->toArray();
+            // svi budući termini aktivnih aranžmana jednim upitom
+            $ids = array_map(fn (Trip $t) => $t->ID, $trips);
+            $byTrip = [];
+            if ($ids) {
+                foreach (TripTerm::get()->filter(['TripID' => $ids, 'StartDate:GreaterThanOrEqual' => date('Y-m-d')])->sort('StartDate') as $term) {
+                    $byTrip[$term->TripID][] = $term;
+                }
+            }
+            foreach ($trips as $t) {
+                $t->setUpcoming($byTrip[$t->ID] ?? []);
+            }
+            $trips = array_filter($trips, fn (Trip $t) => $t->NextTerm() !== null);
+            usort($trips, fn (Trip $a, Trip $b) => [$b->Featured, $a->NextTerm()->StartDate] <=> [$a->Featured, $b->NextTerm()->StartDate]);
+            self::$liveCache = array_values($trips);
+        }
+        if ($source === null) {
+            return ArrayList::create(self::$liveCache);
+        }
+        // podskup (npr. kategorija): isti objekti iz memorije, isti redoslijed
+        $ids = array_flip($source->column('ID'));
+        return ArrayList::create(array_values(array_filter(self::$liveCache, fn (Trip $t) => isset($ids[$t->ID]))));
+    }
+
+    /** Postavlja već učitane termine (iz liveList) i povezuje ih s ovim aranžmanom bez novih upita. */
+    public function setUpcoming(array $terms): void
+    {
+        foreach ($terms as $term) {
+            $term->setTripObject($this);
+        }
+        $this->upcomingCache = $terms;
+    }
+
+    private function upcomingArray(): array
+    {
+        if ($this->upcomingCache === null) {
+            $this->setUpcoming($this->Terms()->filter('StartDate:GreaterThanOrEqual', date('Y-m-d'))->sort('StartDate')->toArray());
+        }
+        return $this->upcomingCache;
     }
 
     public function Link(): string
@@ -274,20 +319,25 @@ class Trip extends DataObject
         return self::TRANSPORT[$this->Transport] ?? '';
     }
 
-    public function UpcomingTerms()
+    public function UpcomingTerms(): ArrayList
     {
-        return $this->Terms()->filter('StartDate:GreaterThanOrEqual', date('Y-m-d'))->sort('StartDate');
+        return ArrayList::create($this->upcomingArray());
     }
 
     public function NextTerm(): ?TripTerm
     {
-        return $this->UpcomingTerms()->first();
+        return $this->upcomingArray()[0] ?? null;
     }
 
     /** Prvi termin u koji se još može prijaviti. */
     public function NextOpenTerm(): ?TripTerm
     {
-        return $this->UpcomingTerms()->exclude('Status', 'popunjeno')->first();
+        foreach ($this->upcomingArray() as $t) {
+            if (!$t->IsFull()) {
+                return $t;
+            }
+        }
+        return null;
     }
 
     public function getNextTermLabel(): string
@@ -441,13 +491,47 @@ class Trip extends DataObject
 
     private function imageURL(int $width): string
     {
+        if (isset($this->imageCache[$width])) {
+            return $this->imageCache[$width];
+        }
+        if (!$this->PosterID) {
+            return $this->imageCache[$width] = '';
+        }
+        $cache = \SilverStripe\Core\Injector\Injector::inst()->get(\Psr\SimpleCache\CacheInterface::class . '.hazreImages');
         $img = $this->Poster();
         if (!$img->exists()) {
+            return $this->imageCache[$width] = '';
+        }
+        $key = 'p' . $img->ID . '_' . $width . '_' . strtotime((string) $img->LastEdited) . '_' . substr((string) $img->FileHash, 0, 10);
+        $url = $cache->get($key);
+        if (!is_string($url) || $url === '') {
+            $scaled = $img->ScaleMaxWidth($width);
+            $webp = $scaled?->Convert('webp');
+            $url = (string) (($webp ?: $scaled)?->getURL() ?? '');
+            if ($url !== '') {
+                $cache->set($key, $url);
+            }
+        }
+        return $this->imageCache[$width] = $url;
+    }
+
+    /** Slika za pregled linka (Facebook, Viber) 1200x630, pamti se u kešu kao i ostale. */
+    public function OgImageURL(): string
+    {
+        if (!$this->PosterID || !($img = $this->Poster())->exists()) {
             return '';
         }
-        $scaled = $img->ScaleMaxWidth($width);
-        $webp = $scaled?->Convert('webp');
-        return (string) (($webp ?: $scaled)?->getURL() ?? '');
+        $cache = \SilverStripe\Core\Injector\Injector::inst()->get(\Psr\SimpleCache\CacheInterface::class . '.hazreImages');
+        $key = 'og' . $img->ID . '_' . strtotime((string) $img->LastEdited) . '_' . substr((string) $img->FileHash, 0, 10);
+        $url = $cache->get($key);
+        if (!is_string($url) || $url === '') {
+            // u keš ide samo putanja: puna adresa zavisi od domene (lokalno, privremena adresa, hazretours.ba)
+            $url = (string) ($img->FillMax(1200, 630)?->getURL() ?? '');
+            if ($url !== '') {
+                $cache->set($key, $url);
+            }
+        }
+        return $url !== '' ? Director::absoluteURL($url) : '';
     }
 
     public function GallerySorted(): SS_List
