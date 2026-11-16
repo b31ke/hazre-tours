@@ -1,0 +1,18 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: app
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - HazreTours\Admin\HazreSettings
+
+# Pošiljalac mailova (adresa mora postojati na serveru)
+SilverStripe\Control\Email\Email:
+  admin_email:
+    noreply@hazretours.ba: 'Hazre Tours'
+
+# Bez demo stranica (Home, About Us, Contact Us) pri dev/build; stranice pravi tasks:hazre-import
+SilverStripe\CMS\Model\SiteTree:
+  create_default_pages: false

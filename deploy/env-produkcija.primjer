@@ -1,0 +1,25 @@
+# .env na serveru (~/hazre-tours/.env). NE ide na GitHub. Kopija ide u backup.
+SS_ENVIRONMENT_TYPE="live"
+# Privremena adresa na našem hostingu; kad se pređe na pravu domenu: https://hazretours.ba
+SS_BASE_URL="https://<privremena-adresa>"
+# Adrese na koje sajt odgovara (odvojene zarezom). Kasnije: hazretours.ba,www.hazretours.ba
+SS_ALLOWED_HOSTS="<privremena-adresa>"
+
+# Google smije indeksirati sajt tek na pravoj domeni. Na privremenoj adresi ostaje prazno.
+HAZRE_ALLOW_INDEX=""
+
+SS_DATABASE_CLASS="MySQLDatabase"
+SS_DATABASE_SERVER="localhost"
+SS_DATABASE_NAME="beshirtb_hazre"
+SS_DATABASE_USERNAME="beshirtb_hazre"
+SS_DATABASE_PASSWORD="<lozinka baze iz cPanela>"
+
+# Rezervna prijava u admin (/admin), radi i ako se izgubi obični nalog
+SS_DEFAULT_ADMIN_USERNAME="<email>"
+SS_DEFAULT_ADMIN_PASSWORD="<duga lozinka>"
+
+# Mailovi s upitima idu preko servera (cPanel exim), bez lozinke
+MAILER_DSN="sendmail://default"
+# Pošiljalac mora biti adresa s domene ovog servera (inače mail ide u spam), npr. noreply@beshirt.ba.
+# Kad sajt pređe na hazretours.ba i taj mail postoji, ovo se može obrisati.
+HAZRE_MAIL_FROM="<noreply@domena-servera>"

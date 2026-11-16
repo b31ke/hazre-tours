@@ -1,0 +1,448 @@
+<title>Vjetrulja Putovanja</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: tamni "polazni" hero s tražilicom → ploča polazaka → razglednice aranžmana s filterom → zašto mi → upit */
+:root {
+  --bg: #F3F6F7;
+  --surface: #FFFFFF;
+  --ink: #0E2433;
+  --muted: #557080;
+  --line: #D6E1E6;
+  --accent: #E8743B;
+  --accent-ink: #FFFFFF;
+  --sea: #1F7A8C;
+  --board: #0E2433;
+  --board-fg: #F2C14E;
+  --board-dim: #8FA9B8;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1A24; --surface: #12283A; --ink: #E6EFF3; --muted: #93AEBD; --line: #24435A;
+    --accent: #F08A55; --accent-ink: #1A0E07; --sea: #5CC1D3; --board: #06121A; --board-fg: #F2C14E; --board-dim: #6F8C9C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1A24; --surface: #12283A; --ink: #E6EFF3; --muted: #93AEBD; --line: #24435A;
+  --accent: #F08A55; --accent-ink: #1A0E07; --sea: #5CC1D3; --board: #06121A; --board-fg: #F2C14E; --board-dim: #6F8C9C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--board); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--sea); }
+
+/* Header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--board); color: #F3F6F7; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 20px; text-decoration: none; color: #F3F6F7; }
+.logo svg { width: 30px; height: 30px; }
+nav.main { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+nav.main a { text-decoration: none; font-size: 15px; color: #C9D8E0; }
+nav.main a:hover { color: #FFFFFF; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; cursor: pointer; font: 600 15px var(--body); padding: 12px 20px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); text-decoration: none; transition: transform .15s ease, filter .15s ease; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+nav.main .btn { color: var(--accent-ink); padding: 9px 16px; }
+@media (max-width: 760px) { nav.main a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { background: var(--board); color: #F3F6F7; position: relative; overflow: hidden; }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; }
+.hero .wrap { position: relative; padding-block: 72px 56px; display: grid; gap: 28px; }
+.hero h1 { font-size: clamp(40px, 7vw, 84px); font-weight: 800; letter-spacing: -.02em; max-width: 14ch; }
+.hero h1 em { font-style: normal; color: var(--board-fg); }
+.hero .lead { font-size: 18px; color: #C9D8E0; max-width: 52ch; }
+
+.search { background: var(--surface); color: var(--ink); border-radius: var(--r); padding: 10px; display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; gap: 8px; max-width: 900px; box-shadow: 0 18px 50px rgba(0,0,0,.25); }
+.search label { display: grid; gap: 2px; padding: 8px 12px; border-radius: 10px; min-width: 0; }
+.search label:hover { background: var(--bg); }
+.search span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.search input, .search select { border: 0; background: transparent; font: 500 16px var(--body); color: var(--ink); padding: 0; width: 100%; min-width: 0; outline: none; }
+.search .btn { border-radius: 10px; padding-inline: 26px; }
+@media (max-width: 760px) { .search { grid-template-columns: 1fr 1fr; } .search label:first-child { grid-column: 1 / -1; } .search .btn { grid-column: 1 / -1; padding-block: 14px; } }
+
+/* Departures board */
+.board { background: var(--board); color: var(--board-fg); border-top: 1px solid rgba(255,255,255,.08); }
+.board .wrap { padding-block: 28px 40px; }
+.board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.board-head h2 { font-family: var(--mono); font-weight: 500; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--board-dim); }
+.clock { font-family: var(--mono); font-size: 14px; color: var(--board-dim); font-variant-numeric: tabular-nums; }
+.board-scroll { overflow-x: auto; }
+table.dep { width: 100%; min-width: 640px; border-collapse: collapse; font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums; }
+table.dep th { text-align: left; font-weight: 400; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--board-dim); padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.12); }
+table.dep td { padding: 11px 10px; border-bottom: 1px dashed rgba(255,255,255,.1); white-space: nowrap; }
+table.dep td.dest { color: #F3F6F7; font-weight: 500; }
+.status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; letter-spacing: .06em; }
+.st-ok { background: rgba(92,193,140,.16); color: #7FDCA8; }
+.st-low { background: rgba(242,193,78,.16); color: #F2C14E; }
+.st-last { background: rgba(240,120,80,.2); color: #FF9C74; }
+.flip { display: inline-block; animation: flip .5s ease both; }
+@keyframes flip { from { transform: rotateX(80deg); opacity: .3; } to { transform: none; opacity: 1; } }
+
+/* Sections */
+section.block { padding-block: 72px; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.sec-head h2 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 700; letter-spacing: -.015em; margin-top: 6px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { font: 500 14px var(--body); padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.card { background: var(--surface); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--line); transition: transform .2s ease, box-shadow .2s ease; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(14,36,51,.12); }
+.postcard { aspect-ratio: 4 / 3; max-width: 100%; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; color: #FFFFFF; }
+.postcard svg { position: absolute; inset: auto 0 0 0; width: 100%; height: 62%; }
+.postcard .coord { position: relative; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; opacity: .85; }
+.postcard .stamp { position: absolute; top: 14px; right: 14px; border: 2px dashed rgba(255,255,255,.7); border-radius: 6px; padding: 4px 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
+.postcard h3 { position: relative; font-size: 34px; font-weight: 800; letter-spacing: -.02em; text-shadow: 0 2px 14px rgba(0,0,0,.25); }
+.card-body { padding: 16px 18px 18px; display: grid; gap: 12px; flex: 1; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.price-row { display: flex; align-items: end; justify-content: space-between; gap: 10px; margin-top: auto; }
+.price { font-family: var(--display); font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.price small { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--muted); display: block; }
+.link-btn { font: 600 14px var(--body); color: var(--sea); background: none; border: 0; cursor: pointer; padding: 6px 0; }
+.link-btn:hover { text-decoration: underline; }
+.empty { padding: 40px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); }
+
+/* Why */
+.why { background: var(--surface); border-block: 1px solid var(--line); }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+.why-item { display: grid; gap: 8px; }
+.why-item .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--sea) 14%, transparent); color: var(--sea); }
+.why-item h3 { font-size: 20px; font-weight: 700; }
+.why-item p { color: var(--muted); font-size: 15px; }
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: start; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+.office { display: grid; gap: 18px; }
+.office p.lead { color: var(--muted); max-width: 46ch; }
+.office dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; margin: 0; }
+.office dt { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.office dd { margin: 0; font-weight: 500; }
+form.inq { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+form.inq .full { grid-column: 1 / -1; }
+@media (max-width: 520px) { form.inq { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-size: 14px; font-weight: 600; }
+.field input, .field select, .field textarea { font: 16px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; width: 100%; }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--sea); outline-offset: 0; border-color: transparent; }
+.notice { grid-column: 1 / -1; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--sea) 14%, transparent); font-size: 15px; }
+
+footer { background: var(--board); color: #9DB4C1; font-size: 14px; }
+footer .wrap { padding-block: 32px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+footer .logo { font-size: 17px; }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#pocetna" aria-label="Vjetrulja Putovanja, početna">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="#F2C14E" stroke-width="2"/><path d="M16 4 L19 16 L16 28 L13 16 Z" fill="#F2C14E"/><path d="M4 16 L16 13.5 L28 16 L16 18.5 Z" fill="#E8743B" opacity=".9"/></svg>
+      Vjetrulja
+    </a>
+    <nav class="main" aria-label="Glavna navigacija">
+      <a href="#polasci">Polasci</a>
+      <a href="#aranzmani">Aranžmani</a>
+      <a href="#zasto">O nama</a>
+      <a class="btn" href="#upit">Pošalji upit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="pocetna">
+  <section class="hero">
+    <canvas id="routes" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow" style="color:#F2C14E">Polasci iz Sarajeva, Mostara i Tuzle</p>
+      <h1>Kuda vas <em>vjetar</em> nosi ove sezone?</h1>
+      <p class="lead">Ljetovanja, city break putovanja i skijanje. Organizovan prevoz, provjereni smještaj i vodič koji govori vaš jezik.</p>
+      <form class="search" id="search" role="search">
+        <label for="q-dest"><span>Destinacija</span>
+          <input id="q-dest" type="text" placeholder="npr. Grčka, Istanbul…" autocomplete="off">
+        </label>
+        <label for="q-cat"><span>Vrsta putovanja</span>
+          <select id="q-cat">
+            <option value="sve">Sve</option>
+            <option value="ljeto">Ljetovanje</option>
+            <option value="grad">City break</option>
+            <option value="zima">Skijanje</option>
+            <option value="daleko">Daleka putovanja</option>
+          </select>
+        </label>
+        <label for="q-pax"><span>Putnika</span>
+          <select id="q-pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
+          </select>
+        </label>
+        <button class="btn" type="submit">Pretraži</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="board" id="polasci" aria-labelledby="board-title">
+    <div class="wrap">
+      <div class="board-head">
+        <h2 id="board-title">Najbliži polasci</h2>
+        <span class="clock" id="clock">--:--</span>
+      </div>
+      <div class="board-scroll">
+        <table class="dep">
+          <thead><tr><th>Datum</th><th>Destinacija</th><th>Polazak iz</th><th>Prevoz</th><th>Trajanje</th><th>Mjesta</th></tr></thead>
+          <tbody id="dep-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="aranzmani" aria-labelledby="ar-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Ponuda 2026/2027</p>
+          <h2 id="ar-title">Izdvojeni aranžmani</h2>
+        </div>
+        <div class="chips" role="group" aria-label="Filtriraj aranžmane">
+          <button class="chip" data-cat="sve" aria-pressed="true">Sve</button>
+          <button class="chip" data-cat="ljeto" aria-pressed="false">Ljetovanje</button>
+          <button class="chip" data-cat="grad" aria-pressed="false">City break</button>
+          <button class="chip" data-cat="zima" aria-pressed="false">Skijanje</button>
+          <button class="chip" data-cat="daleko" aria-pressed="false">Daleka putovanja</button>
+        </div>
+      </div>
+      <div class="grid" id="offers"></div>
+    </div>
+  </section>
+
+  <section class="block why" id="zasto" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Zašto putovati s nama</p>
+          <h2 id="why-title">Vi uživate, mi brinemo o detaljima</h2>
+        </div>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Licencirana agencija</h3>
+          <p>Svako putovanje je osigurano garancijom putovanja, a uplate idu na račun agencije.</p>
+        </div>
+        <div class="why-item">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h3"/></svg></div>
+          <h3>Plaćanje na rate</h3>
+          <p>Akontacija od 30% pri rezervaciji, ostatak do 14 dana prije polaska ili na rate karticama.</p>
+        </div>
+        <div class="why-item">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg></div>
+          <h3>Vodič na putovanju</h3>
+          <p>Na grupnim putovanjima s vama putuje naš vodič, dostupan od polaska do povratka.</p>
+        </div>
+        <div class="why-item">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4z"/></svg></div>
+          <h3>Odgovor isti dan</h3>
+          <p>Na upite poslane radnim danom do 16 sati odgovaramo istog dana, s tačnom cijenom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="upit" aria-labelledby="upit-title">
+    <div class="wrap contact-grid">
+      <div class="office">
+        <p class="eyebrow">Kontakt</p>
+        <h2 id="upit-title" style="font-size:clamp(30px,4.4vw,46px)">Pošaljite upit, javljamo se s ponudom</h2>
+        <p class="lead">Recite nam kuda i kada želite putovati. Pripremit ćemo ponudu s cijenom po osobi i svim uključenim troškovima.</p>
+        <dl>
+          <dt>Adresa</dt><dd>Ferhadija 10, 71000 Sarajevo</dd>
+          <dt>Telefon</dt><dd>+387 33 000 000</dd>
+          <dt>E-mail</dt><dd>info@vjetrulja.ba</dd>
+          <dt>Radno vrijeme</dt><dd>Pon–Pet 08–18 h, Sub 09–14 h</dd>
+        </dl>
+      </div>
+      <form class="inq" id="inq" novalidate>
+        <div class="field"><label for="f-name">Ime i prezime</label><input id="f-name" required autocomplete="name"></div>
+        <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" type="tel" autocomplete="tel"></div>
+        <div class="field full"><label for="f-mail">E-mail</label><input id="f-mail" type="email" required autocomplete="email"></div>
+        <div class="field"><label for="f-trip">Aranžman</label><select id="f-trip"><option value="">Još nisam odlučio/la</option></select></div>
+        <div class="field"><label for="f-pax">Broj putnika</label><input id="f-pax" type="number" min="1" value="2"></div>
+        <div class="field full"><label for="f-msg">Poruka</label><textarea id="f-msg" placeholder="Željeni termin, broj djece i njihov uzrast, posebne želje…"></textarea></div>
+        <div class="full"><button class="btn" type="submit">Pošalji upit</button></div>
+        <p class="notice" id="inq-msg" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo">Vjetrulja Putovanja</span>
+    <span>© 2026 Vjetrulja Putovanja d.o.o. · Licenca br. 00-00/26</span>
+  </div>
+</footer>
+
+<script>
+const OFFERS = [
+  { id: 'lefkada', name: 'Lefkada', country: 'Grčka', cat: 'ljeto', coord: '38.83°N 20.70°E', nights: 10, board: 'Noćenje', transport: 'Autobus', from: 'Sarajevo', price: 649, colors: ['#1F7A8C', '#7CC6D6'], shape: 'sea' },
+  { id: 'istanbul', name: 'Istanbul', country: 'Turska', cat: 'grad', coord: '41.01°N 28.98°E', nights: 4, board: 'Doručak', transport: 'Avion', from: 'Sarajevo', price: 589, colors: ['#7A3E65', '#E3967A'], shape: 'city' },
+  { id: 'jahorina', name: 'Jahorina', country: 'BiH', cat: 'zima', coord: '43.73°N 18.57°E', nights: 5, board: 'Polupansion', transport: 'Vlastiti', from: '—', price: 420, colors: ['#3B5B85', '#BFD7EA'], shape: 'mount' },
+  { id: 'budva', name: 'Budva', country: 'Crna Gora', cat: 'ljeto', coord: '42.29°N 18.84°E', nights: 7, board: 'Polupansion', transport: 'Autobus', from: 'Mostar', price: 515, colors: ['#0F6E7A', '#F2C14E'], shape: 'sea' },
+  { id: 'bec', name: 'Beč', country: 'Austrija', cat: 'grad', coord: '48.21°N 16.37°E', nights: 3, board: 'Doručak', transport: 'Autobus', from: 'Tuzla', price: 299, colors: ['#5A4A78', '#C9A7D9'], shape: 'city' },
+  { id: 'kopaonik', name: 'Kopaonik', country: 'Srbija', cat: 'zima', coord: '43.29°N 20.81°E', nights: 7, board: 'Polupansion', transport: 'Autobus', from: 'Sarajevo', price: 560, colors: ['#2D4F6B', '#DCE8F0'], shape: 'mount' },
+  { id: 'dubai', name: 'Dubai', country: 'UAE', cat: 'daleko', coord: '25.20°N 55.27°E', nights: 6, board: 'Doručak', transport: 'Avion', from: 'Sarajevo', price: 1490, colors: ['#B5562E', '#F6C177'], shape: 'city' },
+  { id: 'hurgada', name: 'Hurgada', country: 'Egipat', cat: 'daleko', coord: '27.26°N 33.81°E', nights: 7, board: 'All inclusive', transport: 'Avion', from: 'Sarajevo', price: 1120, colors: ['#C27A2C', '#4FB3BF'], shape: 'sea' },
+];
+
+const DEPARTURES = [
+  { date: '27.11.', id: 'bec', from: 'Tuzla', left: 6 },
+  { date: '04.12.', id: 'istanbul', from: 'Sarajevo', left: 2 },
+  { date: '18.12.', id: 'dubai', from: 'Sarajevo', left: 11 },
+  { date: '28.12.', id: 'kopaonik', from: 'Sarajevo', left: 4 },
+  { date: '10.01.', id: 'jahorina', from: '—', left: 14 },
+  { date: '15.02.', id: 'hurgada', from: 'Sarajevo', left: 9 },
+];
+
+const CAT_LABEL = { ljeto: 'Ljeto', grad: 'City break', zima: 'Skijanje', daleko: 'Daleko' };
+const byId = Object.fromEntries(OFFERS.map(o => [o.id, o]));
+const km = n => n.toLocaleString('bs-BA').replace(/,/g, '.') + ' KM';
+
+function shapeSVG(kind) {
+  if (kind === 'sea') return `<svg viewBox="0 0 400 180" preserveAspectRatio="none" aria-hidden="true"><circle cx="300" cy="40" r="28" fill="#FFE7A8" opacity=".9"/><path d="M0 90 Q50 75 100 90 T200 90 T300 90 T400 90 V180 H0Z" fill="#FFFFFF" opacity=".18"/><path d="M0 115 Q50 100 100 115 T200 115 T300 115 T400 115 V180 H0Z" fill="#FFFFFF" opacity=".22"/><path d="M0 145 Q50 132 100 145 T200 145 T300 145 T400 145 V180 H0Z" fill="#FFFFFF" opacity=".28"/></svg>`;
+  if (kind === 'mount') return `<svg viewBox="0 0 400 180" preserveAspectRatio="none" aria-hidden="true"><path d="M0 180 L90 60 L150 120 L240 20 L330 110 L400 70 V180Z" fill="#FFFFFF" opacity=".3"/><path d="M240 20 L262 46 L248 42 L236 52 L224 40Z" fill="#FFFFFF" opacity=".9"/><path d="M0 180 L70 120 L140 160 L220 100 L310 150 L400 120 V180Z" fill="#FFFFFF" opacity=".35"/></svg>`;
+  return `<svg viewBox="0 0 400 180" preserveAspectRatio="none" aria-hidden="true"><circle cx="80" cy="48" r="22" fill="#FFE7A8" opacity=".85"/><path d="M0 180 V120 H40 V90 H70 V130 H110 V70 H130 V50 H140 V70 H160 V110 H200 V80 Q220 55 240 80 V120 H270 V60 H285 V40 H290 V60 H305 V105 H340 V85 H370 V125 H400 V180Z" fill="#FFFFFF" opacity=".3"/></svg>`;
+}
+
+const grid = document.getElementById('offers');
+let state = { cat: 'sve', q: '' };
+
+function render() {
+  const q = state.q.trim().toLowerCase();
+  const list = OFFERS.filter(o => (state.cat === 'sve' || o.cat === state.cat) && (!q || (o.name + ' ' + o.country).toLowerCase().includes(q)));
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1">Za ovu pretragu trenutno nemamo aranžman. Pošaljite nam upit i složit ćemo putovanje po vašoj mjeri.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(o => `
+    <article class="card">
+      <div class="postcard" style="background:linear-gradient(160deg, ${o.colors[0]}, ${o.colors[1]})">
+        ${shapeSVG(o.shape)}
+        <span class="coord">${o.coord}</span>
+        <span class="stamp">${CAT_LABEL[o.cat]}</span>
+        <h3>${o.name}</h3>
+      </div>
+      <div class="card-body">
+        <div class="meta"><span><b>${o.country}</b></span><span>${o.nights} noći</span><span>${o.board}</span><span>${o.transport}${o.from !== '—' ? ' iz ' + o.from : ''}</span></div>
+        <div class="price-row">
+          <div class="price"><small>od, po osobi</small>${km(o.price)}</div>
+          <button class="link-btn" data-book="${o.id}">Rezerviši →</button>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+function setCat(cat) {
+  state.cat = cat;
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.cat === cat)));
+  document.getElementById('q-cat').value = cat;
+  render();
+}
+
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => setCat(c.dataset.cat)));
+
+document.getElementById('search').addEventListener('submit', e => {
+  e.preventDefault();
+  state.q = document.getElementById('q-dest').value;
+  setCat(document.getElementById('q-cat').value);
+  document.getElementById('aranzmani').scrollIntoView();
+});
+
+// Booking button → prefill inquiry form
+const tripSel = document.getElementById('f-trip');
+OFFERS.forEach(o => tripSel.insertAdjacentHTML('beforeend', `<option value="${o.id}">${o.name}, ${o.nights} noći (od ${km(o.price)})</option>`));
+grid.addEventListener('click', e => {
+  const b = e.target.closest('[data-book]');
+  if (!b) return;
+  tripSel.value = b.dataset.book;
+  const pax = document.getElementById('q-pax').value;
+  document.getElementById('f-pax').value = parseInt(pax, 10) || 2;
+  document.getElementById('upit').scrollIntoView();
+  setTimeout(() => document.getElementById('f-name').focus({ preventScroll: true }), 400);
+});
+
+document.getElementById('inq').addEventListener('submit', e => {
+  e.preventDefault();
+  const msg = document.getElementById('inq-msg');
+  const name = document.getElementById('f-name').value.trim();
+  const mail = document.getElementById('f-mail').value.trim();
+  msg.hidden = false;
+  if (!name || !/^\S+@\S+\.\S+$/.test(mail)) {
+    msg.textContent = 'Upišite ime i ispravnu e-mail adresu da bismo vam mogli poslati ponudu.';
+    return;
+  }
+  msg.textContent = `Hvala, ${name.split(' ')[0]}. Ovo je pregled stranice, pa upit još nije poslan; forma će se povezati s vašim e-mailom pri objavi.`;
+});
+
+// Departures board
+const depBody = document.getElementById('dep-body');
+depBody.innerHTML = DEPARTURES.map((d, i) => {
+  const o = byId[d.id];
+  const st = d.left <= 3 ? ['st-last', 'ZADNJA MJESTA'] : d.left <= 6 ? ['st-low', d.left + ' SLOBODNO'] : ['st-ok', d.left + ' SLOBODNO'];
+  return `<tr><td><span class="flip" style="animation-delay:${i * 80}ms">${d.date}</span></td><td class="dest"><span class="flip" style="animation-delay:${i * 80 + 40}ms">${o.name.toUpperCase()}</span></td><td>${d.from}</td><td>${o.transport}</td><td>${o.nights}N</td><td><span class="status ${st[0]}">${st[1]}</span></td></tr>`;
+}).join('');
+
+function tick() {
+  const n = new Date();
+  document.getElementById('clock').textContent = 'SARAJEVO ' + n.toLocaleTimeString('bs-BA', { hour: '2-digit', minute: '2-digit' });
+}
+tick(); setInterval(tick, 30000);
+
+// Hero: route arcs from Sarajevo
+(function () {
+  const c = document.getElementById('routes');
+  const ctx = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, t = 0;
+  const targets = [[.92, .18], [.85, .7], [.62, .12], [.7, .9], [.98, .45], [.45, .85]];
+  function size() { const r = c.getBoundingClientRect(); const dpr = devicePixelRatio || 1; w = r.width; h = r.height; c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const ox = w * .58, oy = h * .5;
+    ctx.fillStyle = 'rgba(143,169,184,.25)';
+    for (let x = 12; x < w; x += 24) for (let y = 12; y < h; y += 24) ctx.fillRect(x, y, 1.2, 1.2);
+    targets.forEach(([tx, ty], i) => {
+      const x = tx * w, y = ty * h;
+      const mx = (ox + x) / 2, my = Math.min(oy, y) - 80;
+      ctx.strokeStyle = 'rgba(242,193,78,.45)'; ctx.lineWidth = 1.2; ctx.setLineDash([4, 6]);
+      ctx.beginPath(); ctx.moveTo(ox, oy); ctx.quadraticCurveTo(mx, my, x, y); ctx.stroke();
+      ctx.setLineDash([]);
+      const p = ((t / 240) + i / targets.length) % 1;
+      const px = (1 - p) ** 2 * ox + 2 * (1 - p) * p * mx + p * p * x;
+      const py = (1 - p) ** 2 * oy + 2 * (1 - p) * p * my + p * p * y;
+      ctx.fillStyle = '#E8743B'; ctx.beginPath(); ctx.arc(px, py, 2.6, 0, 7); ctx.fill();
+      ctx.fillStyle = 'rgba(242,193,78,.8)'; ctx.beginPath(); ctx.arc(x, y, 3, 0, 7); ctx.fill();
+    });
+    ctx.fillStyle = '#F2C14E'; ctx.beginPath(); ctx.arc(ox, oy, 5, 0, 7); ctx.fill();
+    t++;
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  size(); addEventListener('resize', size); draw();
+})();
+
+render();
+</script>

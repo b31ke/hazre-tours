@@ -1,0 +1,23 @@
+---
+Name: hazre-security
+---
+# Zaključavanje naloga: 5 pogrešnih lozinki zaredom → 15 minuta pauze
+SilverStripe\Security\Member:
+  lock_out_after_incorrect_logins: 5
+  lock_out_delay_mins: 15
+
+---
+Name: hazre-security-live
+After:
+  - '#requestprocessors'
+  - '#canonicalurls'
+Only:
+  environment: live
+---
+SilverStripe\Core\Injector\Injector:
+  # Uvijek HTTPS (http:// se preusmjerava na https://)
+  SilverStripe\Control\Middleware\CanonicalURLMiddleware:
+    properties:
+      ForceSSL: true
+# Adrese na koje sajt odgovara su u .env na serveru (SS_ALLOWED_HOSTS), jer je sajt
+# prvo na privremenoj adresi na našem hostingu, a kasnije na hazretours.ba.

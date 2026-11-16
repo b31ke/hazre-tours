@@ -1,0 +1,31 @@
+---
+Name: hazreroutes
+After:
+  - '#coreroutes'
+  - '#modelascontrollerroutes'
+Before:
+  - '#modelascontrollercatchallroute'
+---
+# Početna i ostale stranice (O nama, Uslovi putovanja…) su CMS stranice (Pages).
+# Aranžmani se vode u adminu (Aranžmani) i imaju svoju adresu /aranzman/<naziv>.
+SilverStripe\Control\Director:
+  rules:
+    'aranzman//$Slug': 'HazreTours\Control\TripController'
+    'upit': '%$HazreRateLimitedInquiry'
+    'sitemap.xml': 'HazreTours\Control\SeoController'
+    'robots.txt': 'HazreTours\Control\SeoController'
+
+SilverStripe\Core\Injector\Injector:
+  # Forma za upit: najviše 10 slanja u minuti po IP adresi (zaštita od spama)
+  HazreInquiryRateLimit:
+    class: SilverStripe\Control\Middleware\RateLimitMiddleware
+    properties:
+      ExtraKey: 'hazreupit'
+      MaxAttempts: 10
+      Decay: 1
+  HazreRateLimitedInquiry:
+    class: SilverStripe\Control\Middleware\RequestHandlerMiddlewareAdapter
+    properties:
+      RequestHandler: '%$HazreTours\Control\InquiryController'
+      Middlewares:
+        - '%$HazreInquiryRateLimit'

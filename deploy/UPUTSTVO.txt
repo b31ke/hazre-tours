@@ -1,0 +1,91 @@
+HAZRE TOURS NA NAŠEM HOSTINGU (cPanel), ISTO KAO SHOP I MINTER
+==============================================================
+
+Sajt se prvo postavlja privremeno na naš hosting (npr. poddomena), a kasnije prelazi na hazretours.ba.
+Dok je na privremenoj adresi, Google ga ne indeksira (HAZRE_ALLOW_INDEX je prazan u .env).
+
+Server: isti cPanel nalog kao shop i Minter (beshirtb@185.212.108.159, SSH port 2218),
+ključ: C:\Users\Bakir\Desktop\BE SHIRT d.o.o\beshirt-deploy
+Kod sajta na serveru: ~/hazre-tours   (web vidi samo ~/hazre-tours/public)
+PHP: 8.4 (/opt/cpanel/ea-php84/root/usr/bin/php), Composer: ~/composer.phar (već postoji)
+
+
+PRVI PUT (jednom)
+-----------------
+1. cPanel -> Domains -> Create a New Domain (privremena adresa, npr. poddomena)
+     ODZNAČI "Share document root"
+     Document Root: hazre-tours/public
+
+2. cPanel -> MultiPHP Manager -> ta adresa -> PHP 8.4
+
+3. cPanel -> Manage My Databases (MySQL):
+     nova baza:     hazre          (cPanel doda prefiks: beshirtb_hazre)
+     novi korisnik: hazre          (beshirtb_hazre), jaka lozinka -> zapiši je
+     Add User To Database -> ALL PRIVILEGES
+
+4. cPanel -> SSL/TLS Status -> ta adresa -> Run AutoSSL (besplatni HTTPS).
+
+5. Na računaru napravi paket (PowerShell, u folderu projekta; paket se pravi od zadnjeg commita):
+
+     powershell -ExecutionPolicy Bypass -File deploy\napravi-paket.ps1
+
+6. Pošalji paket na server:
+
+     scp -i "C:\Users\Bakir\Desktop\BE SHIRT d.o.o\beshirt-deploy" -P 2218 deploy\paket\hazre-paket.zip beshirtb@185.212.108.159:
+
+7. Spoji se na server:
+
+     ssh -i "C:\Users\Bakir\Desktop\BE SHIRT d.o.o\beshirt-deploy" -p 2218 beshirtb@185.212.108.159
+
+   pa na serveru:
+
+     mkdir -p ~/hazre-tours && unzip -oq ~/hazre-paket.zip -d ~/hazre-tours
+     cp ~/hazre-tours/deploy/env-produkcija.primjer ~/hazre-tours/.env && chmod 600 ~/hazre-tours/.env
+     nano ~/hazre-tours/.env          (adresa, lozinka baze, admin, pošiljalac maila; Ctrl+O, Enter, Ctrl+X)
+     bash ~/hazre-tours/deploy/postavi.sh
+
+   postavi.sh prvi put prebaci sa starog sajta aranžmane, plakate, programe (Word) i stranice.
+
+8. Otvori https://<privremena-adresa> i https://<privremena-adresa>/admin (prijava podacima iz .env).
+   U adminu: Settings -> Kontakt -> provjeri adresu (stari sajt ima dvije različite) i e-mail za upite.
+
+
+SVAKA SLJEDEĆA VERZIJA
+----------------------
+  Na računaru:  powershell -ExecutionPolicy Bypass -File deploy\napravi-paket.ps1
+                scp -i "C:\Users\Bakir\Desktop\BE SHIRT d.o.o\beshirt-deploy" -P 2218 deploy\paket\hazre-paket.zip beshirtb@185.212.108.159:
+  Na serveru:   bash ~/hazre-tours/deploy/postavi.sh
+
+Baza, slike (public/assets) i .env na serveru ostaju kakvi jesu. Ništa što je agencija unijela se ne prepisuje.
+
+
+BACKUP NA GOOGLE DRIVE (jednom)
+-------------------------------
+Koristi istu rclone vezu "gdrive" kao shop i Minter. Na Google Driveu nastaje folder HAZRE-backup
+(šifrovana baza po danima, plakati i programi, šifrovan .env).
+
+1. Probno pokretanje na serveru:
+
+     bash ~/hazre-tours/deploy/backup.sh; echo "kod: $?"; tail -n 2 ~/backups/hazre/backup.log
+
+   Pri prvom pokretanju se ispiše ključ za šifrovanje (~/.hazre-backup-kljuc): sačuvaj ga van servera.
+
+2. cPanel -> Cron Jobs -> novi posao, svaki dan u 04:15:
+
+     15 4 * * * /bin/bash $HOME/hazre-tours/deploy/backup.sh
+
+Vraćanje baze (BRIŠE trenutno stanje):
+     openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass file:$HOME/.hazre-backup-kljuc -in hazre-baza-DATUM.sql.gz.enc -out hazre-baza-DATUM.sql.gz
+     gunzip -c hazre-baza-DATUM.sql.gz | mysql -u beshirtb_hazre -p beshirtb_hazre
+
+
+PRELAZAK NA hazretours.ba (kasnije)
+-----------------------------------
+1. Kod hosta domene hazretours.ba usmjeri domenu na naš server (nameserveri ili A zapis).
+2. cPanel -> Domains -> hazretours.ba, Document Root: hazre-tours/public; AutoSSL.
+3. U ~/hazre-tours/.env:
+     SS_BASE_URL="https://hazretours.ba"
+     SS_ALLOWED_HOSTS="hazretours.ba,www.hazretours.ba"
+     HAZRE_ALLOW_INDEX="1"
+     HAZRE_MAIL_FROM="noreply@hazretours.ba"   (kad taj mail postoji u cPanelu)
+4. Stari linkovi (npr. /aranzman/izleti/...) mogu dobiti preusmjerenja na nove stranice.

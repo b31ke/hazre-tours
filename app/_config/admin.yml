@@ -1,0 +1,18 @@
+---
+Name: hazreadmin
+After:
+  - '#adminroutes'
+  - '#rootroutes'
+  - '#cmsdefaultadmin'
+---
+SilverStripe\Admin\LeftAndMain:
+  application_name: 'Hazre Tours'
+  application_link: '/'
+
+# Prva stranica u adminu: Aranžmani
+SilverStripe\Admin\AdminRootController:
+  default_panel: 'HazreTours\Admin\TripAdmin'
+
+# Jezik: bosanski (admin, prijava, formati datuma)
+SilverStripe\i18n\i18n:
+  default_locale: 'bs_BA'

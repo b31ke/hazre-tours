@@ -1,0 +1,12 @@
+---
+Name: hazre-logging
+After: '#logging'
+Except:
+  environment: dev
+---
+# Na serveru (live) posjetilac vidi samo poruku o grešci, a prava greška se zapisuje
+# u ~/hazre-tours/hazre-greske.log (izvan public/, niko je ne može otvoriti).
+SilverStripe\Core\Injector\Injector:
+  Psr\Log\LoggerInterface:
+    calls:
+      HazreFileLog: [ pushHandler, [ '%$HazreTours\Logging\HazreLogHandler' ] ]

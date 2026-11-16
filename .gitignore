@@ -1,0 +1,13 @@
+/.graphql-generated/
+/public/_graphql/
+/silverstripe-cache/
+/.env
+/vendor/
+/themes/startup-theme/
+/_resources/
+/public/_resources/
+
+# Slike i fajlovi iz CMS-a (na serveru, u backupu)
+/public/assets/
+/deploy/paket/
+/hazre-greske.log
