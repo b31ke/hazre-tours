@@ -12,7 +12,7 @@
 <header class="site-head" id="top">
     <div class="wrap head-row">
         <a class="logo" href="$BaseHref" aria-label="$SiteConfig.Title, početna">
-            <img src="images/hazre-logo-sm.png" alt="$SiteConfig.Title" width="96" height="64">
+            <img src="images/hazre-logo-sm.png" alt="$SiteConfig.Title" width="171" height="70">
         </a>
         <nav class="main-nav" id="main-nav" aria-label="Glavni meni">
             <ul>

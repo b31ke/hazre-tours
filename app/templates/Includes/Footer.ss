@@ -2,7 +2,7 @@
 <footer class="site-foot">
     <div class="wrap foot-grid">
         <div class="foot-brand">
-            <img src="images/hazre-logo-sm.png" alt="$SiteConfig.Title" width="120" height="80" loading="lazy">
+            <img src="images/hazre-logo-sm.png" alt="$SiteConfig.Title" width="171" height="70" loading="lazy">
             <p>Putnička agencija i prevoznik iz Srebrenika. Na putu od 2008.</p>
             <div class="socials">
                 <% if $SiteConfig.FacebookURL %><a href="$SiteConfig.FacebookURL" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4.4V11H7v4h3v9h4v-9h3l1-4h-4V8.6c0-.4.3-.6.6-.6z"/></svg></a><% end_if %>
