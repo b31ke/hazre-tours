@@ -35,7 +35,6 @@
     </main>
     <% include Footer %>
     <% include FloatContact %>
-    <% include SearchOverlay %>
     <% include Consent %>
     <script type="application/json" id="search-data">$SearchJSON.RAW</script>
 </body>

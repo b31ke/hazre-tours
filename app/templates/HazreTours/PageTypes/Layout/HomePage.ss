@@ -78,11 +78,17 @@
         <div class="finder">
             <p class="script-title" aria-hidden="true">Pronađi, rezerviši, spakuj kofer</p>
             <h2 id="ar-h" class="sr">Aktuelni aranžmani</h2>
-            <form class="search-bar wide" id="search" role="search" action="putovanja">
-                <label class="sr" for="s-q">Pronađi svoje putovanje</label>
-                <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off">
-                <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
-            </form>
+            <div class="sb-wrap">
+                <form class="search-bar wide" id="search" role="search" action="putovanja">
+                    <label class="sr" for="s-q">Pronađi svoje putovanje</label>
+                    <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sb-res" aria-autocomplete="list">
+                    <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+                </form>
+                <div class="sb-drop" id="sb-drop" hidden>
+                    <ul class="sb-results" id="sb-res" role="listbox" aria-label="Putovanja"></ul>
+                    <p class="sb-foot">Nema onoga što tražite? <a href="putovanje-po-mjeri">Pošaljite upit za putovanje po mjeri →</a></p>
+                </div>
+            </div>
             <div class="cat-tabs" role="group" aria-label="Kategorije putovanja">
                 <button type="button" class="ct" data-cat="" aria-pressed="true">Sve ponude</button>
                 <button type="button" class="ct" data-type="jednodnevni" aria-pressed="false">Jednodnevni izleti</button>

@@ -132,26 +132,46 @@
     if (vrsta && $('#s-type')) { $('#s-type').value = vrsta; panel.hidden = false; read(); }
   }
 
-  /* ---------- Pretraga iz zaglavlja ---------- */
-  const ov = $('#search-ov');
-  if (ov) {
+  /* ---------- Pretraga ispod heroja: rezultati dok se kuca ---------- */
+  const sbDrop = $('#sb-drop');
+  if (sbDrop) {
     let data = [];
     try { data = JSON.parse(($('#search-data') || {}).textContent || '[]'); } catch (e) { data = []; }
-    const input = $('#ov-q'), list = $('#ov-res');
-    let lastFocus = null;
+    const input = $('#s-q'), list = $('#sb-res'), wrap = $('.sb-wrap');
+    let act = -1;
+    const links = () => $$('a', list);
+    const mark = () => links().forEach((l, i) => { l.classList.toggle('act', i === act); l.setAttribute('aria-selected', String(i === act)); });
     const render = () => {
       const words = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
       const rows = data.filter(d => words.every(w => d.q.includes(w))).slice(0, 8);
-      list.innerHTML = rows.length ? rows.map(d => `<li><a href="${esc(d.url)}">${d.img ? `<img src="${esc(d.img)}" alt="" class="${d.flyer ? 'flyer' : ''}">` : '<span class="ph"></span>'}<span><b>${esc(d.title)}</b><small>${esc(d.date)}</small></span><span class="pr">${d.from ? 'od ' : ''}${d.price} KM</span></a></li>`).join('')
+      act = -1;
+      list.innerHTML = rows.length
+        ? rows.map(d => `<li><a href="${esc(d.url)}" role="option" aria-selected="false">${d.img ? `<img src="${esc(d.img)}" alt="">` : '<span class="ph"></span>'}<span class="sr-t"><b>${esc(d.title)}</b><small>${esc(d.date)}</small></span><span class="pr">${d.from ? 'od ' : ''}${d.price} KM</span></a></li>`).join('')
         : '<li class="none">Nema putovanja za „' + esc(input.value) + '“.</li>';
     };
-    const open = () => { lastFocus = document.activeElement; ov.hidden = false; document.body.style.overflow = 'hidden'; input.value = ''; render(); setTimeout(() => input.focus(), 30); };
-    const close = () => { ov.hidden = true; document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
-    $$('[data-open-search]').forEach(b => b.addEventListener('click', open));
-    $$('[data-close-search]').forEach(b => b.addEventListener('click', close));
-    addEventListener('keydown', e => { if (!ov.hidden && e.key === 'Escape') close(); });
-    input.addEventListener('input', render);
-    ov.addEventListener('click', e => { if (e.target === ov) close(); });
+    const open = () => { render(); sbDrop.hidden = false; input.setAttribute('aria-expanded', 'true'); };
+    const close = () => { sbDrop.hidden = true; input.setAttribute('aria-expanded', 'false'); act = -1; };
+    input.addEventListener('focus', open);
+    input.addEventListener('input', open);
+    input.addEventListener('keydown', e => {
+      const ls = links();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (sbDrop.hidden) open();
+        if (!ls.length) return;
+        act = e.key === 'ArrowDown' ? (act + 1) % ls.length : (act - 1 + ls.length) % ls.length;
+        mark();
+        ls[act].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter' && act >= 0 && ls[act]) {
+        e.preventDefault();
+        location.href = ls[act].href;
+      } else if (e.key === 'Escape') {
+        close();
+      }
+    });
+    // Enter bez izabranog rezultata: zatvori listu i filtriraj kartice ispod (radi i forma iznad)
+    $('#search').addEventListener('submit', close);
+    document.addEventListener('click', e => { if (!wrap.contains(e.target)) close(); });
   }
 
   /* ---------- Kontakt dugme (poziv, Viber, WhatsApp) ---------- */

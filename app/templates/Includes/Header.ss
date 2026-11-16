@@ -34,9 +34,6 @@
             </ul>
         </nav>
         <div class="head-actions">
-            <button class="icon-btn" type="button" data-open-search aria-label="Pretraži putovanja">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            </button>
             <a class="btn btn-orange hide-md" href="#kontakt">Rezerviši</a>
             <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Meni">
                 <span></span><span></span><span></span>
