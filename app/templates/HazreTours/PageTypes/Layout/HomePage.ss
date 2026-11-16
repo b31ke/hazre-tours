@@ -11,6 +11,7 @@
 <% end_if %>
 
 <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-sun" aria-hidden="true"></div>
     <div class="wrap hero-grid">
         <div class="hero-copy">
             <% if $HeroEyebrow %><p class="hero-kicker">$HeroEyebrow</p><% end_if %>
@@ -27,33 +28,49 @@
             </ul>
         </div>
 
-        <div class="hero-side">
+        <div class="hero-art">
             <% if $HeroImage.exists %>
                 <img class="hero-photo" src="$HeroImage.FillMax(900,700).Convert('webp').URL" alt="" width="900" height="700">
-            <% else_if $UpcomingTrips.Count %>
-                <% with $UpcomingTrips.First %>
-                <a class="next-trip" href="$Link">
-                    <span class="nt-label">Najbliži polazak</span>
-                    <span class="nt-photo<% if $PosterIsFlyer %> flyer<% end_if %>"><img src="$CardImageURL" alt=""></span>
-                    <span class="nt-body">
-                        <span class="nt-date">$TabLabel</span>
-                        <b class="nt-title">$Title</b>
-                        <span class="nt-price"><% if $HasPriceFrom %>od <% end_if %>$MinPrice KM <small>po osobi</small></span>
-                    </span>
+            <% else %>
+                <% loop $HeroTrips %>
+                <a class="postcard pc-$Pos<% if $PosterIsFlyer %> flyer<% end_if %>" href="$Link" aria-label="$Title">
+                    <img src="$CardImageURL" alt="" <% if $Pos > 1 %>loading="lazy"<% end_if %>>
+                    <span class="pc-name"><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></span>
                 </a>
-                <% end_with %>
-            <% end_if %>
-            <% if $NextDepartures.Count > 1 %>
-            <div class="next-list">
-                <p class="nl-h">Sljedeći polasci</p>
-                <% loop $NextDepartures.Limit(3, 1) %>
-                <a href="$Trip.Link"><span class="nl-d">$StartDate.Format('dd.MM.')</span><span class="nl-t">$Trip.Title</span><span class="nl-p">$EffectivePrice KM</span></a>
                 <% end_loop %>
-                <a class="nl-all" href="kalendar">Svi polasci →</a>
-            </div>
             <% end_if %>
+            <% with $UpcomingTrips.First %>
+            <a class="ticket" href="$Link">
+                <span class="tk-main">
+                    <span class="tk-label">Najbliži polazak</span>
+                    <b class="tk-title">$Title</b>
+                    <span class="tk-meta">$TabLabel · $TransportLabel</span>
+                </span>
+                <span class="tk-stub">
+                    <span class="tk-from"><% if $HasPriceFrom %>od<% else %>cijena<% end_if %></span>
+                    <b class="tk-price">$MinPrice <small>KM</small></b>
+                    <span class="tk-go">Rezerviši →</span>
+                </span>
+            </a>
+            <% end_with %>
         </div>
     </div>
+
+    <% if $NextDepartures.Count > 1 %>
+    <div class="wrap next-strip">
+        <span class="ns-h">Sljedeći polasci</span>
+        <% loop $NextDepartures.Limit(4, 1) %>
+        <a href="$Trip.Link"><b>$StartDate.Format('dd.MM.')</b> $Trip.Title <span>$EffectivePrice KM</span></a>
+        <% end_loop %>
+        <a class="ns-all" href="kalendar">Svi polasci →</a>
+    </div>
+    <% end_if %>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60 C 240 20, 480 20, 720 50 S 1200 90, 1440 40 L1440 90 L0 90 Z" fill="#fff"/>
+        <path d="M0 58 C 240 18, 480 18, 720 48 S 1200 88, 1440 38" fill="none" stroke="#17AEDF" stroke-width="3" opacity=".55"/>
+        <path d="M0 70 C 260 36, 500 40, 740 62 S 1180 92, 1440 56" fill="none" stroke="#F7A11A" stroke-width="3" opacity=".7"/>
+    </svg>
 </section>
 
 <section class="block" id="aranzmani" aria-labelledby="ar-h">

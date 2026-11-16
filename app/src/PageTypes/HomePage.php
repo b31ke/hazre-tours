@@ -70,6 +70,28 @@ class HomePage extends Page
         return Trip::liveList();
     }
 
+    /**
+     * Kolaž u vrhu: tri različite destinacije sa slikom (najbliži polazak prvi),
+     * da se ne ponove npr. dva Istanbula.
+     */
+    public function HeroTrips(): ArrayList
+    {
+        $out = [];
+        $seen = [];
+        foreach (Trip::liveList() as $trip) {
+            $dest = $trip->DestinationName ?: $trip->Title;
+            if (!$trip->PosterID || isset($seen[$dest])) {
+                continue;
+            }
+            $seen[$dest] = true;
+            $out[] = $trip;
+            if (count($out) === 3) {
+                break;
+            }
+        }
+        return ArrayList::create($out);
+    }
+
     /** Slider u vrhu: istaknuti pa najbliži polasci, najviše 5. */
     public function HeroSlides(): ArrayList
     {
