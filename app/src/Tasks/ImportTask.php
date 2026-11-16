@@ -147,6 +147,49 @@ class ImportTask extends BuildTask
             'exc' => "PZO\nFakultativni obilazak s vodičem\nDoplata za jednokrevetnu sobu\nIndividualni troškovi"],
     ];
 
+    /** Destinacija na mapi ruta (naziv, širina, dužina) po adresi aranžmana. */
+    private const DESTINATIONS = [
+        'graz-maribor-zagreb-novembar' => ['Graz', 47.07070, 15.43950],
+        'novi-pazar-zlatibor' => ['Novi Pazar', 43.13670, 20.51220],
+        'advent-budimpesta' => ['Budimpešta', 47.49790, 19.04020],
+        'advent-shopping-ljubljana' => ['Ljubljana', 46.05690, 14.50580],
+        'advent-shopping-graz' => ['Graz', 47.07070, 15.43950],
+        'graz-maribor-zagreb-decembar' => ['Maribor', 46.55470, 15.64590],
+        'edirne-istanbul' => ['Istanbul', 41.00820, 28.97840],
+        'budimpesta-decembar' => ['Budimpešta', 47.49790, 19.04020],
+        'graz-klagenfurt' => ['Klagenfurt', 46.62470, 14.30530],
+        'nova-godina-istanbul' => ['Istanbul', 41.00820, 28.97840],
+        'zima-2027-zlatibor' => ['Zlatibor', 43.72900, 19.70060],
+        'istanbul-princeva-ostrva-edirne' => ['Istanbul', 41.00820, 28.97840],
+        'bec-bratislava' => ['Beč', 48.20820, 16.37380],
+    ];
+
+    /** Kategorije: naziv => [redoslijed, uvod, aranžmani] */
+    private const CATEGORIES = [
+        'Advent' => [1, 'Božićni sajmovi u Grazu, Budimpešti, Ljubljani, Mariboru i Zagrebu. Jednodnevni i vikend polasci.',
+            ['advent-budimpesta', 'advent-shopping-ljubljana', 'advent-shopping-graz', 'graz-maribor-zagreb-novembar', 'graz-maribor-zagreb-decembar', 'budimpesta-decembar', 'graz-klagenfurt']],
+        'Shopping' => [2, 'Seiersberg, CityPark, Eurovea i outleti: jednodnevni šoping izleti s polaskom u noći.',
+            ['advent-shopping-graz', 'advent-shopping-ljubljana', 'graz-maribor-zagreb-novembar', 'graz-maribor-zagreb-decembar', 'graz-klagenfurt', 'bec-bratislava']],
+        'Istanbul' => [3, 'Istanbul, Edirne i Prinčeva ostrva autobusom, s hotelom blizu Kapali čaršije.',
+            ['edirne-istanbul', 'nova-godina-istanbul', 'istanbul-princeva-ostrva-edirne']],
+        'Nova godina' => [4, 'Dočekajte Novu godinu na putovanju.', ['nova-godina-istanbul']],
+        'Zimovanje' => [5, 'Vikendi na snijegu s hotelom i wellnessom.', ['zima-2027-zlatibor']],
+        'Vikend putovanja' => [6, 'Dva ili tri dana, polazak u petak ili subotu, povratak u nedjelju.',
+            ['graz-maribor-zagreb-novembar', 'graz-maribor-zagreb-decembar', 'graz-klagenfurt', 'novi-pazar-zlatibor', 'bec-bratislava', 'zima-2027-zlatibor']],
+        'Ljetovanja' => [7, 'Turska, Jadran, Albanija, Grčka i Tunis. Ponuda za ljeto 2027 uskoro.', []],
+    ];
+
+    /** Opšta česta pitanja, iz opštih uslova putovanja i napomena u programima agencije. */
+    private const FAQ = [
+        ['Kako se prijavljujem za putovanje?', "Telefonom, e-mailom, formom na sajtu ili lično u agenciji u Srebreniku. Prijava je važeća kad je potvrdi agencija i kad zaključimo ugovor (potvrdu) o putovanju, a može biti i elektronski."],
+        ['Da li je putničko zdravstveno osiguranje obavezno?', "Da. Svaki putnik mora imati uplaćeno putničko zdravstveno osiguranje, vlastito ili putem agencije. Cijena je navedena u programu svakog putovanja, a osobe starije od 60 godina plaćaju duplu policu."],
+        ['Kako se raspoređuju sjedišta u autobusu?', "Redoslijed prijava određuje raspored sjedišta, s tim da agencija pravi raspored po strukturi i broju putnika. Željeno sjedište možete uzeti uz doplatu."],
+        ['Odakle su polasci i u koliko sati?', "Polasci su iz Tuzle, Srebrenika, Gračanice, Gradačca, Brčkog i Orašja, a za Istanbul i iz Bijeljine. Tačno vrijeme i mjesto polaska za svaki grad su u programu putovanja."],
+        ['Šta ako se ne prijavi dovoljno putnika?', "Cijene su računate na 40 do 45 prijavljenih putnika. S manjim brojem agencija zadržava pravo otkaza putovanja ili korekcije cijene, o čemu vas obavještavamo na vrijeme. Fakultativni izleti se realizuju uz najmanje 25 prijavljenih."],
+        ['Koje dokumente trebam?', "Svaki putnik je dužan sam provjeriti važnost svojih putnih isprava i pravila za ulazak u zemlje Evropske unije prije polaska. Ako niste sigurni, pitajte nas prije prijave."],
+        ['Ko odgovara za prtljag i lične stvari?', "Putnici sami vode računa o putnim ispravama, novcu i ličnim stvarima tokom putovanja. Prtljag možete osigurati kod osiguravajuće kuće po njihovim uslovima."],
+    ];
+
     protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->siteConfig($output);
@@ -154,8 +197,53 @@ class ImportTask extends BuildTask
         foreach (self::TRIPS as $data) {
             $this->trip($data, $output);
         }
+        $this->destinations($output);
+        $this->categories($output);
+        $this->faqs($output);
         $output->writeln('Gotovo.');
         return 0;
+    }
+
+    /** Koordinate za mapu ruta (samo gdje još nisu upisane). */
+    private function destinations(PolyOutput $output): void
+    {
+        foreach (self::DESTINATIONS as $slug => [$name, $lat, $lng]) {
+            $trip = Trip::get()->filter('URLSegment', $slug)->first();
+            if ($trip && !$trip->DestinationLat) {
+                $trip->DestinationName = $name;
+                $trip->DestinationLat = $lat;
+                $trip->DestinationLng = $lng;
+                $trip->write();
+            }
+        }
+    }
+
+    private function categories(PolyOutput $output): void
+    {
+        foreach (self::CATEGORIES as $title => [$sort, $intro, $slugs]) {
+            if (\HazreTours\Model\TripCategory::get()->filter('Title', $title)->exists()) {
+                continue;
+            }
+            $cat = \HazreTours\Model\TripCategory::create(['Title' => $title, 'Sort' => $sort, 'Intro' => $intro, 'ShowOnHome' => true]);
+            $cat->write();
+            foreach ($slugs as $slug) {
+                if ($trip = Trip::get()->filter('URLSegment', $slug)->first()) {
+                    $trip->Categories()->add($cat);
+                }
+            }
+            $output->writeln("Kategorija: $title");
+        }
+    }
+
+    private function faqs(PolyOutput $output): void
+    {
+        if (\HazreTours\Model\FaqItem::get()->exists()) {
+            return;
+        }
+        foreach (self::FAQ as $i => [$q, $a]) {
+            \HazreTours\Model\FaqItem::create(['Question' => $q, 'Answer' => $a, 'Sort' => $i + 1])->write();
+        }
+        $output->writeln('Česta pitanja: ' . count(self::FAQ));
     }
 
     private function siteConfig(PolyOutput $output): void
@@ -191,9 +279,9 @@ class ImportTask extends BuildTask
                 'MenuTitle' => 'Početna',
                 'URLSegment' => 'home',
                 'Sort' => 1,
-                'HeroEyebrow' => 'Putnička agencija i prevoznik iz Srebrenika',
-                'HeroTitle' => 'Putujte *sigurno*, našim autobusima',
-                'HeroLead' => 'Advent u Grazu i Budimpešti, Istanbul, Beč i zimovanje na Zlatiboru. Polasci iz Tuzle, Srebrenika, Gračanice, Gradačca, Brčkog, Orašja i Bijeljine.',
+                'HeroEyebrow' => 'Putnička agencija i prevoznik · Srebrenik',
+                'HeroTitle' => 'Gdje god krenete, *mi vozimo*',
+                'HeroLead' => 'Advent u Grazu i Budimpešti, Istanbul, Beč i zimovanje na Zlatiboru. Polasci iz Tuzle, Srebrenika, Gračanice, Gradačca, Brčkog, Orašja i Bijeljine, našim autobusima.',
                 'TripsTitle' => 'Aktuelni aranžmani',
             ]);
             $home->write();
@@ -201,12 +289,15 @@ class ImportTask extends BuildTask
             $output->writeln('Stranica: Početna');
         }
 
+        // [adresa, naslov, redoslijed, u meniju, stari sajt, tekst, forma, podnaslov]
         $pages = [
-            ['o-nama', 'O nama', 2, true, '/o-nama/', $this->aboutContent()],
-            ['uslovi-putovanja', 'Uslovi putovanja', 3, true, '/uslovi-putovanja/', null],
-            ['politika-privatnosti', 'Politika privatnosti', 4, false, '/politika-privatnositi/', null],
+            ['putovanje-po-mjeri', 'Putovanje po mjeri', 2, true, null, $this->customContent(), 'pomjeri', 'Recite nam kuda, kada i s kim, a mi složimo program, prevoz i smještaj.'],
+            ['najam-autobusa', 'Najam autobusa', 3, true, null, $this->busContent(), 'autobus', 'Ekskurzije, sportski klubovi, firme, svadbe i transferi, našim autobusima i našim vozačima.'],
+            ['o-nama', 'O nama', 4, true, '/o-nama/', $this->aboutContent(), '', 'Prevoznik od 2008., putnička agencija od 2016.'],
+            ['uslovi-putovanja', 'Uslovi putovanja', 5, false, '/uslovi-putovanja/', null, '', ''],
+            ['politika-privatnosti', 'Politika privatnosti', 6, false, '/politika-privatnositi/', null, '', ''],
         ];
-        foreach ($pages as [$slug, $title, $sort, $inMenu, $old, $content]) {
+        foreach ($pages as [$slug, $title, $sort, $inMenu, $old, $content, $form, $intro]) {
             if (Page::get()->filter('URLSegment', $slug)->exists()) {
                 continue;
             }
@@ -216,12 +307,65 @@ class ImportTask extends BuildTask
                 'URLSegment' => $slug,
                 'Sort' => $sort,
                 'ShowInMenus' => $inMenu,
+                'PageForm' => $form,
+                'Intro' => $intro,
                 'Content' => $content ?: '<p>Tekst stranice upišite u adminu (Pages).</p>',
             ]);
             $page->write();
             $page->publishRecursive();
             $output->writeln("Stranica: $title" . ($content ? '' : ' (bez teksta, stari sajt nije odgovorio)'));
         }
+        // Stranice za greške na bosanskom, u izgledu sajta (statične kopije u assets/error-*.html)
+        $errors = [
+            404 => ['Stranica nije pronađena', '<p>Link je možda zastario ili je putovanje završeno. Pogledajte <a href="/putovanja">aktuelna putovanja</a> ili <a href="/kalendar">kalendar polazaka</a>.</p>'],
+            500 => ['Nešto nije u redu', '<p>Desila se greška na našoj strani. Pokušajte ponovo za minut ili nas pozovite na 035 644 155.</p>'],
+        ];
+        foreach ($errors as $code => [$title, $content]) {
+            if (\SilverStripe\ErrorPage\ErrorPage::get()->filter('ErrorCode', $code)->exists()) {
+                continue;
+            }
+            $page = \SilverStripe\ErrorPage\ErrorPage::create(['Title' => $title, 'ErrorCode' => $code, 'Content' => $content, 'ShowInMenus' => false, 'ShowInSearch' => false, 'Sort' => 90 + intdiv($code, 100)]);
+            $page->write();
+            $page->publishSingle();
+            $output->writeln("Stranica za grešku $code");
+        }
+
+        // Galerija: skrivena iz menija dok agencija ne doda fotografije (Pages → Galerija)
+        if (!\HazreTours\PageTypes\GalleryPage::get()->exists()) {
+            $g = \HazreTours\PageTypes\GalleryPage::create([
+                'Title' => 'Galerija',
+                'URLSegment' => 'galerija',
+                'Sort' => 7,
+                'ShowInMenus' => false,
+                'Intro' => 'Naša putovanja i naš vozni park.',
+                'Content' => '',
+            ]);
+            $g->write();
+            $g->publishRecursive();
+            $output->writeln('Stranica: Galerija (dodajte fotografije u Pages → Galerija)');
+        }
+    }
+
+    private function customContent(): string
+    {
+        return <<<HTML
+<p>Svidio vam se neki od naših aranžmana, ali biste promijenili termin, trajanje ili hotel? Putujete s porodicom, firmom ili udruženjem? Popunite formu ispod i pripremićemo ponudu po vašoj mjeri: prevoz našim autobusom, smještaj, program i vodič.</p>
+HTML;
+    }
+
+    private function busContent(): string
+    {
+        return <<<HTML
+<p>Hazre Tours je osnovan 2008. godine kao prevoznička firma. Vlastiti vozni park i iskusni vozači su temelj svega što radimo, pa autobus iznajmljujemo i za vaša putovanja.</p>
+<h2>Za koga vozimo</h2>
+<ul>
+<li><strong>Škole:</strong> ekskurzije i izleti, po programu škole ili našem.</li>
+<li><strong>Sportski klubovi:</strong> utakmice, turniri i pripreme u BiH i Evropi.</li>
+<li><strong>Firme i udruženja:</strong> službena putovanja, team building, sajmovi.</li>
+<li><strong>Privatne grupe:</strong> svadbe, proslave, transferi do aerodroma.</li>
+</ul>
+<p>Pošaljite nam relaciju, datum i broj putnika, a mi vam šaljemo ponudu.</p>
+HTML;
     }
 
     private function trip(array $d, PolyOutput $output): void

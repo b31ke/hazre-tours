@@ -11,7 +11,10 @@ Before:
 SilverStripe\Control\Director:
   rules:
     'aranzman//$Slug': 'HazreTours\Control\TripController'
+    'putovanja//$Slug': 'HazreTours\Control\CategoryController'
+    'kalendar': 'HazreTours\Control\CalendarController'
     'upit': '%$HazreRateLimitedInquiry'
+    'newsletter': '%$HazreRateLimitedNewsletter'
     'sitemap.xml': 'HazreTours\Control\SeoController'
     'robots.txt': 'HazreTours\Control\SeoController'
 
@@ -27,5 +30,11 @@ SilverStripe\Core\Injector\Injector:
     class: SilverStripe\Control\Middleware\RequestHandlerMiddlewareAdapter
     properties:
       RequestHandler: '%$HazreTours\Control\InquiryController'
+      Middlewares:
+        - '%$HazreInquiryRateLimit'
+  HazreRateLimitedNewsletter:
+    class: SilverStripe\Control\Middleware\RequestHandlerMiddlewareAdapter
+    properties:
+      RequestHandler: '%$HazreTours\Control\NewsletterController'
       Middlewares:
         - '%$HazreInquiryRateLimit'

@@ -32,7 +32,7 @@ class TripController extends PageController
             'Title' => $trip->Title,
             'MetaTitle' => $trip->Title . ' | Hazre Tours',
             'MetaDescriptionText' => $trip->Summary ?: $trip->Highlight,
-            'OgImage' => $trip->Poster()->exists() ? $trip->Poster()->ScaleMaxWidth(1200)?->getAbsoluteURL() : '',
+            'OgImage' => $trip->Poster()->exists() ? $trip->Poster()->FillMax(1200, 630)?->getAbsoluteURL() : '',
         ])->renderWith(['TripPage', 'Page']);
     }
 
@@ -42,12 +42,22 @@ class TripController extends PageController
     }
 
     /** Ostali aranžmani na dnu stranice (najbliži polasci, bez ovog). */
+    /** Ostali aranžmani: prvo iz iste kategorije, pa najbliži polasci. */
     public function OtherTrips()
     {
-        $list = $this->FormTrips();
-        if ($this->trip) {
-            $list = $list->exclude('ID', $this->trip->ID);
-        }
-        return $list->limit(3);
+        $all = $this->FormTrips()->exclude('ID', $this->trip?->ID ?? 0)->toArray();
+        $cats = $this->trip ? $this->trip->Categories()->column('ID') : [];
+        usort($all, fn ($a, $b) => (int) (bool) array_intersect($b->Categories()->column('ID'), $cats) <=> (int) (bool) array_intersect($a->Categories()->column('ID'), $cats));
+        return \SilverStripe\Model\List\ArrayList::create(array_slice($all, 0, 3));
+    }
+
+    public function ShareText(): string
+    {
+        return rawurlencode(($this->trip?->Title ?? '') . ' – ' . ($this->trip?->getPriceLabel() ?? '') . ' ' . ($this->trip?->AbsoluteLink() ?? ''));
+    }
+
+    public function ShareURL(): string
+    {
+        return rawurlencode($this->trip?->AbsoluteLink() ?? '');
     }
 }

@@ -38,6 +38,7 @@ class TripTerm extends DataObject
         'Price' => 'Int',
         'Status' => "Enum('slobodno,zadnja,popunjeno','slobodno')",
         'Note' => 'Varchar(150)',
+        'SeatsLeft' => 'Int',
     ];
 
     private static array $has_one = [
@@ -61,6 +62,7 @@ class TripTerm extends DataObject
             DateField::create('EndDate', 'Datum povratka')->setDescription('Prazno za jednodnevni izlet.'),
             NumericField::create('Price', 'Cijena za ovaj termin (KM)')->setDescription('Prazno ili 0 = cijena iz aranžmana.'),
             DropdownField::create('Status', 'Popunjenost', self::STATUSES),
+            NumericField::create('SeatsLeft', 'Slobodnih mjesta')->setDescription('Nije obavezno. Kad je upisano 10 ili manje, na sajtu piše "Još N mjesta".'),
             TextField::create('Note', 'Napomena')->setDescription('Nije obavezno, npr. "Nova godina na brodu".'),
         );
     }
@@ -120,7 +122,30 @@ class TripTerm extends DataObject
 
     public function getStatusLabel(): string
     {
+        if (!$this->IsFull() && $this->SeatsLeft > 0 && $this->SeatsLeft <= 10) {
+            return 'Još ' . $this->SeatsLeft . ($this->SeatsLeft === 1 ? ' mjesto' : ($this->SeatsLeft < 5 ? ' mjesta' : ' mjesta'));
+        }
         return self::STATUSES[$this->Status] ?? '';
+    }
+
+    /** CSS oznaka popunjenosti: slobodno, zadnja, popunjeno */
+    public function StatusKey(): string
+    {
+        if (!$this->IsFull() && $this->SeatsLeft > 0 && $this->SeatsLeft <= 10) {
+            return 'zadnja';
+        }
+        return (string) $this->Status;
+    }
+
+    /** Dan u sedmici polaska ("SUB"). */
+    public function WeekdayShort(): string
+    {
+        return ['NED', 'PON', 'UTO', 'SRI', 'ČET', 'PET', 'SUB'][(int) date('w', strtotime((string) $this->StartDate))];
+    }
+
+    public function DaysUntil(): int
+    {
+        return (int) (new \DateTime('today'))->diff(new \DateTime($this->StartDate))->format('%r%a');
     }
 
     public function IsFull(): bool

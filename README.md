@@ -21,10 +21,20 @@ ddev exec vendor/bin/sake tasks:hazre-import
 
 ## Šta se gdje uređuje (admin)
 
-- **Aranžmani i upiti** → Aranžmani: naziv, cijena, plakat, program (Word/PDF), šta obuhvata, termini (datum, cijena, popunjenost). Prošli termini sami nestaju sa sajta.
-- **Aranžmani i upiti** → Upiti: rezervacije iz forme sa sajta (status, bilješka agencije). Svaki upit stiže i mailom.
-- **Pages**: Početna (naslov, tekst, slika u vrhu), O nama, Uslovi putovanja, Politika privatnosti.
-- **Settings → Kontakt**: adresa, telefoni, e-mail, e-mail za upite, Facebook/Instagram.
+- **Aranžmani i upiti** → Aranžmani: naziv, kategorije, cijena i akcija (stara cijena, odbrojavanje), plakat i galerija, program (Word/PDF i po danima), termini (datum, cijena, slobodna mjesta, popunjenost), pitanja za taj aranžman, tačka na mapi ruta. Prošli termini sami nestaju sa sajta.
+- **Aranžmani i upiti** → Upiti: rezervacije, putovanja po mjeri, izmjene aranžmana i najam autobusa (status, bilješka agencije, izvoz u Excel). Svaki upit stiže i mailom.
+- **Aranžmani i upiti** → Kategorije (Advent, Shopping…), Česta pitanja, Utisci putnika, Newsletter (izvoz adresa).
+- **Pages**: Početna (naslov, tekst, slika u vrhu), Putovanje po mjeri, Najam autobusa, O nama, Galerija, Uslovi putovanja, Politika privatnosti. Svaka stranica može imati formu ispod teksta.
+- **Settings → Kontakt**: adresa, telefoni, Viber/WhatsApp, e-mail za upite, licenca, mreže, Google recenzije.
+- **Settings → Akcija**: traka na vrhu sajta s odbrojavanjem (Black Friday, First minute).
+- **Settings → Analitika**: Google Analytics 4 i Meta Pixel (pokreću se tek kad posjetilac prihvati kolačiće).
+
+## Na sajtu
+
+- Mapa ruta u vrhu početne: stvarne koordinate destinacija i udaljenost od Srebrenika.
+- Ploča polazaka (kao na stanici) i kalendar polazaka (`/kalendar`).
+- Pretraga preko cijelog ekrana (Ctrl+K), filter po vrsti, mjesecu i mjestu polaska.
+- Stranica aranžmana: termini sa slobodnim mjestima, program po danima, česta pitanja, dijeljenje na Viber/WhatsApp/Facebook, schema.org podaci za Google.
 
 ## Struktura
 
