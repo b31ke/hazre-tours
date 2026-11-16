@@ -229,32 +229,44 @@ button { font: inherit; color: inherit; }
 .filter-panel select { font: 400 15px var(--body); padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); }
 @media (max-width: 700px) { .filter-panel { grid-template-columns: 1fr; } }
 
-/* Kartice aranžmana (kao triptop.rs) */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
-.card { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; transition: box-shadow .2s, transform .2s; }
-.card:hover { box-shadow: var(--shadow-h); transform: translateY(-3px); }
-.card-date { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 3; background: #fff; color: var(--royal); font: 600 13px var(--head); padding: 6px 18px; border-radius: 0 0 12px 12px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, .1); }
-.card-photo { position: relative; display: block; aspect-ratio: 3 / 2; max-width: 100%; overflow: hidden; background: var(--bg-alt); }
-.card-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.card-photo.flyer img { object-position: 50% 36%; transform: scale(2); }
-.card:hover .card-photo img { transform: scale(1.04); }
-.card:hover .card-photo.flyer img { transform: scale(2.06); }
-.card-badge { position: absolute; left: 12px; bottom: 12px; z-index: 2; background: var(--blue); color: #fff; font: 600 12px var(--head); padding: 4px 12px; border-radius: 999px; }
+/* Kartice aranžmana: cijeli plakat (uspravno), pečat s cijenom, odsjaj i traka pri prelazu mišem */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(262px, 1fr)); gap: 28px; }
+.card { position: relative; display: flex; flex-direction: column; background: #fff; border-radius: 18px; box-shadow: 0 10px 30px -14px rgba(27, 63, 168, .3); overflow: hidden; transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(27, 63, 168, .45); }
+.card-photo { position: relative; display: block; aspect-ratio: 1448 / 2048; max-width: 100%; overflow: hidden; background: var(--bg-alt); isolation: isolate; }
+.card-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+.card:hover .card-photo img { transform: scale(1.05); }
+/* odsjaj koji preleti preko plakata */
+.card-photo::after { content: ""; position: absolute; inset: -20% -60%; z-index: 2; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .55) 50%, transparent 60%); transform: translateX(-70%); pointer-events: none; }
+.card:hover .card-photo::after { transition: transform .9s ease; transform: translateX(70%); }
+/* traka koja izađe odozdo */
+.card-peek { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; justify-content: center; gap: 8px; padding: 14px; background: linear-gradient(0deg, rgba(19, 46, 126, .92), rgba(19, 46, 126, .75)); color: #fff; font: 600 14px var(--head); letter-spacing: .02em; transform: translateY(101%); transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.card:hover .card-peek, .card-photo:focus-visible .card-peek { transform: none; }
+/* pečat s cijenom */
+.card-seal { position: absolute; top: 12px; right: 12px; z-index: 3; width: 74px; height: 74px; border-radius: 50%; display: grid; place-content: center; text-align: center; line-height: 1; background: var(--orange); color: #fff; border: 3px solid #fff; box-shadow: 0 8px 20px -6px rgba(217, 131, 0, .7); rotate: -8deg; transition: rotate .4s ease, scale .4s ease; }
+.card-seal b { font: 700 24px/1 var(--head); }
+.card-seal small { font: 600 10px var(--head); text-transform: uppercase; letter-spacing: .06em; }
+.card:hover .card-seal { rotate: 0deg; scale: 1.08; }
+.card-badge { position: absolute; left: 12px; top: 14px; z-index: 3; background: var(--blue); color: #fff; font: 600 12px var(--head); padding: 5px 12px; border-radius: 999px; box-shadow: 0 4px 12px rgba(0, 0, 0, .2); }
 .card-badge.promo { background: var(--red); font-size: 14px; }
-.seats { position: absolute; right: 12px; bottom: 12px; z-index: 2; background: #FFF4D6; color: #7A4B00; font: 600 12px var(--head); padding: 4px 10px; border-radius: 8px; }
-.stamp { position: absolute; top: 50%; left: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-12deg); font: 700 20px var(--head); text-transform: uppercase; color: #fff; padding: 6px 16px; border: 3px solid #fff; border-radius: 8px; background: rgba(0, 0, 0, .35); white-space: nowrap; }
+.seats { position: absolute; left: 12px; bottom: 14px; z-index: 2; background: #FFF4D6; color: #7A4B00; font: 600 12px var(--head); padding: 5px 10px; border-radius: 8px; }
+.stamp { position: absolute; top: 50%; left: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-12deg); font: 700 20px var(--head); text-transform: uppercase; color: #fff; padding: 6px 16px; border: 3px solid #fff; border-radius: 8px; background: rgba(0, 0, 0, .45); white-space: nowrap; }
 .card.is-full .card-photo img { filter: grayscale(.7); }
-.card-body { padding: 20px 20px 24px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; flex: 1; }
-.card h3 { font-size: 21px; font-weight: 600; }
+.card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card-date { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font: 600 13px var(--head); color: var(--royal); background: #EEF2FB; padding: 4px 10px; border-radius: 999px; }
+.card h3 { font-size: 19px; font-weight: 600; line-height: 1.25; }
 .card h3 a { text-decoration: none; }
 .card h3 a:hover { color: var(--orange-d); }
-.card-price { display: flex; align-items: baseline; gap: 10px; }
-.card-price s { color: var(--red); font-size: 16px; }
-.card-price strong { font: 700 28px/1 var(--head); color: var(--orange); font-variant-numeric: tabular-nums; }
-.card-price strong small { font-size: 15px; font-weight: 600; }
+.card-hl { font-size: 13.5px; color: var(--text-2); }
+.card-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.card-price { display: grid; line-height: 1.1; }
+.card-price s { color: var(--red); font-size: 14px; }
+.card-price strong { font: 700 24px/1.1 var(--head); color: var(--orange-d); font-variant-numeric: tabular-nums; }
+.card-price strong small { font-size: 13px; font-weight: 600; }
+.card-price span { font-size: 12px; color: var(--muted); }
+.card-foot .btn { padding: 10px 14px; font-size: 12.5px; }
 .card-promo { font-size: 13px; color: var(--muted); font-style: italic; }
-.card-hl { font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; color: var(--text-2); }
-.card .btn { margin-top: auto; }
+@media (prefers-reduced-motion: reduce) { .card-photo::after { display: none; } }
 
 /* Kategorije */
 .cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
@@ -589,3 +601,10 @@ details[open] > summary i::after { rotate: 0deg; }
 .ct[aria-pressed="true"] { background: var(--royal); color: #fff; }
 .filter-link { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; color: var(--blue-d); font: 600 14px var(--body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .ct { padding: 8px 10px; font-size: 13px; } .search-bar.wide .btn { padding: 0 22px; } }
+
+/* Oznake ispod slike na kartici (ne prekrivaju plakat) */
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { display: inline-flex; align-items: center; font: 600 12px var(--head); padding: 4px 10px; border-radius: 999px; }
+.tag-blue { background: #E3F6FC; color: #0B6E8F; }
+.tag-red { background: #FDECEC; color: #B32D2D; }
+.tag-warn { background: #FFF4D6; color: #7A4B00; }
