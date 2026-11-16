@@ -82,6 +82,7 @@
                 <form class="search-bar wide" id="search" role="search" action="putovanja">
                     <label class="sr" for="s-q">Pronađi svoje putovanje</label>
                     <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sb-res" aria-autocomplete="list">
+                    <button class="sb-filter" type="button" id="filter-btn" aria-expanded="false" aria-controls="filter-panel" aria-label="Još filtera: mjesec i mjesto polaska" title="Mjesec i mjesto polaska"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filter</span></button>
                     <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
                 </form>
                 <div class="sb-drop" id="sb-drop" hidden>
@@ -94,9 +95,6 @@
                 <button type="button" class="ct" data-type="jednodnevni" aria-pressed="false">Jednodnevni izleti</button>
                 <% loop $MenuCategories %><button type="button" class="ct" data-cat="$URLSegment" aria-pressed="false">$Title</button><% end_loop %>
             </div>
-            <button class="filter-link" type="button" id="filter-btn" aria-expanded="false" aria-controls="filter-panel">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>Još filtera: mjesec i mjesto polaska
-            </button>
         </div>
         <div class="filter-panel" id="filter-panel" hidden>
             <label><span>Vrsta putovanja</span>

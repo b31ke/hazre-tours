@@ -690,3 +690,9 @@ details[open] > summary i::after { rotate: 0deg; }
 /* tema bez fotografije: gradijent u bojama logotipa umjesto plakata */
 .tile.no-img { background: linear-gradient(135deg, var(--royal) 0%, #1A6FC4 55%, var(--blue) 100%); }
 .tile.no-img::before { content: ""; position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 196, 64, .7), rgba(247, 161, 26, 0) 70%); z-index: -1; }
+
+/* Dugme za dodatne filtere u polju pretrage (umjesto linka ispod tabova) */
+.sb-filter { display: inline-flex; align-items: center; gap: 7px; padding: 0 18px; border: 0; border-left: 1px solid var(--line); background: #fff; color: var(--royal); font: 600 14px var(--head); cursor: pointer; transition: color .2s, background .2s; }
+.sb-filter:hover { background: #F1F6FD; }
+.sb-filter[aria-expanded="true"] { color: var(--orange-d); background: #FFF6EA; }
+@media (max-width: 560px) { .sb-filter span { display: none; } .sb-filter { padding: 0 14px; } }
