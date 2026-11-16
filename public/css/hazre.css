@@ -89,18 +89,19 @@ button { font: inherit; color: inherit; }
 /* Zaglavlje */
 .site-head { position: sticky; top: 0; z-index: 40; background: #fff; border-bottom: 1px solid var(--line); transition: box-shadow .2s; }
 .site-head.scrolled { box-shadow: 0 4px 18px rgba(31, 42, 51, .08); }
-.head-row { display: flex; align-items: center; gap: 20px; height: var(--head-h); }
+.head-row { display: flex; align-items: center; gap: 16px; height: var(--head-h); }
+.site-head .wrap { max-width: 1360px; }
 .logo { flex: none; display: block; line-height: 0; }
 .logo img { height: 58px; width: auto; max-width: none; object-fit: contain; }
 @media (max-width: 480px) { .logo img { height: 46px; } }
 .main-nav { margin-left: auto; }
 .main-nav > ul { list-style: none; display: flex; gap: 2px; margin: 0; padding: 0; align-items: center; }
-.nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 10px 13px; text-decoration: none; font: 700 16px "Nunito", "Segoe UI", system-ui, sans-serif; letter-spacing: 0; color: var(--royal); border-bottom: 2px solid transparent; white-space: nowrap; }
+.nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 10px 11px; text-decoration: none; font: 600 14px "Montserrat", "Segoe UI", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .04em; color: var(--royal); border-bottom: 2px solid transparent; white-space: nowrap; }
 .nav-link:hover, .nav-link.on { color: var(--orange-d); border-bottom-color: var(--orange); }
 .has-drop { position: relative; }
 .drop { position: absolute; top: 100%; left: 0; min-width: 260px; padding: 10px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-h); display: none; }
 .has-drop:hover .drop, .has-drop:focus-within .drop { display: grid; }
-.drop a { display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; border-radius: 8px; text-decoration: none; font: 600 15.5px "Nunito", "Segoe UI", system-ui, sans-serif; }
+.drop a { display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; border-radius: 8px; text-decoration: none; font: 600 14.5px "Montserrat", "Segoe UI", system-ui, sans-serif; }
 .drop a:hover { background: var(--bg-alt); color: var(--orange-d); }
 .count { font-size: 12px; font-weight: 700; color: var(--orange-d); }
 .head-actions { display: flex; align-items: center; gap: 10px; }
@@ -108,7 +109,7 @@ button { font: inherit; color: inherit; }
 .icon-btn:hover { border-color: var(--orange); color: var(--orange-d); }
 .menu-toggle { display: none; flex-direction: column; gap: 4px; }
 .menu-toggle span { width: 18px; height: 2px; background: currentColor; border-radius: 2px; }
-@media (max-width: 1240px) {
+@media (max-width: 1340px) {
   .menu-toggle { display: inline-flex; }
   .hide-md { display: none !important; }
   .head-actions { margin-left: auto; }
