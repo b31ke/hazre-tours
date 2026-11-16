@@ -29,6 +29,12 @@ namespace {
             Requirements::javascript('js/hazre.js', ['defer' => true]);
         }
 
+        /** Najbliži polazak za gornju traku (na svim stranicama). */
+        public function TopbarTrip(): ?Trip
+        {
+            return Trip::liveList()->first();
+        }
+
         /** Aranžmani u formi i pretrazi (aktivni s budućim terminom). */
         public function FormTrips(): ArrayList
         {

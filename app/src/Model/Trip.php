@@ -101,6 +101,7 @@ class Trip extends DataObject
 
     private static array $has_one = [
         'Poster' => Image::class,
+        'Photo' => Image::class,
         'ProgramFile' => File::class,
     ];
 
@@ -118,7 +119,7 @@ class Trip extends DataObject
         'Gallery' => ['SortOrder' => 'Int'],
     ];
 
-    private static array $owns = ['Poster', 'ProgramFile', 'Gallery'];
+    private static array $owns = ['Poster', 'Photo', 'ProgramFile', 'Gallery'];
 
     private static array $cascade_deletes = ['Terms'];
 
@@ -190,6 +191,8 @@ class Trip extends DataObject
 
         $media = [
             UploadField::create('Poster', 'Plakat ili glavna fotografija')->setFolderName('aranzmani')->setAllowedFileCategories('image/supported'),
+            UploadField::create('Photo', 'Fotografija destinacije')->setFolderName('destinacije')->setAllowedFileCategories('image/supported')
+                ->setDescription('Prava fotografija grada (vodoravna, bez teksta) za razglednice u vrhu početne. Prazno = plakat.'),
             CheckboxField::create('PosterIsFlyer', 'Slika je plakat s tekstom')
                 ->setDescription('Uključeno: na kartici se vidi samo srednji dio plakata (fotografija). Za običnu fotografiju isključite.'),
             UploadField::create('Gallery', 'Galerija fotografija')->setFolderName('galerija')->setAllowedFileCategories('image/supported')
@@ -508,18 +511,25 @@ class Trip extends DataObject
         return (string) (($out?->Convert('webp') ?: $out)?->getURL() ?? '');
     }
 
-    private function imageURL(int $width): string
+    /** Fotografija destinacije za razglednicu u kolažu na početnoj (webp, do 1200 px); prazno ako nije postavljena. */
+    public function PhotoURL(): string
     {
-        if (isset($this->imageCache[$width])) {
-            return $this->imageCache[$width];
+        return $this->imageURL(1200, 'Photo');
+    }
+
+    private function imageURL(int $width, string $rel = 'Poster'): string
+    {
+        $ck = $rel . $width;
+        if (isset($this->imageCache[$ck])) {
+            return $this->imageCache[$ck];
         }
-        if (!$this->PosterID) {
-            return $this->imageCache[$width] = '';
+        if (!$this->{$rel . 'ID'}) {
+            return $this->imageCache[$ck] = '';
         }
         $cache = \SilverStripe\Core\Injector\Injector::inst()->get(\Psr\SimpleCache\CacheInterface::class . '.hazreImages');
-        $img = $this->Poster();
+        $img = $this->{$rel}();
         if (!$img->exists()) {
-            return $this->imageCache[$width] = '';
+            return $this->imageCache[$ck] = '';
         }
         $key = 'p' . $img->ID . '_' . $width . '_' . strtotime((string) $img->LastEdited) . '_' . substr((string) $img->FileHash, 0, 10);
         $url = $cache->get($key);
@@ -531,7 +541,7 @@ class Trip extends DataObject
                 $cache->set($key, $url);
             }
         }
-        return $this->imageCache[$width] = $url;
+        return $this->imageCache[$ck] = $url;
     }
 
     /** Slika za pregled linka (Facebook, Viber) 1200x630, pamti se u kešu kao i ostale. */

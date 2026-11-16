@@ -33,8 +33,8 @@
                 <img class="hero-photo" src="$HeroImage.FillMax(900,700).Convert('webp').URL" alt="" width="900" height="700">
             <% else %>
                 <% loop $HeroTrips %>
-                <a class="postcard pc-$Pos<% if $PosterIsFlyer %> flyer<% end_if %>" href="$Link" aria-label="$Title">
-                    <img src="$CardImageURL" alt="" <% if $Pos > 1 %>loading="lazy"<% end_if %>>
+                <a class="postcard pc-$Pos<% if not $PhotoURL %><% if $PosterIsFlyer %> flyer<% end_if %><% end_if %>" href="$Link" aria-label="$Title">
+                    <img src="<% if $PhotoURL %>$PhotoURL<% else %>$CardImageURL<% end_if %>" alt="" fetchpriority="<% if $Pos == 1 %>high<% else %>auto<% end_if %>">
                     <span class="pc-name"><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></span>
                 </a>
                 <% end_loop %>

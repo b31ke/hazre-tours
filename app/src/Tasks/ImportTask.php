@@ -202,6 +202,7 @@ class ImportTask extends BuildTask
         $this->faqs($output);
         $this->cleanPrograms($output);
         $this->categoryImages($output);
+        $this->destinationImages($output);
         $output->writeln('Gotovo.');
         return 0;
     }
@@ -298,6 +299,50 @@ class ImportTask extends BuildTask
             $cat->ImageID = $existing->ID;
             $cat->write();
             $output->writeln("Slika teme: $title");
+        }
+    }
+
+    /**
+     * Prave fotografije gradova za razglednice u vrhu početne (Unsplash i Pexels, besplatna licenca i za komercijalnu upotrebu).
+     * Postavlja se samo aranžmanu koji još nema fotografiju destinacije.
+     */
+    private const DESTINATION_IMAGES = [
+        'Graz' => ['https://images.unsplash.com/photo-1700852014793-0ea22b02e794?w=1600&q=80&fm=jpg&fit=max', 'graz-sahat-kula'],
+        'Beč' => ['https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=1600&q=80&fm=jpg&fit=max', 'bec-katedrala-sv-stefana'],
+        'Budimpešta' => ['https://images.unsplash.com/photo-1616432902940-b7a1acbc60b3?w=1600&q=80&fm=jpg&fit=max', 'budimpesta-parlament'],
+        'Istanbul' => ['https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1600&q=80&fm=jpg&fit=max', 'istanbul-galata'],
+        'Klagenfurt' => ['https://images.unsplash.com/photo-1600526819670-b9ba90dd480a?w=1600&q=80&fm=jpg&fit=max', 'klagenfurt-worthersee'],
+        'Ljubljana' => ['https://images.unsplash.com/photo-1773658088032-87e28148ea1b?w=1600&q=80&fm=jpg&fit=max', 'ljubljana-dvorac'],
+        'Maribor' => ['https://images.unsplash.com/photo-1676715307977-ca7717473dbf?w=1600&q=80&fm=jpg&fit=max', 'maribor-drava'],
+        'Novi Pazar' => ['https://images.pexels.com/photos/12236665/pexels-photo-12236665.jpeg?auto=compress&cs=tinysrgb&w=1600', 'novi-pazar-arap-dzamija'],
+        'Zlatibor' => ['https://images.unsplash.com/photo-1674492905598-07e4bb16f96f?w=1600&q=80&fm=jpg&fit=max', 'zlatibor-jezero'],
+    ];
+
+    private function destinationImages(PolyOutput $output): void
+    {
+        foreach (self::DESTINATION_IMAGES as $dest => [$url, $fileName]) {
+            $trips = \HazreTours\Model\Trip::get()->filter(['DestinationName' => $dest, 'PhotoID' => 0]);
+            if (!$trips->exists()) {
+                continue;
+            }
+            $img = Image::get()->filter('Name', $fileName . '.jpg')->first();
+            if (!$img) {
+                $bytes = $this->fetch($url);
+                if ($bytes === null || @getimagesizefromstring($bytes) === false) {
+                    $output->writeln("Fotografija za $dest nije preuzeta");
+                    continue;
+                }
+                $img = Image::create();
+                $img->setFromString($bytes, 'destinacije/' . $fileName . '.jpg');
+                $img->Title = $dest . (str_contains($url, 'pexels') ? ' (Pexels)' : ' (Unsplash)');
+                $img->write();
+                $img->publishSingle();
+            }
+            foreach ($trips as $trip) {
+                $trip->PhotoID = $img->ID;
+                $trip->write();
+            }
+            $output->writeln("Fotografija destinacije: $dest");
         }
     }
 

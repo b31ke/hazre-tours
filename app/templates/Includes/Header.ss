@@ -1,11 +1,20 @@
 <div class="topbar">
     <div class="wrap topbar-in">
-        <% if $SiteConfig.Address %><span class="tb-addr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>$SiteConfig.Address</span><% end_if %>
+        <% with $TopbarTrip %><% with $NextTerm %>
+        <a class="tb-next" href="$Up.Link">
+            <span class="tb-live" aria-hidden="true"></span>
+            <span class="tb-lbl">Sljedeći polazak</span>
+            <b>$StartDate.Format('dd.MM.')</b> <span class="tb-trip">$Up.Title</span>
+            <span class="tb-cd">$Countdown</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <% end_with %><% end_with %>
         <span class="tb-right">
-            <% with $SiteConfig.MainPhone %><a href="tel:$Tel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>$Number</a><% end_with %>
-            <% if $SiteConfig.ContactEmail %><a href="mailto:$SiteConfig.ContactEmail" class="tb-mail">$SiteConfig.ContactEmail</a><% end_if %>
-            <% if $SiteConfig.FacebookURL %><a href="$SiteConfig.FacebookURL" rel="noopener" aria-label="Facebook">f</a><% end_if %>
-            <% if $SiteConfig.InstagramURL %><a href="$SiteConfig.InstagramURL" rel="noopener" aria-label="Instagram">ig</a><% end_if %>
+            <% if $SiteConfig.Address %><span class="tb-item tb-addr"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>$SiteConfig.Address</span><% end_if %>
+            <% if $SiteConfig.ContactEmail %><a class="tb-item tb-mail" href="mailto:$SiteConfig.ContactEmail"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>$SiteConfig.ContactEmail</a><% end_if %>
+            <% if $SiteConfig.FacebookURL %><a class="tb-soc" href="$SiteConfig.FacebookURL" rel="noopener" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg></a><% end_if %>
+            <% if $SiteConfig.InstagramURL %><a class="tb-soc" href="$SiteConfig.InstagramURL" rel="noopener" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a><% end_if %>
+            <% with $SiteConfig.MainPhone %><a class="tb-phone" href="tel:$Tel"><span class="tb-ring" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span>$Number</a><% end_with %>
         </span>
     </div>
 </div>
@@ -34,7 +43,6 @@
             </ul>
         </nav>
         <div class="head-actions">
-            <a class="btn btn-orange hide-md" href="#kontakt">Rezerviši</a>
             <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Meni">
                 <span></span><span></span><span></span>
             </button>
