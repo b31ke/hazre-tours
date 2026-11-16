@@ -10,36 +10,56 @@
 </section>
 <% end_if %>
 
-<% if $HeroSlides.Count %>
-<section class="slider" aria-roledescription="carousel" aria-label="Izdvojena putovanja">
-    <% loop $HeroSlides %>
-    <div class="slide<% if $IsFirst %> on<% end_if %>" aria-roledescription="slide" aria-label="$Pos od $TotalItems">
-        <% if $SlideImageURL %><img src="$SlideImageURL" alt="" <% if not $IsFirst %>loading="lazy"<% end_if %>><% end_if %>
-        <div class="wrap slide-txt">
-            <p class="slide-date">$TabLabel</p>
-            <h2>$Title</h2>
-            <p class="slide-price"><% if $HasPriceFrom %>od <% end_if %><b>$MinPrice KM</b> po osobi</p>
-            <a class="btn btn-orange" href="$Link">Pogledaj putovanje</a>
+<section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-grid">
+        <div class="hero-copy">
+            <% if $HeroEyebrow %><p class="hero-kicker">$HeroEyebrow</p><% end_if %>
+            <h1 id="hero-h">$HeroTitleHTML</h1>
+            <% if $HeroLead %><p class="hero-lead">$HeroLead</p><% end_if %>
+            <form class="search-bar" id="search" role="search" action="putovanja">
+                <label class="sr" for="s-q">Pronađi svoje putovanje</label>
+                <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off">
+                <button class="btn btn-orange" type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Traži</span></button>
+            </form>
+            <% if $HomeCategories.Count %>
+            <div class="quick" aria-label="Brzi izbor">
+                <span>Popularno:</span>
+                <% loop $HomeCategories.Limit(5) %><a href="$Link">$Title</a><% end_loop %>
+            </div>
+            <% end_if %>
+            <ul class="trust">
+                <li><b>Od 2008.</b> na putu</li>
+                <li><b>Vlastiti</b> autobusi</li>
+                <li><b>$CityCount</b> mjesta polaska</li>
+            </ul>
         </div>
-    </div>
-    <% end_loop %>
-    <% if $HeroSlides.Count > 1 %>
-    <button class="sl-arrow sl-prev" type="button" aria-label="Prethodno putovanje">‹</button>
-    <button class="sl-arrow sl-next" type="button" aria-label="Sljedeće putovanje">›</button>
-    <div class="dots"><% loop $HeroSlides %><button class="dot" type="button" aria-label="Putovanje $Pos"<% if $IsFirst %> aria-current="true"<% end_if %>></button><% end_loop %></div>
-    <% end_if %>
-</section>
-<% end_if %>
 
-<section class="intro" aria-labelledby="intro-h">
-    <div class="wrap intro-in">
-        <h1 id="intro-h">Hazre Tours, putnička agencija i prevoznik iz Srebrenika</h1>
-        <% if $HeroLead %><p>$HeroLead</p><% end_if %>
-        <form class="search-bar" id="search" role="search" action="putovanja">
-            <label class="sr" for="s-q">Pronađi svoje putovanje</label>
-            <input id="s-q" type="search" placeholder="Pronađi svoje putovanje… (npr. Istanbul, advent, Zlatibor)" autocomplete="off">
-            <button class="btn btn-blue" type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Traži</span></button>
-        </form>
+        <div class="hero-side">
+            <% if $HeroImage.exists %>
+                <img class="hero-photo" src="$HeroImage.FillMax(900,700).Convert('webp').URL" alt="" width="900" height="700">
+            <% else_if $UpcomingTrips.Count %>
+                <% with $UpcomingTrips.First %>
+                <a class="next-trip" href="$Link">
+                    <span class="nt-label">Najbliži polazak</span>
+                    <span class="nt-photo<% if $PosterIsFlyer %> flyer<% end_if %>"><img src="$CardImageURL" alt=""></span>
+                    <span class="nt-body">
+                        <span class="nt-date">$TabLabel</span>
+                        <b class="nt-title">$Title</b>
+                        <span class="nt-price"><% if $HasPriceFrom %>od <% end_if %>$MinPrice KM <small>po osobi</small></span>
+                    </span>
+                </a>
+                <% end_with %>
+            <% end_if %>
+            <% if $NextDepartures.Count > 1 %>
+            <div class="next-list">
+                <p class="nl-h">Sljedeći polasci</p>
+                <% loop $NextDepartures.Limit(3, 1) %>
+                <a href="$Trip.Link"><span class="nl-d">$StartDate.Format('dd.MM.')</span><span class="nl-t">$Trip.Title</span><span class="nl-p">$EffectivePrice KM</span></a>
+                <% end_loop %>
+                <a class="nl-all" href="kalendar">Svi polasci →</a>
+            </div>
+            <% end_if %>
+        </div>
     </div>
 </section>
 
