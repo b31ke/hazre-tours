@@ -66,7 +66,6 @@
                 <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off">
                 <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
             </form>
-            <p class="tagline">svako putovanje je <span class="mark">nova priča<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 50 3, 120 2, 197 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></p>
             <div class="cat-tabs" role="group" aria-label="Kategorije putovanja">
                 <button type="button" class="ct" data-cat="" aria-pressed="true">Sve ponude</button>
                 <button type="button" class="ct" data-type="jednodnevni" aria-pressed="false">Jednodnevni izleti</button>
