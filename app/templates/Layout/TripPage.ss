@@ -1,7 +1,7 @@
 <% with $Trip %>
 $JsonLD
 <section class="trip-hero">
-    <div class="trip-bg<% if $PosterIsFlyer %> flyer<% end_if %>" data-parallax aria-hidden="true"<% if $HeroImageURL %> style="background-image:url('$HeroImageURL')"<% end_if %>></div>
+    <div class="trip-bg<% if $PosterIsFlyer %> flyer<% end_if %>" aria-hidden="true"<% if $HeroImageURL %> style="background-image:url('$HeroImageURL')"<% end_if %>></div>
     <div class="wrap trip-hero-in">
         <nav class="crumbs" aria-label="Putanja"><a href="$BaseHref">Početna</a><span>/</span><a href="putovanja">Putovanja</a><% with $Categories.First %><span>/</span><a href="$Link">$Title</a><% end_with %></nav>
         <p class="eyebrow">$TypeLabel<% if $DestinationName %> · $DestinationName<% end_if %></p>
@@ -29,7 +29,7 @@ $JsonLD
                 <% if $ProgramDays.Count %><button role="tab" aria-selected="false" aria-controls="t-program" id="tb-program">Program</button><% end_if %>
                 <button role="tab" aria-selected="false" aria-controls="t-cijena" id="tb-cijena">Cijena i uslovi</button>
                 <% if $AllFaqs.Count %><button role="tab" aria-selected="false" aria-controls="t-pitanja" id="tb-pitanja">Pitanja</button><% end_if %>
-                <span class="tab-ink" aria-hidden="true"></span>
+                
             </div>
 
             <div class="tab-panel" role="tabpanel" id="t-opis" aria-labelledby="tb-opis">

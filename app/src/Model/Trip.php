@@ -428,6 +428,17 @@ class Trip extends DataObject
         return $this->imageURL(1800);
     }
 
+    /** Široka slika za slider: kod plakata se izreže srednja traka (fotografija), bez teksta plakata. */
+    public function SlideImageURL(): string
+    {
+        $img = $this->Poster();
+        if (!$img->exists()) {
+            return '';
+        }
+        $out = $this->PosterIsFlyer ? $img->Fill(1600, 600) : $img->ScaleMaxWidth(1800);
+        return (string) (($out?->Convert('webp') ?: $out)?->getURL() ?? '');
+    }
+
     private function imageURL(int $width): string
     {
         $img = $this->Poster();

@@ -70,6 +70,12 @@ class HomePage extends Page
         return Trip::liveList();
     }
 
+    /** Slider u vrhu: istaknuti pa najbliži polasci, najviše 5. */
+    public function HeroSlides(): ArrayList
+    {
+        return Trip::liveList()->limit(5);
+    }
+
     /** Ploča polazaka: najbližih 8 polazaka. */
     public function NextDepartures(): ArrayList
     {

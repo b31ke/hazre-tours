@@ -20,13 +20,13 @@
     <link rel="apple-touch-icon" href="images/favicon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap">
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     $AgencyJsonLD
 </head>
 <body class="$BodyClass" data-ga="$SiteConfig.GA4Id.ATT" data-pixel="$SiteConfig.MetaPixelId.ATT">
     <a class="skip" href="#sadrzaj">Preskoči na sadržaj</a>
-    <% if $SiteConfig.PromoVisible %><% include PromoBar %><% end_if %>
+    <% if $SiteConfig.PromoVisible %><% if $BodyClass != 'HomePageController' %><% include PromoBar %><% end_if %><% end_if %>
     <% include Header %>
     <main id="sadrzaj">
         $Layout
