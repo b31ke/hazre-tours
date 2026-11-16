@@ -696,3 +696,38 @@ details[open] > summary i::after { rotate: 0deg; }
 .sb-filter:hover { background: #F1F6FD; }
 .sb-filter[aria-expanded="true"] { color: var(--orange-d); background: #FFF6EA; }
 @media (max-width: 560px) { .sb-filter span { display: none; } .sb-filter { padding: 0 14px; } }
+
+/* Zašto mi: plava sekcija s valovima, veliki brojevi, kartice i autobus koji vozi po putu */
+.why { position: relative; overflow: hidden; color: #fff; background: radial-gradient(900px 500px at 85% 20%, rgba(23, 174, 223, .45), transparent 60%), linear-gradient(135deg, #132E7E 0%, #1B3FA8 55%, #1A6FC4 100%); padding: 110px 0 0; }
+.why-wave { position: absolute; left: 0; width: 100%; height: 70px; }
+.why-wave.top { top: -1px; }
+.why-wave.bottom { bottom: -1px; }
+.why-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(30px, 5vw, 70px); align-items: center; }
+@media (max-width: 960px) { .why-grid { grid-template-columns: 1fr; } }
+.why-copy { display: grid; gap: 20px; justify-items: start; }
+.why-kicker { font: 400 clamp(28px, 3.4vw, 40px)/1.1 "Kaushan Script", "Segoe Script", cursive; color: #8FDDF5; margin-bottom: -6px; }
+.why h2 { color: #fff; font-size: clamp(34px, 4.4vw, 52px); line-height: 1.08; font-weight: 700; }
+.why h2 em { font-style: normal; color: #FFC56B; }
+.why-lead { color: #D6E3FA; font-size: 17px; max-width: 52ch; }
+.why-stats { list-style: none; margin: 4px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 36px; }
+.why-stats li { display: grid; }
+.why-stats b { font: 700 clamp(40px, 4.4vw, 56px)/1 var(--head); color: #FFC56B; }
+.why-stats span { font-size: 14px; color: #CFE0FA; margin-top: 4px; }
+.why-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 560px) { .why-cards { grid-template-columns: 1fr; } }
+.wcard { background: #fff; color: var(--text); border-radius: 20px; padding: 24px 22px; display: grid; gap: 10px; align-content: start; box-shadow: 0 24px 50px -24px rgba(5, 15, 50, .7); transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.why-cards .wcard:nth-child(2), .why-cards .wcard:nth-child(4) { translate: 0 26px; }
+@media (max-width: 560px) { .why-cards .wcard:nth-child(n) { translate: none; } }
+.wcard:hover { transform: translateY(-6px); }
+.wcard h3 { font-size: 18px; color: var(--royal); }
+.wcard p { font-size: 15px; color: var(--text-2); }
+.wc-ico { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; }
+.wc-ico svg { width: 30px; height: 30px; }
+.wc-ico.o { background: #FFF1DA; color: var(--orange-d); }
+.wc-ico.b { background: #E3F6FC; color: #0B86B3; }
+/* put i autobus */
+.road { position: relative; height: 120px; margin-top: 50px; }
+.road-line { position: absolute; left: 0; right: 0; bottom: 70px; height: 4px; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .55) 0 34px, transparent 34px 60px); }
+.road-bus { position: absolute; bottom: 64px; left: -140px; width: 110px; height: auto; animation: bus-drive 18s linear infinite; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .3)); }
+@keyframes bus-drive { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 160px)); } }
+@media (prefers-reduced-motion: reduce) { .road-bus { animation: none; left: 8%; } }

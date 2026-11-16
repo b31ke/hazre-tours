@@ -140,19 +140,32 @@
 </section>
 <% end_if %>
 
-<section class="block" aria-labelledby="why-h">
-    <div class="wrap">
-        <div class="center-head">
-            <h2 id="why-h">Zašto putovati s nama</h2>
-            <p>Od 2008. vozimo putnike, a od 2016. organizujemo i putovanja.</p>
+<section class="why" aria-labelledby="why-h">
+    <svg class="why-wave top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 H1440 V30 C 1200 70, 960 70, 720 40 S 240 0, 0 40 Z" fill="#F3F7FC"/></svg>
+    <div class="wrap why-grid">
+        <div class="why-copy">
+            <p class="why-kicker">Zašto baš Hazre Tours?</p>
+            <h2 id="why-h">Prvo prevoznik,<br><em>onda agencija</em></h2>
+            <p class="why-lead">Od 2008. vozimo putnike, a od 2016. pravimo i putovanja. Autobus je naš, vozač je naš i plan puta je naš, pa ne zavisimo od tuđeg prevoza i znamo svaki kilometar rute.</p>
+            <ul class="why-stats">
+                <li><b>$YearsOnRoad</b><span>godina na putu</span></li>
+                <li><b>$CityCount</b><span>mjesta polaska</span></li>
+                <li><b>$AllTripsCount</b><span>aktivnih putovanja</span></li>
+            </ul>
+            <a class="btn btn-orange btn-lg" href="o-nama">Upoznajte nas</a>
         </div>
-        <div class="features">
-            <div class="feature"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/></svg></span><h3>Vlastiti autobusi</h3><p>Turistički autobusi s klimom, TV-om i WC-om i naši iskusni vozači.</p></div>
-            <div class="feature"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><h3>Polasci iz vašeg grada</h3><p>Tuzla, Srebrenik, Gračanica, Gradačac, Brčko, Orašje i Bijeljina.</p></div>
-            <div class="feature"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg></span><h3>Vodič i pratilac</h3><p>Na grupnim putovanjima s vama je naš pratilac od polaska do povratka.</p></div>
-            <div class="feature"><span class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12V7H4v5m16 0v7H4v-7m16 0H4"/><path d="M12 7v14"/></svg></span><h3>Jasne cijene</h3><p>U programu piše šta je uključeno, a šta se plaća posebno.</p></div>
+        <div class="why-cards">
+            <div class="wcard"><span class="wc-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/><circle cx="8" cy="14.5" r="1"/><circle cx="16" cy="14.5" r="1"/></svg></span><h3>Vlastiti autobusi</h3><p>Turistički autobusi s klimom, TV-om i WC-om, tehnički pregledani prije svakog puta.</p></div>
+            <div class="wcard"><span class="wc-ico b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><h3>Polasci iz vašeg grada</h3><p>Tuzla, Srebrenik, Gračanica, Gradačac, Brčko, Orašje i Bijeljina, bez presjedanja.</p></div>
+            <div class="wcard"><span class="wc-ico b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg></span><h3>Vodič i pratilac</h3><p>Na grupnim putovanjima s vama je naš pratilac, od polaska do povratka.</p></div>
+            <div class="wcard"><span class="wc-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 12V7H4v5m16 0v7H4v-7m16 0H4"/><path d="M12 7v14"/><path d="M12 7c-1.5-3-5-3-5-1s3 1 5 1c2 0 5 1 5-1s-3.5-2-5 1z"/></svg></span><h3>Jasne cijene</h3><p>U programu piše šta je uključeno, a šta se plaća posebno. Bez iznenađenja na putu.</p></div>
         </div>
     </div>
+    <div class="road" aria-hidden="true">
+        <div class="road-line"></div>
+        <svg class="road-bus" viewBox="0 0 120 52"><rect x="4" y="6" width="104" height="34" rx="9" fill="#F7A11A"/><rect x="12" y="12" width="16" height="12" rx="2" fill="#E3F6FC"/><rect x="32" y="12" width="16" height="12" rx="2" fill="#E3F6FC"/><rect x="52" y="12" width="16" height="12" rx="2" fill="#E3F6FC"/><rect x="72" y="12" width="16" height="12" rx="2" fill="#E3F6FC"/><path d="M92 12h8a6 6 0 0 1 6 6v6H92z" fill="#E3F6FC"/><rect x="4" y="29" width="104" height="4" fill="#fff" opacity=".85"/><circle cx="28" cy="42" r="7" fill="#132E7E"/><circle cx="28" cy="42" r="3" fill="#fff"/><circle cx="86" cy="42" r="7" fill="#132E7E"/><circle cx="86" cy="42" r="3" fill="#fff"/></svg>
+    </div>
+    <svg class="why-wave bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 H1440 V40 C 1200 0, 960 0, 720 30 S 240 70, 0 30 Z" fill="#F3F7FC"/></svg>
 </section>
 
 <section class="block alt" aria-labelledby="svc-h">
