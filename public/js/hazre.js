@@ -157,11 +157,11 @@
       // zvijezde
       stars.forEach(s => {
         const a = .25 + .35 * Math.sin(t / 50 + s.p);
-        ctx.fillStyle = `rgba(200,230,250,${a})`;
+        ctx.fillStyle = `rgba(11,110,170,${a * 0.45})`;
         ctx.beginPath(); ctx.arc(s.x * W + (mx - .5) * 8 * s.r, s.y * H + (my - .5) * 8 * s.r, s.r, 0, 7); ctx.fill();
       });
       // mreža meridijana i paralela (svaki stepen)
-      ctx.strokeStyle = 'rgba(127,221,251,.06)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(11,110,170,.08)'; ctx.lineWidth = 1;
       for (let lat = Math.ceil(box.minLat); lat <= box.maxLat; lat++) {
         const a = proj({ lat, lng: box.minLng }), b = proj({ lat, lng: box.maxLng });
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
@@ -177,7 +177,7 @@
         const mxp = (h.x + p.x) / 2, myp = Math.min(h.y, p.y) - Math.hypot(p.x - h.x, p.y - h.y) * 0.32;
         // ruta
         const g = ctx.createLinearGradient(h.x, h.y, p.x, p.y);
-        g.addColorStop(0, 'rgba(255,154,31,.75)'); g.addColorStop(1, 'rgba(51,198,244,.75)');
+        g.addColorStop(0, 'rgba(246,139,18,.9)'); g.addColorStop(1, 'rgba(11,146,211,.9)');
         ctx.strokeStyle = g; ctx.lineWidth = 1.4; ctx.setLineDash([3, 6]); ctx.lineDashOffset = -t * 0.4;
         ctx.beginPath(); ctx.moveTo(h.x, h.y); ctx.quadraticCurveTo(mxp, myp, p.x, p.y); ctx.stroke();
         ctx.setLineDash([]);
@@ -186,27 +186,27 @@
         const bx = (1 - k) ** 2 * h.x + 2 * (1 - k) * k * mxp + k * k * p.x;
         const by = (1 - k) ** 2 * h.y + 2 * (1 - k) * k * myp + k * k * p.y;
         const glow = ctx.createRadialGradient(bx, by, 0, bx, by, 10);
-        glow.addColorStop(0, 'rgba(255,200,120,.95)'); glow.addColorStop(1, 'rgba(255,154,31,0)');
+        glow.addColorStop(0, 'rgba(246,139,18,.95)'); glow.addColorStop(1, 'rgba(246,139,18,0)');
         ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(bx, by, 10, 0, 7); ctx.fill();
         // destinacija
         const pulse = 4 + 3 * Math.sin(t / 30 + i);
-        ctx.strokeStyle = 'rgba(51,198,244,.35)'; ctx.beginPath(); ctx.arc(p.x, p.y, 6 + pulse, 0, 7); ctx.stroke();
-        ctx.fillStyle = '#7FDDFB'; ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, 7); ctx.fill();
+        ctx.strokeStyle = 'rgba(11,146,211,.35)'; ctx.beginPath(); ctx.arc(p.x, p.y, 6 + pulse, 0, 7); ctx.stroke();
+        ctx.fillStyle = '#0B92D3'; ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, 7); ctx.fill();
         // natpis samo ako ne prekriva susjedni grad (Graz, Maribor i Klagenfurt su blizu)
         if (W > 520 && labels.every(l => Math.abs(l.x - p.x) > 70 || Math.abs(l.y - p.y) > 26)) {
           labels.push(p);
           ctx.font = '600 11px "JetBrains Mono", monospace';
-          ctx.fillStyle = 'rgba(233,242,248,.9)';
+          ctx.fillStyle = '#0F2333';
           ctx.fillText(d.dest.toUpperCase(), p.x + 10, p.y - 4);
-          ctx.fillStyle = 'rgba(146,169,186,.9)';
+          ctx.fillStyle = '#5B7284';
           ctx.fillText(d.km + ' km', p.x + 10, p.y + 10);
         }
       });
       // Srebrenik
       const hp = 8 + 4 * Math.sin(t / 20);
-      ctx.fillStyle = 'rgba(255,154,31,.18)'; ctx.beginPath(); ctx.arc(h.x, h.y, 10 + hp, 0, 7); ctx.fill();
-      ctx.fillStyle = '#FF9A1F'; ctx.beginPath(); ctx.arc(h.x, h.y, 5, 0, 7); ctx.fill();
-      if (W > 520) { ctx.font = '700 11px "JetBrains Mono", monospace'; ctx.fillStyle = '#FFB547'; ctx.fillText('SREBRENIK', h.x + 12, h.y + 4); }
+      ctx.fillStyle = 'rgba(246,139,18,.18)'; ctx.beginPath(); ctx.arc(h.x, h.y, 10 + hp, 0, 7); ctx.fill();
+      ctx.fillStyle = '#F68B12'; ctx.beginPath(); ctx.arc(h.x, h.y, 5, 0, 7); ctx.fill();
+      if (W > 520) { ctx.font = '700 11px "JetBrains Mono", monospace'; ctx.fillStyle = '#B85F00'; ctx.fillText('SREBRENIK', h.x + 12, h.y + 4); }
     };
     const loop = () => { if (running) { t++; draw(); } requestAnimationFrame(loop); };
     resize(); addEventListener('resize', resize);

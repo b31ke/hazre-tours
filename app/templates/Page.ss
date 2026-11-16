@@ -14,13 +14,13 @@
     <meta property="og:url" content="$CurrentURL">
     <meta property="og:image" content="<% if $OgImage %>$OgImage.ATT<% else %>$DefaultOgImage<% end_if %>">
     <meta property="og:locale" content="bs_BA">
-    <meta name="theme-color" content="#060E16">
+    <meta name="theme-color" content="#F4F8FB">
     <% if not $Indexable %><meta name="robots" content="noindex, nofollow"><% end_if %>
     <link rel="icon" type="image/png" href="images/favicon-192.png">
     <link rel="apple-touch-icon" href="images/favicon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     $AgencyJsonLD
 </head>
