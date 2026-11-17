@@ -9,6 +9,7 @@
             <% loop $MenuCategories %><a class="chip<% if $Up.Category.ID == $ID %> on<% end_if %>" href="$Link">$Title <span class="count">$TripCount</span></a><% end_loop %>
         </div>
     </div>
+    <svg class="ph-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 H1440 V30 C 1180 0, 900 56, 720 32 S 260 4, 0 30 Z" fill="#fff"/></svg>
 </section>
 <section class="block">
     <div class="wrap">

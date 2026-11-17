@@ -5,6 +5,7 @@
         <h1 class="h1">$Title</h1>
         <% if $Intro %><p class="hero-lead">$Intro</p><% end_if %>
     </div>
+    <svg class="ph-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 H1440 V30 C 1180 0, 900 56, 720 32 S 260 4, 0 30 Z" fill="#fff"/></svg>
 </section>
 <section class="block">
     <div class="wrap">
