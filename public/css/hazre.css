@@ -1332,3 +1332,18 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 480px) { .consent { left: 10px; right: 10px; width: auto; bottom: 10px; padding: 18px 16px 14px; } .cz-btns .cz-btn { flex: 1; } .cz-link { width: 100%; margin: 0 0 2px; text-align: left; } }
 @media (prefers-reduced-motion: reduce) { .consent { transition: opacity .2s; translate: 0 0; scale: 1; } .cz-ico svg { animation: none; } }
 .consent[hidden], .cz-prefs[hidden], .cz-btn[hidden] { display: none !important; }
+/* Kolačići: vodoravni prozorčić na dnu, po sredini (na telefonu ostaje uspravno) */
+@media (min-width: 900px) {
+  .consent { left: 50%; right: auto; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); width: min(1180px, calc(100% - 48px)); translate: -50% 24px; padding: 18px 22px;
+    grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "head text btns" "prefs prefs prefs"; align-items: center; column-gap: 24px; row-gap: 14px; }
+  .consent.in { translate: -50% 0; }
+  .cz-head { grid-area: head; }
+  .cz-head .cz-title { white-space: nowrap; }
+  .cz-text { grid-area: text; font-size: 14px; line-height: 1.55; padding-left: 24px; border-left: 1px solid var(--line); }
+  .cz-btns { grid-area: btns; flex-wrap: nowrap; }
+  .cz-link { margin-right: 6px; }
+  .cz-btn { white-space: nowrap; }
+  .cz-prefs { grid-area: prefs; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 14px; border-top: 1px dashed var(--line); }
+  .cz-ico { width: 48px; height: 48px; }
+}
+@media (min-width: 900px) and (prefers-reduced-motion: reduce) { .consent { translate: -50% 0; } }
