@@ -1347,3 +1347,11 @@ details[open] > summary i::after { rotate: 0deg; }
   .cz-ico { width: 48px; height: 48px; }
 }
 @media (min-width: 900px) and (prefers-reduced-motion: reduce) { .consent { translate: -50% 0; } }
+/* Kolačići (vodoravno): tekst tačno u sredini prozora */
+@media (min-width: 900px) {
+  .consent { grid-template-columns: minmax(0, 1fr) minmax(0, 520px) minmax(0, 1fr); }
+  .cz-head { justify-self: start; }
+  .cz-btns { justify-self: end; }
+  .cz-text { justify-self: center; text-align: center; padding: 0 24px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+}
+@media (min-width: 900px) and (max-width: 1280px) { .cz-head .cz-title { white-space: normal; } .cz-kicker { font-size: 17px; } }
