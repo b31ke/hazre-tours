@@ -1362,3 +1362,14 @@ details[open] > summary i::after { rotate: 0deg; }
   .cz-text { justify-self: stretch; text-align: left; padding: 0 0 0 24px; border-right: 0; margin: 0; }
   .cz-prefs { margin-top: 16px; }
 }
+/* Zaglavlje aranžmana s pravom fotografijom destinacije */
+.trip-bg.is-photo { background-size: cover; background-position: center 45%; animation: tb-zoom 18s ease-out both; }
+@keyframes tb-zoom { from { scale: 1.08; } to { scale: 1; } }
+.trip-hero:has(.trip-bg.is-photo)::after { background: linear-gradient(90deg, rgba(14, 36, 102, .88) 0%, rgba(19, 46, 126, .62) 42%, rgba(19, 46, 126, .12) 75%), linear-gradient(0deg, rgba(10, 25, 70, .55), transparent 55%); }
+.trip-hero:has(.trip-bg.is-photo) .trip-hero-in { padding-block: clamp(110px, 15vw, 200px) 44px; }
+.trip-hero .trip-title { text-shadow: 0 4px 24px rgba(0, 0, 0, .35); }
+.fact-when { background: rgba(14, 36, 102, .55); color: #fff; border: 1px solid rgba(255, 255, 255, .28); backdrop-filter: blur(6px); }
+.fact-when b { color: #FFC65C; }
+.fw-dot { width: 8px; height: 8px; border-radius: 50%; background: #3BE07A; box-shadow: 0 0 0 0 rgba(59, 224, 122, .6); animation: hz-ping2 1.8s infinite; }
+@keyframes hz-ping2 { to { box-shadow: 0 0 0 9px rgba(59, 224, 122, 0); } }
+@media (prefers-reduced-motion: reduce) { .trip-bg.is-photo, .fw-dot { animation: none; } }

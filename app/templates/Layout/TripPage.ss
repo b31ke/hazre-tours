@@ -1,7 +1,7 @@
 <% with $Trip %>
 $JsonLD
 <section class="trip-hero">
-    <div class="trip-bg<% if $PosterIsFlyer %> flyer<% end_if %>" aria-hidden="true"<% if $HeroImageURL %> style="background-image:url('$HeroImageURL')"<% end_if %>></div>
+    <% if $HeroPhotoURL %><div class="trip-bg is-photo" aria-hidden="true" style="background-image:url('$HeroPhotoURL')"></div><% else %><div class="trip-bg<% if $PosterIsFlyer %> flyer<% end_if %>" aria-hidden="true"<% if $HeroImageURL %> style="background-image:url('$HeroImageURL')"<% end_if %>></div><% end_if %>
     <div class="wrap trip-hero-in">
         <nav class="crumbs" aria-label="Putanja"><a href="$BaseHref">Početna</a><span>/</span><a href="putovanja">Putovanja</a><% with $Categories.First %><span>/</span><a href="$Link">$Title</a><% end_with %></nav>
         <p class="eyebrow">$TypeLabel<% if $DestinationName %> · $DestinationName<% end_if %></p>
@@ -10,6 +10,7 @@ $JsonLD
             <span class="fact fact-price"><% if $OnPromo %><s>$OldPrice KM</s> <% end_if %><% if $HasPriceFrom %>od <% end_if %><b>$MinPrice KM</b> po osobi</span>
             <span class="fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>$DurationLabel</span>
             <span class="fact"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/></svg>$TransportLabel</span>
+            <% with $NextOpenTerm %><span class="fact fact-when"><span class="fw-dot" aria-hidden="true"></span>Polazak $Label · <b>$Countdown</b></span><% end_with %>
             <% if $DistanceKm %><span class="fact mono">≈ $DistanceKm km od Srebrenika</span><% end_if %>
         </div>
         <% if $OnPromo && $PromoUntil %>
@@ -36,15 +37,6 @@ $JsonLD
                 <h2 class="panel-h">Opis putovanja</h2>
                 <% if $Summary %><p class="trip-lead">$Summary</p><% end_if %>
 
-                <% if $PhotoURL %>
-                <figure class="dest-photo">
-                    <img src="$PhotoURL" alt="<% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %>" loading="lazy">
-                    <figcaption>
-                        <span class="dp-place"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></span>
-                        <% with $NextOpenTerm %><span class="dp-when">Polazak $Label · <b>$Countdown</b></span><% end_with %>
-                    </figcaption>
-                </figure>
-                <% end_if %>
 
                 <% if $IncludesList.Count || $ExcludesList.Count %>
                 <div class="two">

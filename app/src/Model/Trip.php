@@ -517,6 +517,12 @@ class Trip extends DataObject
         return $this->imageURL(1200, 'Photo');
     }
 
+    /** Široka fotografija destinacije za zaglavlje stranice aranžmana (oštra, do 1920 px). */
+    public function HeroPhotoURL(): string
+    {
+        return $this->imageURL(1920, 'Photo');
+    }
+
     private function imageURL(int $width, string $rel = 'Poster'): string
     {
         $ck = $rel . $width;
