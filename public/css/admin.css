@@ -271,3 +271,8 @@ body.cms { background: var(--hz-bg) !important; }
 .hz-sub { margin-left: 20px !important; }
 /* U "Aranžmani i upiti" su sve kartice u stablu lijevo, pa gornji tabovi nisu potrebni (ostali dijelovi admina ih zadržavaju) */
 .cms-content.TripAdmin > .cms-content-header .cms-tabset-nav-primary, .cms-content.TripAdmin .cms-content-header-tabs { display: none !important; }
+/* Tabovi u formi za uređivanje (omotač div + lista): vodoravno */
+.cms-content-header .cms-content-header-tabs ul.ui-tabs-nav { display: flex !important; flex-wrap: nowrap; gap: 4px; margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; }
+.cms-content-header .cms-content-header-tabs ul.ui-tabs-nav li { display: block !important; float: none !important; white-space: nowrap; }
+.cms-content-header div.cms-tabset-nav-primary { flex: none; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.cms-content-header div.cms-tabset-nav-primary::-webkit-scrollbar { display: none; }
