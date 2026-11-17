@@ -269,3 +269,5 @@ body.cms { background: var(--hz-bg) !important; }
 .hz-sub__text { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; line-height: 1.2; }
 .cms-menu__list .hz-sub li a.hz-sub__link { font-size: 12.5px !important; }
 .hz-sub { margin-left: 20px !important; }
+/* U "Aranžmani i upiti" su sve kartice u stablu lijevo, pa gornji tabovi nisu potrebni (ostali dijelovi admina ih zadržavaju) */
+.cms-content.TripAdmin > .cms-content-header .cms-tabset-nav-primary, .cms-content.TripAdmin .cms-content-header-tabs { display: none !important; }
