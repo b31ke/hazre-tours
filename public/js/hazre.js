@@ -482,3 +482,10 @@
   addEventListener('scroll', check, { passive: true });
   check();
 })();
+
+// "Na vrh": uvijek na sam početak stranice (zaglavlje je ljepljivo pa link #top pomjeri samo malo)
+document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  history.replaceState(null, '', location.pathname + location.search);
+}));
