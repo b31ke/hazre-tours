@@ -44,3 +44,16 @@ body {
 .silverstripe-brand { margin-top: 22px !important; opacity: .55; }
 .silverstripe-brand svg, .silverstripe-brand path { fill: #fff !important; color: #fff !important; }
 .login-form input.text, .login-form input[type="email"], .login-form input[type="password"], .login-form input[type="text"] { width: 100% !important; max-width: none !important; box-sizing: border-box; }
+/* Dno prijave: BE SHIRT logo umjesto Silverstripe */
+.silverstripe-brand { opacity: 1 !important; display: flex !important; align-items: center; justify-content: center; gap: 10px; color: rgba(255, 255, 255, .6); font: 500 12px "Poppins", sans-serif; }
+.silverstripe-brand svg, .silverstripe-brand > * { display: none !important; }
+.silverstripe-brand::before { content: "Izrada"; }
+.silverstripe-brand::after { content: ""; width: 92px; height: 25px; background: url("../images/be-shirt-logo-white.png") center / contain no-repeat; opacity: .85; }
+/* "Created by" + BE SHIRT logo (link) */
+.silverstripe-brand.hz-brand::before, .silverstripe-brand.hz-brand::after { content: none !important; display: none !important; }
+.silverstripe-brand.hz-brand > * { display: inline-flex !important; }
+.hz-created { font: 500 12.5px "Poppins", sans-serif; letter-spacing: .04em; color: rgba(255, 255, 255, .65); }
+.hz-created__logo { align-items: center; padding: 6px 10px; border-radius: 10px; transition: background .2s; line-height: 0; }
+.hz-created__logo:hover { background: rgba(255, 255, 255, .12); }
+.hz-created__logo img { height: 22px; width: auto; opacity: .9; }
+.hz-created__logo:hover img { opacity: 1; }

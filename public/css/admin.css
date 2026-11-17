@@ -323,3 +323,19 @@ body.cms { background: var(--hz-bg) !important; }
 .hz-help.cms-help__toggle--show .cms-help__links { display: block !important; position: absolute !important; left: 6px; bottom: calc(100% + 8px); top: auto !important; width: 210px; height: auto !important; max-height: none !important; overflow: visible !important; z-index: 50; }
 .hz-help.cms-help__toggle--show .cms-help__links { left: 0; width: 154px; }
 .hz-help .cms-help__link { white-space: normal !important; line-height: 1.3 !important; }
+/* Profil u meniju: kartica s avatarom, imenom i dugmetom za odjavu, sve poravnato po sredini */
+.cms-menu .cms-login-status { display: flex !important; align-items: center !important; justify-content: space-between; gap: 8px; margin-top: 12px !important; padding: 8px 8px 8px 8px !important; border-radius: 14px !important; background: rgba(255, 255, 255, .08) !important; border: 1px solid rgba(255, 255, 255, .12); height: auto !important; min-height: 0 !important; }
+.cms-menu .cms-login-status__profile-link { display: flex !important; align-items: center; gap: 9px; min-width: 0; flex: 1; padding: 0 !important; margin: 0 !important; text-decoration: none !important; color: #fff !important; position: static !important; }
+.cms-menu .cms-login-status__profile-icon { flex: none; display: grid !important; place-items: center; width: 32px; height: 32px; margin: 0 !important; border-radius: 50%; background: linear-gradient(150deg, #FFC65C, var(--hz-orange)); color: var(--hz-royal-dd) !important; font-size: 15px !important; position: static !important; }
+.cms-menu .cms-login-status__profile-icon::before { margin: 0 !important; }
+.cms-menu .cms-login-status__profile-text { display: grid !important; min-width: 0; padding: 0 !important; margin: 0 !important; font: 600 13px/1.2 "Poppins", sans-serif !important; color: #fff !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: static !important; }
+.cms-menu .cms-login-status__profile-text::after { content: "Moj profil"; font: 500 11px "Poppins", sans-serif; color: rgba(255, 255, 255, .6); }
+.cms-menu .cms-login-status__profile-link:hover .cms-login-status__profile-text::after { color: var(--hz-orange); }
+.cms-menu .cms-login-status__logout-link { flex: none; display: grid !important; place-items: center; width: 32px; height: 32px; margin: 0 !important; padding: 0 !important; border-radius: 50%; background: rgba(255, 255, 255, .1); color: rgba(255, 255, 255, .85) !important; position: static !important; transition: background .2s, color .2s; }
+.cms-menu .cms-login-status__logout-link span::before { margin: 0 !important; }
+.cms-menu .cms-login-status__logout-link:hover { background: #E5533F; color: #fff !important; }
+/* Profil: duže ime prelazi u drugi red umjesto da se siječe */
+.cms-menu .cms-login-status__profile-text { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; font-size: 12.5px !important; line-height: 1.2 !important; word-break: break-word; }
+.cms-menu .cms-login-status { padding: 8px 6px 8px 8px !important; gap: 6px; }
+.cms-menu .cms-login-status__profile-link { gap: 8px; }
+.cms-menu .cms-login-status__profile-icon, .cms-menu .cms-login-status__logout-link { width: 30px; height: 30px; }

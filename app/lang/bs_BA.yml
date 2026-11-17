@@ -30,3 +30,52 @@ bs_BA:
     Delete: Obriši
   SilverStripe\Forms\GridField\GridFieldDeleteAction:
     Delete: Obriši
+  SilverStripe\Admin\AdminController:
+    PERMDEFAULT: 'Za pristup administraciji potrebno je da se prijavite.'
+  SilverStripe\Admin\LeftAndMain:
+    PERMDEFAULT: 'Za pristup administraciji potrebno je da se prijavite.'
+    LOGOUT: Odjava
+    HelpMenu: 'Izrada i podrška'
+    CollapsePanel: 'Skupi meni'
+    ExpandPanel: 'Raširi meni'
+    MenuToggleStickyNav: 'Zadrži meni'
+    MenuToggleAuto: Automatski
+  SilverStripe\Security\Member:
+    KEEP_ME_SIGNED_IN: 'Ostani prijavljen {count} dana'
+    KEEP_ME_SIGNED_IN_TOOLTIP: 'Na ovom uređaju ostat ćete prijavljeni {count} dana. Koristite samo na računaru kojem vjerujete.'
+    ERRORWRONGCRED: 'E-mail ili šifra nisu tačni. Pokušajte ponovo.'
+    ERRORLOCKEDOUT2: 'Nalog je privremeno zaključan zbog previše neuspjelih prijava. Pokušajte ponovo za {count} minuta.'
+    ENTEREMAIL: 'Upišite e-mail adresu da biste dobili link za novu šifru.'
+    SUBJECTPASSWORDRESET: 'Link za novu šifru'
+    BUTTONLOGIN: Prijava
+    BUTTONLOGOUT: Odjava
+    BUTTONLOSTPASSWORD: 'Zaboravio sam šifru'
+    BUTTONCHANGEPASSWORD: 'Promijeni šifru'
+    NEWPASSWORD: 'Nova šifra'
+    CONFIRMNEWPASSWORD: 'Potvrdi novu šifru'
+    CONFIRMPASSWORD: 'Potvrdi šifru'
+    CURRENT_PASSWORD: 'Trenutna šifra'
+    YOUROLDPASSWORD: 'Stara šifra'
+    EMPTYNEWPASSWORD: 'Nova šifra ne može biti prazna, pokušajte ponovo.'
+    ERRORNEWPASSWORD: 'Šifre se ne poklapaju, pokušajte ponovo.'
+  SilverStripe\Security\MemberAuthenticator\MemberAuthenticator:
+    ERRORWRONGCRED: 'E-mail ili šifra nisu tačni. Pokušajte ponovo.'
+  SilverStripe\Security\MemberAuthenticator\CMSMemberLoginForm:
+    BUTTONFORGOTPASSWORD: 'Zaboravio sam šifru'
+    BUTTONLOGIN: 'Prijavi me ponovo'
+    BUTTONLOGOUT: Odjava
+  SilverStripe\Security\Security:
+    LOGIN: Prijava
+    LOGOUT: Odjava
+    BUTTONSEND: 'Pošalji mi link za novu šifru'
+    CONFIRMLOGOUT: 'Kliknite dugme ispod da potvrdite odjavu.'
+    ENTERNEWPASSWORD: 'Upišite novu šifru.'
+    NOTEPAGESECURED: 'Ova stranica je zaštićena. Prijavite se i odmah vas vraćamo.'
+    NOTERESETPASSWORD: 'Upišite svoju e-mail adresu i poslat ćemo vam link za postavljanje nove šifre.'
+    ALREADYLOGGEDIN: 'Nemate pristup ovoj stranici. Ako imate drugi nalog s pristupom, prijavite se ponovo ispod.'
+    CHANGEPASSWORDHEADER: 'Promjena šifre'
+    LOSTPASSWORDHEADER: 'Zaboravljena šifra'
+  SilverStripe\LoginForms:
+    BackToHomePage: 'Nazad na sajt'
+    LOGIN: Prijava
+    SilverstripeTitle: 'BE SHIRT'
