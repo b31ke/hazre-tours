@@ -357,3 +357,116 @@
   addEventListener('scroll', check, { passive: true });
   check();
 })();
+
+// Padajuće liste u stilu sajta (na računaru; na telefonu ostaje izvorni birač).
+// Prava <select> lista ostaje ispod i šalje vrijednost; ova samo prikazuje i bira.
+(() => {
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const proto = HTMLSelectElement.prototype;
+  const valueDesc = Object.getOwnPropertyDescriptor(proto, 'value');
+  const indexDesc = Object.getOwnPropertyDescriptor(proto, 'selectedIndex');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let open = null;
+  const closeAll = () => {
+    if (!open) return;
+    open.classList.remove('open');
+    open.querySelector('.dd-btn').setAttribute('aria-expanded', 'false');
+    open = null;
+  };
+  document.addEventListener('click', e => { if (open && !open.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && open) { const b = open.querySelector('.dd-btn'); closeAll(); b.focus(); }
+  });
+
+  const enhance = sel => {
+    if (sel.dataset.dd || sel.multiple) return;
+    sel.dataset.dd = '1';
+    const wrap = document.createElement('div');
+    wrap.className = 'dd';
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    sel.classList.add('dd-native');
+    sel.tabIndex = -1;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'dd-btn';
+    btn.setAttribute('aria-haspopup', 'listbox');
+    btn.setAttribute('aria-expanded', 'false');
+    const lbl = sel.id ? document.querySelector('label[for="' + sel.id + '"]') : sel.closest('label');
+    if (lbl) {
+      if (lbl.htmlFor) { lbl.htmlFor = ''; lbl.addEventListener('click', () => btn.focus()); }
+      btn.setAttribute('aria-label', (lbl.querySelector('span') || lbl).textContent.trim());
+    }
+    const list = document.createElement('ul');
+    list.className = 'dd-list';
+    list.setAttribute('role', 'listbox');
+    wrap.append(btn, list);
+    let act = -1;
+
+    const sync = () => {
+      const o = sel.options[sel.selectedIndex];
+      btn.textContent = o ? o.textContent : '';
+      btn.classList.toggle('placeholder', !o || o.value === '');
+      [...list.children].forEach((li, i) => li.setAttribute('aria-selected', String(i === sel.selectedIndex)));
+      btn.disabled = sel.disabled;
+    };
+    const render = () => {
+      list.innerHTML = [...sel.options].map((o, i) =>
+        '<li role="option" data-i="' + i + '" aria-selected="' + o.selected + '"' + (o.disabled ? ' aria-disabled="true"' : '') + '>' + esc(o.textContent) + '</li>'
+      ).join('');
+      sync();
+    };
+    const mark = i => {
+      act = i;
+      [...list.children].forEach((li, j) => li.classList.toggle('act', j === i));
+      if (list.children[i]) list.children[i].scrollIntoView({ block: 'nearest' });
+    };
+    const choose = i => {
+      const o = sel.options[i];
+      if (!o || o.disabled) return;
+      indexDesc.set.call(sel, i);
+      sync();
+      sel.dispatchEvent(new Event('input', { bubbles: true }));
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      closeAll();
+      btn.focus();
+    };
+    const toggle = () => {
+      if (wrap.classList.contains('open')) { closeAll(); return; }
+      closeAll();
+      wrap.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      open = wrap;
+      // otvori prema gore ako ispod nema mjesta
+      const r = btn.getBoundingClientRect();
+      wrap.classList.toggle('up', innerHeight - r.bottom < 260 && r.top > innerHeight - r.bottom);
+      mark(sel.selectedIndex);
+    };
+
+    btn.addEventListener('click', toggle);
+    btn.addEventListener('keydown', e => {
+      const n = sel.options.length;
+      if (!n) return;
+      const step = d => { let i = act < 0 ? 0 : act; let k = 0; do { i = (i + d + n) % n; k++; } while (sel.options[i].disabled && k < n); return i; };
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!wrap.classList.contains('open')) { toggle(); return; }
+        mark(step(e.key === 'ArrowDown' ? 1 : -1));
+      } else if ((e.key === 'Enter' || e.key === ' ') && wrap.classList.contains('open')) {
+        e.preventDefault();
+        choose(act);
+      }
+    });
+    list.addEventListener('click', e => { const li = e.target.closest('li'); if (li) choose(+li.dataset.i); });
+    list.addEventListener('mousemove', e => { const li = e.target.closest('li'); if (li && +li.dataset.i !== act) mark(+li.dataset.i); });
+    sel.addEventListener('change', sync);
+    new MutationObserver(render).observe(sel, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled'] });
+    // skripta koja postavi vrijednost bez događaja (reset filtera, "Rezerviši") i dalje ažurira prikaz
+    Object.defineProperty(sel, 'value', { configurable: true, get() { return valueDesc.get.call(this); }, set(v) { valueDesc.set.call(this, v); sync(); } });
+    Object.defineProperty(sel, 'selectedIndex', { configurable: true, get() { return indexDesc.get.call(this); }, set(v) { indexDesc.set.call(this, v); sync(); } });
+    if (sel.form) sel.form.addEventListener('reset', () => setTimeout(sync));
+    render();
+  };
+
+  document.querySelectorAll('.field select, .filter-panel select').forEach(enhance);
+})();

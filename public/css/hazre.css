@@ -1141,3 +1141,24 @@ details[open] > summary i::after { rotate: 0deg; }
 .page-hero .chip:hover { background: rgba(255, 255, 255, .22); color: #fff; }
 .page-hero .chip.on { background: var(--orange); border-color: var(--orange); color: var(--royal-d); }
 .page-hero .chip .count { color: inherit; opacity: .75; }
+
+/* Padajuće liste u stilu sajta */
+.dd { position: relative; }
+.dd-native { position: absolute !important; inset: 0; opacity: 0; pointer-events: none; }
+.dd-btn { position: relative; width: 100%; min-height: 48px; display: flex; align-items: center; padding: 12px 44px 12px 14px; border: 1px solid #CBD5DF; border-radius: 12px; background: #fff; color: var(--text); font: 400 16px var(--body); text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: border-color .2s, box-shadow .2s; }
+.dd-btn.placeholder { color: var(--muted); }
+.dd-btn::after { content: ""; position: absolute; right: 16px; top: 50%; width: 8px; height: 8px; border-right: 2px solid var(--royal); border-bottom: 2px solid var(--royal); rotate: 45deg; translate: 0 -70%; transition: rotate .2s, translate .2s; }
+.dd-btn:hover { border-color: #9FB4DA; }
+.dd-btn:focus-visible, .dd.open .dd-btn { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23, 174, 223, .18); }
+.dd.open .dd-btn::after { rotate: -135deg; translate: 0 -20%; }
+.dd-btn:disabled { background: var(--bg-alt); color: var(--muted); cursor: not-allowed; }
+.dd-list { position: absolute; z-index: 60; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; max-height: 300px; overflow-y: auto; background: #fff; border: 1px solid #DCE4F2; border-radius: 14px; box-shadow: 0 24px 50px -20px rgba(19, 46, 126, .45); opacity: 0; visibility: hidden; translate: 0 -6px; transition: opacity .18s, translate .18s, visibility .18s; scrollbar-width: thin; }
+.dd.up .dd-list { top: auto; bottom: calc(100% + 6px); translate: 0 6px; }
+.dd.open .dd-list { opacity: 1; visibility: visible; translate: 0 0; }
+.dd.open { z-index: 61; }
+.dd-list li { position: relative; padding: 10px 36px 10px 12px; border-radius: 9px; font-size: 15px; color: var(--text); cursor: pointer; line-height: 1.35; }
+.dd-list li.act { background: #EEF3FF; color: var(--royal-d); }
+.dd-list li[aria-selected="true"] { color: var(--orange-d); font-weight: 600; }
+.dd-list li[aria-selected="true"]::after { content: ""; position: absolute; right: 14px; top: 50%; width: 6px; height: 11px; border-right: 2.5px solid var(--orange); border-bottom: 2.5px solid var(--orange); rotate: 45deg; translate: 0 -65%; }
+.dd-list li[aria-disabled="true"] { color: #B5BFCE; cursor: not-allowed; background: none; }
+.filter-panel .dd-btn { min-height: 44px; padding-block: 10px; font-size: 15px; border-radius: 10px; border-color: var(--line); }
