@@ -1094,3 +1094,7 @@ details[open] > summary i::after { rotate: 0deg; }
 .notes-more .nm-close, .notes-more[open] .nm-open { display: none; }
 .notes-more[open] .nm-close { display: inline; }
 .notes-more[open] > summary { order: 2; }
+/* Napomene: redni brojevi umjesto znaka "i" (brojanje se nastavlja i u "Prikaži sve") */
+.notes { counter-reset: note; }
+.notes .notes-list li { counter-increment: note; padding-left: 52px; }
+.notes .notes-list li::before { content: counter(note); left: 14px; top: 11px; width: 26px; height: 26px; display: grid; place-items: center; background: #EEF3FF; color: var(--royal); font: 700 12.5px var(--head); }
