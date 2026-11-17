@@ -39,20 +39,6 @@
                 </a>
                 <% end_loop %>
             <% end_if %>
-            <% with $UpcomingTrips.First %>
-            <a class="ticket" href="$Link">
-                <span class="tk-main">
-                    <span class="tk-label">Najbliži polazak</span>
-                    <b class="tk-title">$Title</b>
-                    <span class="tk-meta">$TabLabel · $TransportLabel</span>
-                </span>
-                <span class="tk-stub">
-                    <span class="tk-from"><% if $HasPriceFrom %>od<% else %>cijena<% end_if %></span>
-                    <b class="tk-price">$MinPrice <small>KM</small></b>
-                    <span class="tk-go">Rezerviši →</span>
-                </span>
-            </a>
-            <% end_with %>
         </div>
     </div>
 
@@ -168,6 +154,37 @@
     <svg class="why-wave bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 H1440 V40 C 1200 0, 960 0, 720 30 S 240 70, 0 30 Z" fill="#F3F7FC"/></svg>
 </section>
 
+<% if $PublishedReviews.Count %>
+<section class="block alt" aria-labelledby="rev-h">
+    <div class="wrap">
+        <div class="center-head">
+            <h2 id="rev-h">Utisci naših putnika</h2>
+            <% if $SiteConfig.GoogleReviewsURL %><a class="link-more" href="$SiteConfig.GoogleReviewsURL" rel="noopener">Sve recenzije na Googleu →</a><% end_if %>
+        </div>
+        <div class="reviews">
+            <% loop $PublishedReviews %>
+            <figure class="review">
+                <div class="stars" aria-label="Ocjena $Rating od 5">$Stars</div>
+                <blockquote>$Text</blockquote>
+                <figcaption><b>$Name</b><% if $City %>, $City<% end_if %><% if $TripTitle %><small>$TripTitle</small><% end_if %></figcaption>
+            </figure>
+            <% end_loop %>
+        </div>
+    </div>
+</section>
+<% end_if %>
+
+<% if $GalleryPreview.Count %>
+<section class="block alt" aria-labelledby="gal-h">
+    <div class="wrap">
+        <div class="center-head"><h2 id="gal-h">Galerija</h2><a class="link-more" href="$GalleryLink">Cijela galerija →</a></div>
+        <div class="gallery">
+            <% loop $GalleryPreview %><a href="$ScaleMaxWidth(1800).URL" class="g-item" data-lightbox="home"><img src="$Fill(600,600).Convert('webp').URL" alt="$Title.ATT" loading="lazy"></a><% end_loop %>
+        </div>
+    </div>
+</section>
+<% end_if %>
+
 <section class="block alt svc-block" aria-labelledby="svc-h">
     <div class="wrap">
         <div class="center-head"><p class="script-kicker">Šta sve radimo</p><h2 id="svc-h">Naše usluge</h2></div>
@@ -199,37 +216,6 @@
         </div>
     </div>
 </section>
-
-<% if $PublishedReviews.Count %>
-<section class="block" aria-labelledby="rev-h">
-    <div class="wrap">
-        <div class="center-head">
-            <h2 id="rev-h">Utisci naših putnika</h2>
-            <% if $SiteConfig.GoogleReviewsURL %><a class="link-more" href="$SiteConfig.GoogleReviewsURL" rel="noopener">Sve recenzije na Googleu →</a><% end_if %>
-        </div>
-        <div class="reviews">
-            <% loop $PublishedReviews %>
-            <figure class="review">
-                <div class="stars" aria-label="Ocjena $Rating od 5">$Stars</div>
-                <blockquote>$Text</blockquote>
-                <figcaption><b>$Name</b><% if $City %>, $City<% end_if %><% if $TripTitle %><small>$TripTitle</small><% end_if %></figcaption>
-            </figure>
-            <% end_loop %>
-        </div>
-    </div>
-</section>
-<% end_if %>
-
-<% if $GalleryPreview.Count %>
-<section class="block" aria-labelledby="gal-h">
-    <div class="wrap">
-        <div class="center-head"><h2 id="gal-h">Galerija</h2><a class="link-more" href="$GalleryLink">Cijela galerija →</a></div>
-        <div class="gallery">
-            <% loop $GalleryPreview %><a href="$ScaleMaxWidth(1800).URL" class="g-item" data-lightbox="home"><img src="$Fill(600,600).Convert('webp').URL" alt="$Title.ATT" loading="lazy"></a><% end_loop %>
-        </div>
-    </div>
-</section>
-<% end_if %>
 
 <section class="block alt faq-block" aria-labelledby="faq-h">
     <div class="wrap faq-grid">
