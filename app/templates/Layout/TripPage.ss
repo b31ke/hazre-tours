@@ -35,14 +35,30 @@ $JsonLD
             <div class="tab-panel" role="tabpanel" id="t-opis" aria-labelledby="tb-opis">
                 <h2 class="panel-h">Opis putovanja</h2>
                 <% if $Summary %><p class="trip-lead">$Summary</p><% end_if %>
+
+                <% if $PhotoURL %>
+                <figure class="dest-photo">
+                    <img src="$PhotoURL" alt="<% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %>" loading="lazy">
+                    <figcaption>
+                        <span class="dp-place"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></span>
+                        <% with $NextOpenTerm %><span class="dp-when">Polazak $Label · <b>$Countdown</b></span><% end_with %>
+                    </figcaption>
+                </figure>
+                <% end_if %>
+
                 <% if $IncludesList.Count || $ExcludesList.Count %>
                 <div class="two">
-                    <% if $IncludesList.Count %><div class="box glass"><h3>Aranžman obuhvata</h3><ul class="ticks"><% loop $IncludesList %><li>$Text</li><% end_loop %></ul></div><% end_if %>
-                    <% if $ExcludesList.Count %><div class="box glass"><h3>Ne obuhvata</h3><ul class="dashes"><% loop $ExcludesList %><li>$Text</li><% end_loop %></ul></div><% end_if %>
+                    <% if $IncludesList.Count %><div class="box inc"><h3><span class="bx-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5 9-10"/></svg></span>Aranžman obuhvata</h3><ul class="ticks"><% loop $IncludesList %><li>$Text</li><% end_loop %></ul></div><% end_if %>
+                    <% if $ExcludesList.Count %><div class="box exc"><h3><span class="bx-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M7 7l10 10M17 7 7 17"/></svg></span>Ne obuhvata</h3><ul class="dashes"><% loop $ExcludesList %><li>$Text</li><% end_loop %></ul></div><% end_if %>
                 </div>
                 <% end_if %>
-                <% if $Accommodation %><div class="box glass"><h3>Smještaj i prevoz</h3><p>$Accommodation</p></div><% end_if %>
-                <% if $Departures %><p class="trip-deps"><b>Polasci iz:</b> $Departures. <span class="muted">Tačno vrijeme i mjesto polaska su u programu.</span></p><% end_if %>
+                <% if $Accommodation %><div class="box"><h3>Smještaj i prevoz</h3><p>$Accommodation</p></div><% end_if %>
+                <% if $DepartureList.Count %>
+                <div class="deps-card">
+                    <div class="deps-h"><span class="bx-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg></span><div><b>Polasci iz</b><small>Tačno vrijeme i mjesto polaska su u programu.</small></div></div>
+                    <ul class="deps-chips"><% loop $DepartureList %><li>$Name</li><% end_loop %></ul>
+                </div>
+                <% end_if %>
             </div>
 
             <% if $ProgramDays.Count %>
@@ -103,7 +119,7 @@ $JsonLD
             <% if $Poster.exists %>
             <a class="side-poster" href="$Poster.URL" data-lightbox="poster" aria-label="Pogledaj plakat: $Title">
                 <img src="$CardImageURL" alt="Plakat: $Title" loading="lazy">
-                <span class="sp-zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg>Uvećaj plakat</span>
+                <span class="sp-zoom" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg></span>
             </a>
             <% end_if %>
             <div class="book glass" id="book">
@@ -125,10 +141,10 @@ $JsonLD
                 <% if $ProgramFile.exists %><a class="btn btn-ghost wide" href="$ProgramFile.URL" download><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>Program ($ProgramFile.Extension.UpperCase)</a><% end_if %>
                 <div class="share">
                     <span class="muted small">Podijeli:</span>
-                    <a href="viber://forward?text=$Top.ShareText" aria-label="Podijeli na Viberu" class="sh viber">V</a>
-                    <a href="https://wa.me/?text=$Top.ShareText" rel="noopener" aria-label="Podijeli na WhatsAppu" class="sh wa">W</a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=$Top.ShareURL" rel="noopener" aria-label="Podijeli na Facebooku" class="sh fb">f</a>
-                    <button type="button" class="sh" data-copy="$AbsoluteLink" aria-label="Kopiraj link">⧉</button>
+                    <a href="viber://forward?text=$Top.ShareText" aria-label="Podijeli na Viberu" class="sh viber"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C7 2 3.5 4.6 3.5 10c0 3 .9 5 2.5 6.3V21l3.4-2.5c.8.2 1.7.3 2.6.3 5 0 8.5-2.6 8.5-8.8S17 2 12 2zm3.6 12.3c-.4.6-1.4 1-2 .8-2.6-.8-4.6-2.7-5.5-5.3-.2-.6.2-1.6.8-2 .3-.2.7-.2.9.1l1 1.4c.2.3.2.7-.1 1l-.4.4c.5 1.2 1.4 2.1 2.6 2.6l.4-.4c.3-.3.7-.3 1-.1l1.4 1c.3.2.3.6-.1.5z"/></svg></a>
+                    <a href="https://wa.me/?text=$Top.ShareText" rel="noopener" aria-label="Podijeli na WhatsAppu" class="sh wa"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 .9c.3.2.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=$Top.ShareURL" rel="noopener" aria-label="Podijeli na Facebooku" class="sh fb"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4.4V11H7v4h3v9h4v-9h3l1-4h-4V8.6c0-.4.3-.6.6-.6z"/></svg></a>
+                    <button type="button" class="sh" data-copy="$AbsoluteLink" aria-label="Kopiraj link"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
                 </div>
             </div>
         </aside>
