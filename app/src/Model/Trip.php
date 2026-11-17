@@ -704,7 +704,39 @@ class Trip extends DataObject
         if (!preg_match('/<p[^>]*>\s*(<strong>)?\s*(ARANŽMAN RAĐEN|Napomen)/iu', $html, $m, PREG_OFFSET_CAPTURE)) {
             return null;
         }
-        return DBField::create_field('HTMLFragment', substr($html, $m[0][1]));
+        return DBField::create_field('HTMLFragment', self::formatNotes(substr($html, $m[0][1])));
+    }
+
+    /**
+     * Uljepšava napomene: "ARANŽMAN RAĐEN NA BAZI 40 OSOBA" kao istaknuta kartica, "Napomene:" kao naslov,
+     * brojevi (40 putnika, 25 osoba, 90 dana) podebljani, a dugačka lista skraćena na prvih 6 uz "Prikaži sve".
+     */
+    public static function formatNotes(string $html): string
+    {
+        $html = str_replace(['25osoba', 'sjedišete'], ['25 osoba', 'sjedište'], $html);
+        $html = preg_replace_callback(
+            '/<p[^>]*>\s*(?:<strong>)?\s*ARANŽMAN RAĐEN NA BAZI\s+(\d+)\s+OSOBA\.?\s*(?:<\/strong>)?\s*<\/p>/iu',
+            fn ($m) => '<div class="note-base"><span class="nb-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/></svg></span>'
+                . '<span><b>Aranžman rađen na bazi ' . $m[1] . ' osoba</b><small>Cijena važi uz najmanje ' . $m[1] . ' prijavljenih putnika.</small></span></div>',
+            $html
+        );
+        $html = preg_replace('/<p[^>]*>\s*(?:<strong>)?\s*Napomene\s*:?\s*(?:<\/strong>)?\s*<\/p>/iu', '<h3 class="notes-h">Napomene</h3>', $html);
+        // brojevi s jedinicom podebljani
+        $html = preg_replace('/\b(\d+)\s?(osoba|putnika|prijavljenih putnika|dana|sati)\b/u', '<b>$1 $2</b>', $html);
+        // dugačka lista: prvih 6 vidljivo, ostalo na klik
+        $html = preg_replace_callback('/<ul[^>]*>(.*?)<\/ul>/su', function ($m) {
+            preg_match_all('/<li[^>]*>.*?<\/li>/su', $m[1], $li);
+            $items = $li[0];
+            if (count($items) <= 8) {
+                return '<ul class="notes-list">' . implode('', $items) . '</ul>';
+            }
+            $first = array_slice($items, 0, 6);
+            $rest = array_slice($items, 6);
+            return '<ul class="notes-list">' . implode('', $first) . '</ul>'
+                . '<details class="notes-more"><summary><span class="nm-open">Prikaži sve napomene (' . count($items) . ')</span><span class="nm-close">Sakrij napomene</span></summary>'
+                . '<ul class="notes-list" start="7">' . implode('', $rest) . '</ul></details>';
+        }, $html);
+        return $html;
     }
 
     /** Pitanja za ovaj aranžman pa opšta. */
