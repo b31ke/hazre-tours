@@ -1373,3 +1373,9 @@ details[open] > summary i::after { rotate: 0deg; }
 .fw-dot { width: 8px; height: 8px; border-radius: 50%; background: #3BE07A; box-shadow: 0 0 0 0 rgba(59, 224, 122, .6); animation: hz-ping2 1.8s infinite; }
 @keyframes hz-ping2 { to { box-shadow: 0 0 0 9px rgba(59, 224, 122, 0); } }
 @media (prefers-reduced-motion: reduce) { .trip-bg.is-photo, .fw-dot { animation: none; } }
+/* Meni na telefonu: broj tačno u sredini narandžastog dugmeta (ikonica lijevo); važi samo za meni na manjim ekranima */
+@media (max-width: 1340px) {
+  .nav-call { position: relative; justify-content: center; padding: 10px 56px !important; min-height: 56px; }
+  .nav-call span { position: absolute; left: 8px; top: 50%; translate: 0 -50%; }
+  .nav-call b { text-align: center; letter-spacing: .02em; }
+}
