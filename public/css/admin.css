@@ -250,3 +250,22 @@ body.cms { background: var(--hz-bg) !important; }
 .cms-content-header .cms-tabset-nav-primary li.ui-tabs-active a.ui-tabs-anchor { background: var(--hz-orange) !important; color: var(--hz-royal-dd) !important; font-weight: 600 !important; box-shadow: 0 8px 18px -8px rgba(247, 161, 26, .9) !important; }
 .cms-content-header .cms-tabset-nav-primary li.ui-tabs-active::after, .cms-content-header .cms-tabset-nav-primary li::before { display: none !important; }
 .cms-menu__list li a .text { margin: 0 !important; flex: 1; min-width: 0; }
+
+/* Podstablo "Aranžmani i upiti" u meniju */
+.hz-sub { list-style: none; margin: 2px 8px 10px 26px !important; padding: 4px 0 4px 12px !important; position: relative; }
+.hz-sub::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 16px; width: 2px; border-radius: 2px; background: rgba(255, 255, 255, .16); }
+.hz-sub li { position: relative; margin: 0 !important; }
+.hz-sub li::before { content: ""; position: absolute; left: -12px; top: 50%; width: 9px; height: 2px; background: rgba(255, 255, 255, .16); }
+.cms-menu__list .hz-sub li a.hz-sub__link { display: flex !important; align-items: center; gap: 9px; margin: 1px 0 !important; padding: 6px 8px !important; border-radius: 10px !important; background: transparent !important; color: rgba(255, 255, 255, .78) !important; font: 500 13px "Poppins", sans-serif !important; text-decoration: none !important; translate: 0 0; }
+.cms-menu__list .hz-sub li a.hz-sub__link:hover { background: rgba(255, 255, 255, .1) !important; color: #fff !important; translate: 2px 0; }
+.hz-sub__ico { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: rgba(255, 255, 255, .08); color: #8FDDF5; font-size: 12px; line-height: 1; }
+.hz-sub__ico::before { margin: 0 !important; }
+.hz-sub__text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hz-sub__badge { flex: none; min-width: 20px; height: 20px; padding: 0 6px; display: grid; place-items: center; border-radius: 999px; background: var(--hz-orange); color: var(--hz-royal-dd); font: 700 11px "Poppins", sans-serif; box-shadow: 0 0 0 3px rgba(247, 161, 26, .25); }
+.cms-menu__list .hz-sub li a.hz-sub__link.is-current { background: rgba(255, 255, 255, .16) !important; color: #fff !important; font-weight: 600 !important; }
+.cms-menu__list .hz-sub li a.hz-sub__link.is-current .hz-sub__ico { background: var(--hz-orange); color: var(--hz-royal-dd); }
+.cms-menu__list .hz-sub li a.hz-sub__link.is-current::before { content: ""; position: absolute; left: -13px; top: 50%; width: 6px; height: 6px; translate: 0 -50%; border-radius: 50%; background: var(--hz-orange); box-shadow: 0 0 0 3px rgba(247, 161, 26, .3); }
+.cms-menu.collapsed .hz-sub { display: none; }
+.hz-sub__text { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; line-height: 1.2; }
+.cms-menu__list .hz-sub li a.hz-sub__link { font-size: 12.5px !important; }
+.hz-sub { margin-left: 20px !important; }

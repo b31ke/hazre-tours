@@ -1,0 +1,37 @@
+---
+Name: hazrepermissions
+---
+# Urednici (grupa "Urednici aranžmana") vide samo Aranžmani i upiti i smiju uređivati sve u tom dijelu
+HazreTours\Model\Trip:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\TripTerm:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\Inquiry:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\TripCategory:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\FaqItem:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\Review:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+HazreTours\Model\Subscriber:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+# fotografije i plakati za aranžmane (bez otvaranja cijelog dijela Datoteke)
+SilverStripe\Assets\File:
+  extensions:
+    - HazreTours\Extensions\TripAdminAccessExtension
+SilverStripe\Security\Group:
+  extensions:
+    - HazreTours\Extensions\EditorGroupExtension
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - HazreTours\Extensions\AdminMenuExtension
+  extra_requirements_javascript:
+    - 'js/admin.js'
