@@ -963,3 +963,11 @@ details[open] > summary i::after { rotate: 0deg; }
 /* blur kvari slova obojena preko pozadine (background-clip: text), zato bez filtera */
 .foot-mark span { filter: none !important; translate: 0 .25em; transition-property: opacity, translate; }
 .foot-mark.in span { translate: 0 0; }
+/* Dno podnožja: © i potpis na sredini, dugme Na vrh desno */
+.foot-bottom { position: relative; justify-content: center; text-align: center; }
+.foot-legal { display: grid; gap: 4px; justify-items: center; }
+.foot-credit { font-size: 12.5px; color: #8E9DC8; }
+.foot-credit a { color: #C9D4F0; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(247, 161, 26, .5); transition: color .2s, border-color .2s; }
+.foot-credit a:hover { color: var(--orange); border-color: var(--orange); }
+.foot-bottom .to-top { position: absolute; right: var(--gutter, 20px); top: 50%; translate: 0 -50%; }
+@media (max-width: 640px) { .foot-bottom { flex-direction: column; } .foot-bottom .to-top { position: static; translate: none; } }

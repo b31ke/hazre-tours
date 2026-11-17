@@ -70,7 +70,10 @@
     <p class="foot-mark" aria-hidden="true"><span style="--i:0">H</span><span style="--i:1">A</span><span style="--i:2">Z</span><span style="--i:3">R</span><span style="--i:4">E</span><span class="fm-sp"> </span><span style="--i:6">T</span><span style="--i:7">O</span><span style="--i:8">U</span><span style="--i:9">R</span><span style="--i:10">S</span></p>
 
     <div class="wrap foot-bottom">
-        <span>© $CurrentYear <% if $SiteConfig.CompanyName %>$SiteConfig.CompanyName<% else %>$SiteConfig.Title<% end_if %><% if $SiteConfig.LicenseNumber %> · Licenca $SiteConfig.LicenseNumber<% end_if %></span>
+        <div class="foot-legal">
+            <span>© $CurrentYear <% if $SiteConfig.CompanyName %>$SiteConfig.CompanyName<% else %>$SiteConfig.Title<% end_if %><% if $SiteConfig.LicenseNumber %> · Licenca $SiteConfig.LicenseNumber<% end_if %></span>
+            <span class="foot-credit">Design by <a href="https://beshirt.ba/be-web/" rel="noopener" target="_blank">BE SHIRT d.o.o.</a></span>
+        </div>
         <a href="#top" class="to-top">Na vrh <span aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></a>
     </div>
 </footer>
