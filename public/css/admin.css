@@ -249,3 +249,4 @@ body.cms { background: var(--hz-bg) !important; }
 .cms-content-header .cms-tabset-nav-primary li a.ui-tabs-anchor:hover { background: rgba(255, 255, 255, .16) !important; color: #fff !important; }
 .cms-content-header .cms-tabset-nav-primary li.ui-tabs-active a.ui-tabs-anchor { background: var(--hz-orange) !important; color: var(--hz-royal-dd) !important; font-weight: 600 !important; box-shadow: 0 8px 18px -8px rgba(247, 161, 26, .9) !important; }
 .cms-content-header .cms-tabset-nav-primary li.ui-tabs-active::after, .cms-content-header .cms-tabset-nav-primary li::before { display: none !important; }
+.cms-menu__list li a .text { margin: 0 !important; flex: 1; min-width: 0; }
