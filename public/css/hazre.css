@@ -1355,3 +1355,10 @@ details[open] > summary i::after { rotate: 0deg; }
   .cz-text { justify-self: center; text-align: center; padding: 0 24px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 }
 @media (min-width: 900px) and (max-width: 1280px) { .cz-head .cz-title { white-space: normal; } .cz-kicker { font-size: 17px; } }
+/* Kolačići (vodoravno): nazad na raspored lijevo / tekst / dugmad, sve centrirano po visini prozora */
+@media (min-width: 900px) {
+  .consent { grid-template-columns: auto minmax(0, 1fr) auto; row-gap: 0; padding: 20px 24px; }
+  .cz-head, .cz-text, .cz-btns { align-self: center; }
+  .cz-text { justify-self: stretch; text-align: left; padding: 0 0 0 24px; border-right: 0; margin: 0; }
+  .cz-prefs { margin-top: 16px; }
+}
