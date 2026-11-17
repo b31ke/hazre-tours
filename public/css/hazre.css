@@ -894,10 +894,6 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-call:hover { scale: 1.04; background: #FFB33A; }
 .foot-call b { font: 800 18px var(--head); }
 .fc-ico { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--royal-d); color: #fff; }
-.foot-phones { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 6px; }
-.foot-phones a { font-weight: 600; }
-.foot-line { display: flex; gap: 10px; align-items: flex-start; padding: 4px 0; overflow-wrap: anywhere; }
-.foot-line svg { flex: none; margin-top: 3px; color: #8FDDF5; }
 .socials a { transition: background .2s, translate .2s; }
 .socials a:hover { translate: 0 -3px; }
 .foot-mark { position: relative; margin: clamp(26px, 4vw, 44px) 0 -0.18em; text-align: center; white-space: nowrap; font: 800 clamp(56px, 13vw, 190px)/1 var(--head); letter-spacing: .04em; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .1); background: linear-gradient(180deg, rgba(255, 255, 255, .1), transparent 85%); -webkit-background-clip: text; background-clip: text; user-select: none; pointer-events: none; }
@@ -962,3 +958,11 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-credit a { display: inline-flex; border: 0; line-height: 0; }
 .foot-credit img { height: 18px; width: auto; opacity: .7; transition: opacity .2s, translate .2s; }
 .foot-credit a:hover img { opacity: 1; translate: 0 -1px; }
+/* Podnožje, kontakt: uredni redovi s ikonom i oznakom */
+.foot-rows { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 12px; }
+.foot-rows a { display: flex; align-items: center; gap: 12px; color: #fff !important; text-decoration: none; }
+.fr-ico { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: rgba(255, 255, 255, .09); border: 1px solid rgba(255, 255, 255, .12); color: #8FDDF5; transition: background .2s, color .2s, border-color .2s; }
+.foot-rows a:hover .fr-ico { background: var(--orange); border-color: var(--orange); color: var(--royal-d); }
+.fr-txt { display: grid; min-width: 0; font: 600 14.5px/1.3 var(--head); overflow-wrap: anywhere; }
+.fr-txt small { font: 500 11px var(--body); letter-spacing: .06em; text-transform: uppercase; color: #8E9DC8; }
+.foot-rows a:hover .fr-txt { color: var(--orange); }
