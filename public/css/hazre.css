@@ -1104,3 +1104,8 @@ details[open] > summary i::after { rotate: 0deg; }
 .sh svg { width: 23px; height: 23px; }
 .sh.viber { background: #F0EDFF; } .sh.wa { background: #E6F7EC; } .sh.fb { background: #E8F1FE; }
 .sh:not(.viber):not(.wa):not(.fb) { background: #EEF3FF; }
+/* Dijeljenje: originalni logotipi u bijelim krugovima */
+.sh, .sh.viber, .sh.wa, .sh.fb { width: 48px; height: 48px; background: #fff; border: 1px solid #E2E8F4; box-shadow: 0 6px 14px -10px rgba(27, 63, 168, .5); }
+.sh svg { width: 28px; height: 28px; }
+.sh.viber:hover, .sh.wa:hover, .sh.fb:hover { background: #fff; border-color: #C9D5EE; translate: 0 -3px; box-shadow: 0 12px 20px -12px rgba(27, 63, 168, .6); }
+.sh:not(.viber):not(.wa):not(.fb) svg { width: 22px; height: 22px; }
