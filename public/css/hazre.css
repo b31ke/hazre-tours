@@ -890,10 +890,6 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-col > a:not(.foot-call):not(.foot-line)::before { content: "→"; position: absolute; left: -18px; opacity: 0; color: var(--orange); transition: opacity .2s, left .2s; }
 .foot-col > a:not(.foot-call):not(.foot-line):hover { translate: 14px 0; color: #fff; }
 .foot-col > a:not(.foot-call):not(.foot-line):hover::before { opacity: 1; left: -16px; }
-.foot-call { display: inline-flex; align-items: center; gap: 10px; justify-self: start; margin-bottom: 4px; padding: 6px 18px 6px 6px; border-radius: 999px; background: var(--orange); color: var(--royal-d) !important; transition: scale .2s, background .2s; }
-.foot-call:hover { scale: 1.04; background: #FFB33A; }
-.foot-call b { font: 800 18px var(--head); }
-.fc-ico { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--royal-d); color: #fff; }
 .socials a { transition: background .2s, translate .2s; }
 .socials a:hover { translate: 0 -3px; }
 .foot-mark { position: relative; margin: clamp(26px, 4vw, 44px) 0 -0.18em; text-align: center; white-space: nowrap; font: 800 clamp(56px, 13vw, 190px)/1 var(--head); letter-spacing: .04em; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .1); background: linear-gradient(180deg, rgba(255, 255, 255, .1), transparent 85%); -webkit-background-clip: text; background-clip: text; user-select: none; pointer-events: none; }
@@ -960,9 +956,13 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-credit a:hover img { opacity: 1; translate: 0 -1px; }
 /* Podnožje, kontakt: uredni redovi s ikonom i oznakom */
 /* Kontakt u podnožju: kompaktno, tri reda bez oznaka */
-.foot-call { margin-bottom: 6px; }
 /* Kontakt u podnožju istim stilom kao ostale kolone */
-.foot-col > a.fc-link { display: flex; align-items: flex-start; gap: 9px; padding: 4px 0; overflow-wrap: anywhere; }
-.foot-col > a.fc-link svg { flex: none; margin-top: 4px; color: #8FDDF5; transition: color .2s; }
-.foot-col > a.fc-link:hover svg { color: var(--orange); }
-.foot-col > a.fc-link::before { display: none; }
+/* Kontakt u podnožju: providna kartica, tri reda odvojena linijama */
+.fcard { display: grid; border-radius: 18px; background: linear-gradient(160deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03)); border: 1px solid rgba(255, 255, 255, .12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); overflow: hidden; }
+.fcard-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #DCE4F8 !important; text-decoration: none; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; transition: background .2s; }
+.fcard-row + .fcard-row { border-top: 1px solid rgba(255, 255, 255, .09); }
+.fcard-row:hover { background: rgba(255, 255, 255, .06); }
+.fcard-ico { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgba(143, 221, 245, .12); color: #8FDDF5; transition: background .2s, color .2s; }
+.fcard-row:hover .fcard-ico { background: var(--orange); color: var(--royal-d); }
+.fcard-row.is-phone { font: 700 19px var(--head); color: #fff !important; letter-spacing: .01em; }
+.fcard-row.is-phone .fcard-ico { background: var(--orange); color: var(--royal-d); }

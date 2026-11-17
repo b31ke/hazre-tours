@@ -59,9 +59,11 @@
         </nav>
         <div class="foot-col foot-contact">
             <p class="foot-h">Kontakt</p>
-            <% with $SiteConfig.MainPhone %><a class="foot-call" href="tel:$Tel"><span class="fc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span><b>$Number</b></a><% end_with %>
-            <% if $SiteConfig.ContactEmail %><a class="fc-link" href="mailto:$SiteConfig.ContactEmail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>$SiteConfig.ContactEmail</a><% end_if %>
-            <% if $SiteConfig.Address %><a class="fc-link" href="$SiteConfig.MapsLink" rel="noopener" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>$SiteConfig.Address</a><% end_if %>
+            <div class="fcard">
+                <% with $SiteConfig.MainPhone %><a class="fcard-row is-phone" href="tel:$Tel"><span class="fcard-ico" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span><span>$Number</span></a><% end_with %>
+                <% if $SiteConfig.ContactEmail %><a class="fcard-row" href="mailto:$SiteConfig.ContactEmail"><span class="fcard-ico" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span>$SiteConfig.ContactEmail</span></a><% end_if %>
+                <% if $SiteConfig.Address %><a class="fcard-row" href="$SiteConfig.MapsLink" rel="noopener" target="_blank"><span class="fcard-ico" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span>$SiteConfig.Address</span></a><% end_if %>
+            </div>
             <% if $SiteConfig.WorkingHours %><p class="foot-line muted">$SiteConfig.WorkingHours</p><% end_if %>
         </div>
     </div>
