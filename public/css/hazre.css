@@ -856,3 +856,4 @@ details[open] > summary i::after { rotate: 0deg; }
 .faq-a { padding: 0 20px 18px 62px; }
 @media (max-width: 560px) { .faq-a { padding-left: 18px; } }
 @media (max-width: 860px) { .faq-side { position: static; } }
+.faq-grid { align-items: center; } .faq-side { position: static; }
