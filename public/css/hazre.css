@@ -1417,3 +1417,23 @@ details[open] > summary i::after { rotate: 0deg; }
   .head-row > .logo { margin: 0 auto; }
   .head-row > .head-actions { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; margin: 0 !important; }
 }
+/* Podnožje na telefonu: kraće i uredno (desktop nepromijenjen) */
+@media (max-width: 640px) {
+  .foot-scene { height: 72px; margin-bottom: 10px; }
+  .foot-skyline { height: 56px; }
+  .foot-wave { height: 30px; }
+  .foot-grid { grid-template-columns: 1fr 1fr !important; gap: 26px 18px !important; }
+  .foot-brand { grid-column: 1 / -1 !important; justify-items: center; text-align: center; gap: 10px !important; }
+  .foot-brand .foot-logo img { height: 56px !important; }
+  .foot-brand .socials { justify-content: center; }
+  .flm { grid-column: 1 / -1 !important; }
+  .flm .foot-h, .foot-col .foot-h { margin-bottom: 6px !important; padding-bottom: 8px; font-size: 13px !important; }
+  .flm-stops { grid-template-columns: 1fr 1fr !important; grid-auto-flow: column !important; grid-template-rows: repeat(5, auto) !important; column-gap: 12px; }
+  .flm-stops li { font-size: 13.5px; padding-block: 3px; }
+  .flm-stops li:nth-child(5)::before { bottom: 50%; }
+  .flm-stops li:nth-child(6)::before { top: 50%; }
+  .foot-col > a:not(.fcard-row) { padding: 3px 0 !important; font-size: 14px; }
+  .foot-col > a:not(.fcard-row):hover { translate: none; }
+  .foot-contact { grid-column: 1 / -1 !important; }
+  .foot-mark { margin: 18px 0 4px !important; }
+}
