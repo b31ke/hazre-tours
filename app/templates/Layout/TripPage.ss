@@ -100,6 +100,12 @@ $JsonLD
         </div>
 
         <aside class="trip-side">
+            <% if $Poster.exists %>
+            <a class="side-poster" href="$Poster.URL" data-lightbox="poster" aria-label="Pogledaj plakat: $Title">
+                <img src="$CardImageURL" alt="Plakat: $Title" loading="lazy">
+                <span class="sp-zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg>Uvećaj plakat</span>
+            </a>
+            <% end_if %>
             <div class="book glass" id="book">
                 <p class="book-h">Izaberite termin</p>
                 <div class="term-pick">
@@ -124,7 +130,6 @@ $JsonLD
                     <a href="https://www.facebook.com/sharer/sharer.php?u=$Top.ShareURL" rel="noopener" aria-label="Podijeli na Facebooku" class="sh fb">f</a>
                     <button type="button" class="sh" data-copy="$AbsoluteLink" aria-label="Kopiraj link">⧉</button>
                 </div>
-                <% if $Poster.exists %><a class="poster-link" href="$Poster.URL" data-lightbox="poster">Pogledaj plakat</a><% end_if %>
             </div>
         </aside>
     </div>

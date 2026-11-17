@@ -1004,3 +1004,13 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 1100px) { .foot-grid { grid-template-columns: 1fr 1fr 1fr !important; } .foot-brand { grid-column: 1 / -1 !important; } }
 @media (max-width: 700px) { .foot-grid { grid-template-columns: 1fr 1fr !important; } }
 @media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr !important; } }
+/* Stranica aranžmana: plakat iznad kartice s terminom; ljepljiva je samo kartica */
+.trip-side { position: static; display: grid; gap: 18px; align-content: start; }
+.trip-side .book { position: sticky; top: calc(var(--head-h) + 16px); }
+.side-poster { position: relative; display: block; overflow: hidden; border-radius: var(--r); background: #fff; box-shadow: var(--shadow-h); line-height: 0; }
+.side-poster img { width: 100%; height: auto; transition: scale .5s ease; }
+.side-poster:hover img { scale: 1.03; }
+.sp-zoom { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: rgba(19, 46, 126, .85); color: #fff; font: 600 12.5px/1 var(--head); backdrop-filter: blur(6px); opacity: .9; transition: opacity .2s, background .2s; }
+.side-poster:hover .sp-zoom { opacity: 1; background: var(--orange); color: var(--royal-d); }
+@media (max-width: 1000px) { .side-poster { max-width: 420px; justify-self: center; } .trip-side .book { position: static; } }
+@media (min-width: 1101px) { .foot-brand { align-self: center; } }
