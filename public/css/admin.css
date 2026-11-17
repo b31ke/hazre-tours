@@ -110,3 +110,87 @@ input[type="checkbox"]:checked, .form-check-input:checked { accent-color: var(--
 .cms-menu__list li, .cms-menu__list li a { background: transparent !important; border: 0 !important; }
 .cms-menu__list li a:hover, .cms-menu__list li a:focus { background: rgba(255, 255, 255, .1) !important; }
 .cms-menu__list li.current > a, .cms-menu__list li.current > a:hover, .cms-menu__list li.opened > a { background: var(--hz-orange) !important; }
+
+/* ===== Admin WOW ===== */
+body.cms { background: var(--hz-bg) !important; }
+
+/* Meni: bez unutrašnje sjene (linije desno), ikonice u kvadratima, svijetleća aktivna stavka */
+.cms-menu__list li a, .cms-menu__list li.current > a { box-shadow: none !important; }
+.cms-menu { position: relative; overflow: hidden; }
+.cms-menu::before, .cms-menu::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .1); pointer-events: none; z-index: 0; }
+.cms-menu::before { width: 320px; height: 320px; left: -120px; bottom: -150px; }
+.cms-menu::after { width: 200px; height: 200px; left: -60px; bottom: -90px; border-color: rgba(247, 161, 26, .25); }
+.cms-menu > * { position: relative; z-index: 1; }
+.cms-menu__list { padding-top: 10px !important; }
+.cms-menu__list li a { display: flex !important; align-items: center; gap: 12px; margin: 3px 10px !important; padding: 9px 10px !important; width: auto !important; border-radius: 14px !important; transition: background .2s, translate .2s !important; }
+.cms-menu__list li a:hover { translate: 3px 0; }
+.cms-menu__list li a .menu__icon { flex: none; display: grid !important; place-items: center; width: 34px !important; height: 34px !important; margin: 0 !important; border-radius: 10px; background: rgba(255, 255, 255, .1); font-size: 16px !important; line-height: 1 !important; transition: background .2s; position: static !important; }
+.cms-menu__list li a .text { position: static !important; padding: 0 !important; font-size: 14.5px !important; white-space: nowrap; }
+.cms-menu__list li a:hover .menu__icon { background: rgba(255, 255, 255, .18); }
+.cms-menu__list li.current > a { box-shadow: 0 12px 26px -12px rgba(247, 161, 26, .95), inset 0 1px 0 rgba(255, 255, 255, .45) !important; translate: 0 0; }
+.cms-menu__list li.current > a .menu__icon { background: rgba(14, 36, 102, .14); }
+.cms-menu.collapsed .cms-menu__list li a { justify-content: center; margin: 3px 6px !important; padding: 8px !important; }
+.cms-menu.collapsed .cms-menu__list li a .text { display: none !important; }
+
+/* Profil u meniju kao mala kartica */
+.cms-login-status { margin-top: 10px; padding: 8px 10px !important; border-radius: 12px; background: rgba(255, 255, 255, .08); }
+
+/* Zaglavlje sadržaja: veći naslov s narandžastom crticom */
+.cms-content-header { padding-top: 6px !important; box-shadow: 0 8px 24px -22px rgba(19, 46, 126, .6); position: relative; z-index: 2; }
+.cms-content-header h2, .breadcrumbs-wrapper { font-size: 20px !important; }
+.breadcrumbs-wrapper .crumb:last-child, .cms-content-header h2 .crumb:last-child { position: relative; }
+.cms-content-header .breadcrumbs-wrapper::before, .cms-content-header h2::before { content: ""; display: inline-block; width: 18px; height: 4px; margin: 0 10px 5px 0; border-radius: 4px; background: var(--hz-orange); vertical-align: middle; }
+
+/* Tabovi kao pilule */
+.cms-content-header-tabs .nav, .cms-content-header-tabs .nav-tabs { gap: 4px; padding: 4px; border: 0 !important; border-radius: 999px; background: var(--hz-bg); }
+.cms-content-header-tabs .nav-link, .cms-content-header-tabs .nav-tabs .nav-link { border: 0 !important; border-radius: 999px !important; padding: 7px 14px !important; box-shadow: none !important; font-size: 13px !important; transition: background .2s, color .2s; }
+.cms-content-header-tabs .nav-link:hover { background: rgba(255, 255, 255, .7); color: var(--hz-royal-d) !important; }
+.cms-content-header-tabs .nav-link.active { background: #fff !important; color: var(--hz-orange-d) !important; box-shadow: 0 6px 16px -8px rgba(27, 63, 168, .45) !important; }
+
+/* Forma za uređivanje u bijeloj kartici */
+.cms-edit-form .cms-content-fields > .panel--padded, .cms-content-fields .panel--padded, .cms-panel-padded {
+  margin: 20px !important; padding: 26px 28px !important; background: #fff !important; border-radius: 20px; box-shadow: 0 20px 44px -34px rgba(19, 46, 126, .55); border: 1px solid var(--hz-line);
+}
+.cms-edit-form .field, .cms-edit-form .form-group { padding-block: 10px; border-bottom: 1px dashed #E6ECF6; }
+.cms-edit-form .field:last-child, .cms-edit-form .form-group:last-child { border-bottom: 0; }
+.form__field-label, .cms-edit-form label.left { font-family: "Poppins", sans-serif; font-size: 13.5px !important; }
+
+/* Donja traka s dugmadima */
+.toolbar--south.cms-content-actions, .cms-content-actions { background: rgba(255, 255, 255, .92) !important; backdrop-filter: blur(8px); border-top: 1px solid var(--hz-line) !important; box-shadow: 0 -10px 30px -24px rgba(19, 46, 126, .6); }
+.cms-content-actions .btn { padding: 9px 18px !important; }
+
+/* Tabele (spiskovi) kao kartice */
+.grid-field { padding: 4px; }
+.grid-field__table { border-collapse: separate !important; border-spacing: 0; border: 1px solid var(--hz-line) !important; border-radius: 18px !important; background: #fff; }
+.grid-field__table thead th { padding-top: 14px !important; padding-bottom: 12px !important; font-size: 12px !important; letter-spacing: .06em; text-transform: uppercase; }
+.grid-field__table tbody td { border-top: 1px solid #EEF2F9 !important; vertical-align: middle !important; }
+.grid-field__table tbody tr { transition: background .15s; }
+.grid-field__table tbody tr.ss-gridfield-item { cursor: pointer; }
+.grid-field__table tbody tr:hover > td:first-child { box-shadow: inset 4px 0 0 var(--hz-orange); }
+.grid-field__table img { border-radius: 10px; box-shadow: 0 6px 14px -8px rgba(19, 46, 126, .5); }
+.grid-field__title, .grid-field .grid-field__title h2 { font-family: "Poppins", sans-serif; color: var(--hz-royal-d); }
+.grid-field__toolbar, .grid-field .toolbar--content { margin-bottom: 10px; }
+.grid-field__search-holder, .search-holder { border-radius: 14px; }
+
+/* Dugmad: zaobljenija, s blagim podizanjem */
+.btn { transition: translate .15s, box-shadow .2s, background .2s !important; }
+.btn-primary:hover, .btn-outline-primary:hover { translate: 0 -1px; }
+
+/* Oznake (badge) i statusi */
+.badge-info, .badge.badge-info { background: #E3F4FC !important; color: #0B7FA8 !important; }
+.badge-success { background: #E3F7EC !important; color: #1E9E5A !important; }
+.badge-warning { background: #FFF1D9 !important; color: var(--hz-orange-d) !important; }
+
+/* Upload polja (plakat, fotografije) */
+.uploadfield, .uploadfield-holder, .uploadfield-item { border-radius: 14px !important; }
+.uploadfield__dropzone, .dropzone-holder { border: 2px dashed #C9D6EE !important; border-radius: 14px !important; background: #F7FAFF !important; }
+
+/* Klizači */
+.cms-content-fields::-webkit-scrollbar, .panel--scrollable::-webkit-scrollbar { width: 10px; }
+.cms-content-fields::-webkit-scrollbar-thumb, .panel--scrollable::-webkit-scrollbar-thumb { background: #C9D6EE; border-radius: 10px; border: 2px solid var(--hz-bg); }
+.cms-menu__list li a { gap: 10px; margin: 3px 8px !important; padding: 7px 8px !important; }
+.cms-menu__list li a .menu__icon { width: 30px !important; height: 30px !important; font-size: 15px !important; }
+.cms-menu__list li a .text { white-space: normal !important; line-height: 1.2 !important; font-size: 14px !important; overflow: visible !important; text-overflow: clip !important; }
+.cms-menu__list li a, .cms-menu__list li a .text { text-align: left !important; justify-content: flex-start; }
+.cms-content-header .breadcrumbs-wrapper::before, .cms-content-header h2::before { display: none; }
+.cms-content-header .breadcrumbs-wrapper .crumb:last-child { border-bottom: 3px solid var(--hz-orange); padding-bottom: 2px; }
