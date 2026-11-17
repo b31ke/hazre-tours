@@ -539,3 +539,14 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   history.replaceState(null, '', location.pathname + location.search);
 }));
+
+/* Na telefonu kraći tekst u poljima (npr. pretraga), desktop zadržava puni */
+(function () {
+  var els = document.querySelectorAll('[data-ph-short]');
+  if (!els.length || !window.matchMedia) return;
+  var mq = window.matchMedia('(max-width: 640px)');
+  els.forEach(function (el) { el.dataset.phLong = el.getAttribute('placeholder') || ''; });
+  function apply() { els.forEach(function (el) { el.setAttribute('placeholder', mq.matches ? el.dataset.phShort : el.dataset.phLong); }); }
+  apply();
+  mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
+})();

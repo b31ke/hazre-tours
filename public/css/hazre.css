@@ -1463,3 +1463,23 @@ details[open] > summary i::after { rotate: 0deg; }
   .next-strip a { flex: none; scroll-snap-align: start; white-space: nowrap; font-size: 13.5px; padding: 9px 14px; }
   .next-strip .ns-all { padding-right: 40px; }
 }
+
+/* Formular za upit/rezervaciju na telefonu: zbijeniji, šira polja, parovi u redu (desktop nepromijenjen) */
+@media (max-width: 640px) {
+  .form-card { padding: 18px 14px !important; border-radius: 22px; }
+  form.inq { grid-template-columns: 1fr 1fr !important; gap: 12px 10px !important; }
+  form.inq > * { grid-column: 1 / -1; min-width: 0; }
+  form.inq > .field:has(input[name="adults"]),
+  form.inq > .field:has(input[name="kids"]),
+  form.inq > .field:has(#f-bdate),
+  form.inq > .field:has(input[name="name"]),
+  form.inq > .field:has(input[name="phone"]) { grid-column: auto; }
+  form.inq .field { gap: 5px; }
+  form.inq label, form.inq legend { font-size: 13px; }
+  form.inq input:not([type="checkbox"]):not([type="radio"]), form.inq select { padding: 11px 13px; font-size: 16px; border-radius: 12px; }
+  form.inq textarea { min-height: 84px; height: 84px; padding: 11px 13px; font-size: 16px; border-radius: 12px; }
+  form.inq .chips-field { gap: 6px; }
+  form.inq .check { font-size: 12.5px; line-height: 1.45; gap: 9px; }
+  form.inq .form-actions { flex-direction: column; align-items: stretch; gap: 8px; text-align: center; }
+  form.inq .form-actions .btn { width: 100%; padding: 15px 16px; }
+}

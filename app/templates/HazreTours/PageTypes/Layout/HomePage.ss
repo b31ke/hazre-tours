@@ -67,7 +67,7 @@
             <div class="sb-wrap">
                 <form class="search-bar wide" id="search" role="search" action="putovanja">
                     <label class="sr" for="s-q">Pronađi svoje putovanje</label>
-                    <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sb-res" aria-autocomplete="list">
+                    <input id="s-q" type="search" placeholder="Kuda putujete? Istanbul, advent, Zlatibor…" data-ph-short="Kuda putujete?" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sb-res" aria-autocomplete="list">
                     <button class="sb-filter" type="button" id="filter-btn" aria-expanded="false" aria-controls="filter-panel" aria-label="Još filtera: mjesec i mjesto polaska" title="Mjesec i mjesto polaska"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filter</span></button>
                     <button class="btn btn-royal" type="submit" aria-label="Traži"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
                 </form>
