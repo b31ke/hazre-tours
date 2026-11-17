@@ -966,3 +966,10 @@ details[open] > summary i::after { rotate: 0deg; }
 .fcard-row:hover .fcard-ico { background: var(--orange); color: var(--royal-d); }
 .fcard-row.is-phone { font: 700 19px var(--head); color: #fff !important; letter-spacing: .01em; }
 .fcard-row.is-phone .fcard-ico { background: var(--orange); color: var(--royal-d); }
+/* Niže podnožje: niža silueta, manji natpis, uži razmaci */
+.foot-scene { height: 104px; margin-bottom: 18px; }
+.foot-skyline { height: 84px; }
+.foot-wave { height: 44px; }
+.foot-mark { margin: clamp(10px, 1.6vw, 20px) 0 6px; font-size: clamp(44px, 8.4vw, 124px); }
+.foot-bottom { padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px)); }
+.foot-legal { gap: 2px; }
