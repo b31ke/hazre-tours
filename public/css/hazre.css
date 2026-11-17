@@ -971,3 +971,8 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-credit a:hover { color: var(--orange); border-color: var(--orange); }
 .foot-bottom .to-top { position: absolute; right: var(--gutter, 20px); top: 50%; translate: 0 -50%; }
 @media (max-width: 640px) { .foot-bottom { flex-direction: column; } .foot-bottom .to-top { position: static; translate: none; } }
+/* Potpis s bijelim BE SHIRT logom */
+.foot-credit { display: inline-flex; align-items: center; gap: 8px; }
+.foot-credit a { display: inline-flex; border: 0; line-height: 0; }
+.foot-credit img { height: 18px; width: auto; opacity: .7; transition: opacity .2s, translate .2s; }
+.foot-credit a:hover img { opacity: 1; translate: 0 -1px; }

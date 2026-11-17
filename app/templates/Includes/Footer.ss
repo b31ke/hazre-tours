@@ -72,7 +72,7 @@
     <div class="wrap foot-bottom">
         <div class="foot-legal">
             <span>© $CurrentYear <% if $SiteConfig.CompanyName %>$SiteConfig.CompanyName<% else %>$SiteConfig.Title<% end_if %><% if $SiteConfig.LicenseNumber %> · Licenca $SiteConfig.LicenseNumber<% end_if %></span>
-            <span class="foot-credit">Design by <a href="https://beshirt.ba/be-web/" rel="noopener" target="_blank">BE SHIRT d.o.o.</a></span>
+            <span class="foot-credit">Design by <a href="https://beshirt.ba/be-web/" rel="noopener" target="_blank" aria-label="BE SHIRT d.o.o."><img src="images/be-shirt-logo-white.png" alt="BE SHIRT d.o.o." width="66" height="18" loading="lazy"></a></span>
         </div>
         <a href="#top" class="to-top">Na vrh <span aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></a>
     </div>
