@@ -2,7 +2,7 @@
     <div class="page-hero-glow" aria-hidden="true"></div>
     <div class="wrap">
         <nav class="crumbs" aria-label="Putanja"><a href="$BaseHref">Početna</a><span>/</span><span aria-current="page">$Title</span></nav>
-        <% if $PageForm == 'pomjeri' %><p class="ph-kicker">Vaše putovanje, vaš plan</p><% else_if $PageForm == 'autobus' %><p class="ph-kicker">Vozimo vas mi</p><% end_if %>
+        <p class="ph-kicker"><% if $PageForm == 'pomjeri' %>Vaše putovanje, vaš plan<% else_if $PageForm == 'autobus' %>Vozimo vas mi<% else_if $URLSegment == 'o-nama' %>Na putu s vama<% else_if $URLSegment == 'uslovi-putovanja' %>Sve jasno, bez sitnih slova<% else_if $URLSegment == 'politika-privatnosti' %>Vaši podaci su sigurni s nama<% else_if $ErrorCode %>Ups, skrenuli smo s puta<% else %>Gdje god krenete, mi vozimo<% end_if %></p>
         <h1 class="h1">$Title</h1>
         <% if $Intro %><p class="hero-lead">$Intro</p><% end_if %>
     </div>

@@ -2,6 +2,7 @@
     <div class="page-hero-glow" aria-hidden="true"></div>
     <div class="wrap">
         <nav class="crumbs" aria-label="Putanja"><a href="$BaseHref">Početna</a><span>/</span><a href="putovanja">Putovanja</a><% if $Category %><span>/</span><span aria-current="page">$Title</span><% end_if %></nav>
+        <p class="ph-kicker"><% if $Category %>Izaberite svoj termin<% else %>Kuda ćemo sljedeće?<% end_if %></p>
         <h1 class="h1">$Title</h1>
         <p class="hero-lead">$Intro</p>
         <div class="chips cat-chips">

@@ -1248,3 +1248,10 @@ details[open] > summary i::after { rotate: 0deg; }
 /* Zašto Hazre Tours: plave kartice s kvačicom */
 .about-text h2:nth-of-type(2) + ul li { background: linear-gradient(140deg, #F2F6FF, #EAF7FD); border-color: #D9E4FA; }
 .about-text h2:nth-of-type(2) + ul li::before { background: var(--royal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center / 18px no-repeat; box-shadow: 0 8px 18px -10px rgba(27, 63, 168, .8); }
+/* O nama: autobus ulazi s desne strane, ispod njega blaga refleksija */
+.bs-bus { translate: 110vw 0; -webkit-box-reflect: below 0 linear-gradient(transparent 62%, rgba(255, 255, 255, .28)); filter: drop-shadow(0 6px 6px rgba(19, 46, 126, .18)); }
+.bus-show.in .bs-bus { translate: 0 0; animation: bs-stop .7s ease-out 2.1s; }
+.bs-bus { transform-origin: 30% 100%; }
+.bs-stage { padding-bottom: clamp(40px, 7vw, 96px); }
+.bs-road { bottom: calc(clamp(40px, 7vw, 96px) - 14px); height: 30px; opacity: 0; }
+.bus-show.in .bs-road { opacity: .55; }

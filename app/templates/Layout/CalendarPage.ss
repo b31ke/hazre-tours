@@ -2,6 +2,7 @@
     <div class="page-hero-glow" aria-hidden="true"></div>
     <div class="wrap">
         <nav class="crumbs" aria-label="Putanja"><a href="$BaseHref">Početna</a><span>/</span><span aria-current="page">$Title</span></nav>
+        <p class="ph-kicker">Planirajte putovanje na vrijeme</p>
         <h1 class="h1">$Title</h1>
         <p class="hero-lead">$Intro</p>
         <div class="chips cat-chips">
