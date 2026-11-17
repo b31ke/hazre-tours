@@ -1182,3 +1182,20 @@ details[open] > summary i::after { rotate: 0deg; }
 .bus-feature .pb-steps li { padding: 16px 18px; }
 .bus-feature .pb-steps li:not(:last-child)::after { right: auto; left: 38px; top: auto; bottom: -11px; rotate: 135deg; translate: 0 0; }
 .bus-cta { justify-self: start; }
+/* Najam autobusa: fotografija iste visine kao desna kolona, desna strana zbijenija */
+@media (min-width: 901px) {
+  .bus-feature { align-items: stretch; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .bus-photo { aspect-ratio: auto; max-height: none; height: 100%; min-height: 520px; }
+}
+.bus-side { align-content: start; gap: 16px; }
+.bus-feature .pb-text { font-size: 16px; line-height: 1.65; }
+.bus-feature .pb-text h2 { font-size: 22px; margin: 14px 0 8px; }
+.bus-feature .pb-text ul { margin: 0 0 10px; }
+.bus-feature .pb-text li { margin-bottom: 4px; }
+.bus-feature .pb-steps { gap: 10px; }
+.bus-feature .pb-steps li { padding: 12px 16px; align-items: center; border-radius: 16px; }
+.bus-feature .pbs-n { width: 36px; height: 36px; border-radius: 12px; font-size: 16px; }
+.bus-feature .pb-steps b { font-size: 15.5px; }
+.bus-feature .pb-steps p { font-size: 14px; }
+.bus-feature .pb-steps li:not(:last-child)::after { left: 30px; bottom: -9px; width: 9px; height: 9px; }
+.bus-cta { margin-top: 4px; }
