@@ -26,3 +26,7 @@ bs_BA:
   SilverStripe\Forms\GridField\GridField:
     Add: 'Dodaj: {name}'
     AddNew: 'Dodaj: {name}'
+  SilverStripe\Forms\GridField\GridFieldDetailForm:
+    Delete: Obriši
+  SilverStripe\Forms\GridField\GridFieldDeleteAction:
+    Delete: Obriši
