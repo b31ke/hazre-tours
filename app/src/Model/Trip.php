@@ -628,12 +628,73 @@ class Trip extends DataObject
             $body = preg_split('/<p[^>]*>\s*(<strong>)?\s*(Aranžman obuh|ARANŽMAN RAĐEN|Napomen)/iu', $d['body'])[0];
             $out[] = ArrayData::create([
                 'Title' => preg_replace('/^(\d{1,2}\s*\.\s*DAN|DAN)\s*[-–—:]?\s*/iu', '', $d['title']) ?: $d['title'],
-                'Body' => DBField::create_field('HTMLFragment', $body),
+                'Body' => DBField::create_field('HTMLFragment', self::formatDayBody($body)),
                 'Num' => $i + 1,
                 'IsIntro' => false,
             ]);
         }
         return ArrayList::create($out);
+    }
+
+    /**
+     * Uljepšava tekst jednog dana programa (bez mijenjanja sadržaja):
+     * vrijeme ("01.15h") kao oznaka, spisak znamenitosti iz obilaska kao oznake, "Mjesto: opis" s podebljanim naslovom,
+     * predugi pasusi podijeljeni na kraće, "KRAJ USLUGE" kao završni red.
+     */
+    public static function formatDayBody(string $html): string
+    {
+        $end = false;
+        $html = preg_replace_callback('/\s*KRAJ\s+(USLUGE|PROGRAMA)\.?\s*/u', function () use (&$end) {
+            $end = true;
+            return ' ';
+        }, $html);
+
+        // vrijeme: 01.15h, 2:00h, 09.00 h, 13 sati → oznaka
+        $html = preg_replace('/\b(\d{1,2})[.:](\d{2})\s?h\b/u', '<span class="t-time">$1:$2</span>', $html);
+
+        // "... sa vodičem: Trg heroja, Opera, Lančani most, Ribarska kula: Iako ..." → oznake znamenitosti
+        $html = preg_replace_callback(
+            '/((?:sa|s)\s+vodičem|obilazak[^:<]{0,40}?):\s*((?:[^,.:<]{2,40},\s*){2,}[^,.:<]{2,40})([:.])\s*/u',
+            function ($m) {
+                $items = array_map('trim', explode(',', $m[2]));
+                $chips = implode('', array_map(fn ($i) => '<li>' . $i . '</li>', $items));
+                $after = $m[3] === ':' ? '<p><strong class="poi">' . end($items) . '</strong> ' : '<p>';
+                return $m[1] . ':</p><ul class="sights">' . $chips . '</ul>' . $after;
+            },
+            $html
+        );
+
+        // "… godine. Budimska tvrđava: Buda ili …" → novi pasus s podebljanim nazivom mjesta
+        $html = preg_replace('/(?<=[.!?])\s+([A-ZČĆŠĐŽ][\p{L}]+(?:\s[\p{L}]+){0,3}):\s+/u', '</p><p><strong class="poi">$1</strong> ', $html);
+
+        // predugi pasusi: dijeli na rečenice, otprilike 320 znakova po pasusu
+        $html = preg_replace_callback('/<p([^>]*)>(.*?)<\/p>/su', function ($m) {
+            $plain = strip_tags($m[2]);
+            if (mb_strlen($plain) < 420) {
+                return $m[0];
+            }
+            $sentences = preg_split('/(?<=[.!?])\s+(?=[A-ZČĆŠĐŽ])/u', $m[2]);
+            $chunks = [];
+            $cur = '';
+            foreach ($sentences as $s) {
+                if ($cur !== '' && mb_strlen(strip_tags($cur . ' ' . $s)) > 320) {
+                    $chunks[] = $cur;
+                    $cur = $s;
+                } else {
+                    $cur = $cur === '' ? $s : $cur . ' ' . $s;
+                }
+            }
+            if ($cur !== '') {
+                $chunks[] = $cur;
+            }
+            return implode('', array_map(fn ($c) => '<p' . $m[1] . '>' . $c . '</p>', $chunks));
+        }, $html);
+
+        $html = preg_replace('/<p[^>]*>\s*<\/p>/u', '', $html);
+        if ($end) {
+            $html .= '<p class="prog-end"><span>Kraj usluge</span></p>';
+        }
+        return $html;
     }
 
     /** Napomene iz programa (uslovi uz aranžman): sve od "ARANŽMAN RAĐEN NA BAZI" ili "Napomene" dalje. */

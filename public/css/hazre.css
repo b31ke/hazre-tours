@@ -1057,3 +1057,17 @@ details[open] > summary i::after { rotate: 0deg; }
 .sh:not(.viber):not(.wa):not(.fb):hover { background: var(--royal); border-color: var(--royal); }
 .sp-zoom { top: 12px; right: 12px; bottom: auto; width: 40px; height: 40px; padding: 0; justify-content: center; border-radius: 50%; }
 .trip-main, .trip-side { min-width: 0; } .tabs { width: fit-content; } @media (max-width: 560px) { .tabs { width: 100%; } .tabs button { padding: 9px 14px; font-size: 12px; } }
+
+/* Program po danima: čitljiviji tekst, vrijeme kao oznaka, znamenitosti kao oznake, naslovi mjesta */
+.day-b { font-size: 16px; line-height: 1.75; color: var(--text-2); }
+.day-b p { margin: 0 0 14px; max-width: 72ch; }
+.t-time { display: inline-flex; align-items: center; gap: 4px; padding: 1px 9px 1px 7px; margin: 0 2px; border-radius: 999px; background: #FFF1D9; color: var(--orange-d); font: 700 14px/1.5 var(--head); white-space: nowrap; vertical-align: 1px; }
+.t-time::before { content: ""; width: 12px; height: 12px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E") center / contain no-repeat; }
+.day-b .sights { list-style: none; margin: -4px 0 18px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.day-b .sights li { position: relative; padding: 6px 14px 6px 28px; border-radius: 999px; background: #EEF3FF; border: 1px solid #D8E3FA; color: var(--royal); font: 600 13.5px var(--head); }
+.day-b .sights li::before { content: ""; position: absolute; left: 11px; top: 50%; width: 8px; height: 8px; translate: 0 -50%; border-radius: 50%; background: var(--orange); }
+.day-b .poi { display: block; margin: 6px 0 2px; font: 700 16.5px var(--head); color: var(--royal-d); }
+.day-b .poi::before { content: ""; display: inline-block; width: 18px; height: 3px; margin: 0 8px 4px 0; border-radius: 3px; background: var(--orange); vertical-align: middle; }
+.prog-end { display: flex; align-items: center; gap: 12px; margin: 22px 0 4px !important; max-width: none !important; }
+.prog-end::before, .prog-end::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.prog-end span { padding: 5px 14px; border-radius: 999px; background: var(--bg-alt); color: var(--muted); font: 600 12px var(--head); letter-spacing: .12em; text-transform: uppercase; }
