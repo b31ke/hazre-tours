@@ -29,6 +29,12 @@ namespace {
             Requirements::javascript('js/hazre.js', ['defer' => true]);
         }
 
+        /** Mjesta polaska za podnožje. */
+        public function FooterCities(): ArrayList
+        {
+            return ArrayList::create(array_map(fn ($c) => \SilverStripe\Model\ArrayData::create(['Name' => $c]), Trip::CITIES));
+        }
+
         /** Najbliži polazak za gornju traku (na svim stranicama). */
         public function TopbarTrip(): ?Trip
         {

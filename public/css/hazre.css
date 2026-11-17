@@ -882,3 +882,44 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (prefers-reduced-motion: reduce) { .news-plane { animation: none; } }
 /* Kartica novosti cijela iznad podnožja, na istoj svijetloj pozadini kao kontakt iznad */
 .news { background: var(--bg-alt); padding: 0 0 clamp(40px, 5vw, 64px); }
+
+/* Podnožje: val, silueta destinacija s autobusom na putu, kolone s akcentima, veliki obrubljeni natpis */
+.site-foot { position: relative; overflow: hidden; padding-top: 0; background: radial-gradient(60% 50% at 85% 30%, rgba(23, 174, 223, .18), transparent 70%), radial-gradient(40% 40% at 5% 80%, rgba(247, 161, 26, .1), transparent 70%), linear-gradient(180deg, #16388F 0%, var(--royal-d) 40%, #0E2466 100%); }
+.foot-scene { position: relative; height: 150px; margin-bottom: 26px; }
+.foot-wave { position: absolute; top: -1px; left: 0; width: 100%; height: 60px; }
+.foot-skyline { position: absolute; left: 0; right: 0; bottom: 6px; width: 100%; height: 120px; }
+.foot-road { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: rgba(255, 255, 255, .08); }
+.foot-road::after { content: ""; position: absolute; left: 0; right: 0; top: 2px; height: 2px; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .5) 0 22px, transparent 22px 44px); }
+.foot-bus { position: absolute; bottom: 4px; left: 0; width: 86px; height: 37px; animation: foot-bus 22s linear infinite; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); }
+@keyframes foot-bus { from { translate: -120px 0; } to { translate: calc(100vw + 20px) 0; } }
+.foot-grid { position: relative; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: clamp(24px, 3vw, 40px); }
+@media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .foot-grid { grid-template-columns: 1fr; } }
+.foot-brand { display: grid; gap: 12px; align-content: start; }
+.foot-brand p { margin: 0; max-width: 34ch; color: #C9D4F0; }
+.foot-cities-h { font: 600 12px var(--head) !important; letter-spacing: .12em; text-transform: uppercase; color: var(--orange) !important; margin-top: 4px !important; }
+.foot-cities { display: flex; flex-wrap: wrap; gap: 6px; }
+.foot-cities span { padding: 4px 11px; border-radius: 999px; font: 500 12.5px var(--head); color: #E3EAFB; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14); }
+.foot-h { position: relative; padding-bottom: 10px; margin-bottom: 8px !important; font: 700 14px var(--head) !important; letter-spacing: .1em !important; }
+.foot-h::after { content: ""; position: absolute; left: 0; bottom: 0; width: 28px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), #FFC65C); }
+.foot-col { display: grid; gap: 4px; align-content: start; }
+.foot-col > a:not(.foot-call):not(.foot-line) { position: relative; padding: 4px 0; transition: color .2s, translate .2s; }
+.foot-col > a:not(.foot-call):not(.foot-line)::before { content: "→"; position: absolute; left: -18px; opacity: 0; color: var(--orange); transition: opacity .2s, left .2s; }
+.foot-col > a:not(.foot-call):not(.foot-line):hover { translate: 14px 0; color: #fff; }
+.foot-col > a:not(.foot-call):not(.foot-line):hover::before { opacity: 1; left: -16px; }
+.foot-call { display: inline-flex; align-items: center; gap: 10px; justify-self: start; margin-bottom: 4px; padding: 6px 18px 6px 6px; border-radius: 999px; background: var(--orange); color: var(--royal-d) !important; transition: scale .2s, background .2s; }
+.foot-call:hover { scale: 1.04; background: #FFB33A; }
+.foot-call b { font: 800 18px var(--head); }
+.fc-ico { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--royal-d); color: #fff; }
+.foot-phones { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 6px; }
+.foot-phones a { font-weight: 600; }
+.foot-line { display: flex; gap: 10px; align-items: flex-start; padding: 4px 0; overflow-wrap: anywhere; }
+.foot-line svg { flex: none; margin-top: 3px; color: #8FDDF5; }
+.socials a { transition: background .2s, translate .2s; }
+.socials a:hover { translate: 0 -3px; }
+.foot-mark { position: relative; margin: clamp(26px, 4vw, 44px) 0 -0.18em; text-align: center; white-space: nowrap; font: 800 clamp(56px, 13vw, 190px)/1 var(--head); letter-spacing: .04em; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .1); background: linear-gradient(180deg, rgba(255, 255, 255, .1), transparent 85%); -webkit-background-clip: text; background-clip: text; user-select: none; pointer-events: none; }
+.foot-bottom { position: relative; margin-top: 0; align-items: center; }
+.to-top { display: inline-flex; align-items: center; gap: 8px; color: #fff; font: 600 13px var(--head); }
+.to-top span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--orange); color: var(--royal-d); transition: translate .25s; }
+.to-top:hover span { translate: 0 -4px; }
+@media (prefers-reduced-motion: reduce) { .foot-bus { animation: none; left: 8%; } }
