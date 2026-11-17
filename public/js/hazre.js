@@ -326,27 +326,65 @@
   /* ---------- Kolačići i analitika (tek uz pristanak) ---------- */
   const ga = document.body.dataset.ga, px = document.body.dataset.pixel;
   const consent = $('#consent');
-  const loadAnalytics = () => {
-    if (ga && !window.gtag) {
+  // izbor se čuva kao {a: analitika, m: marketing}; stari zapisi "yes"/"no" i dalje važe
+  const readChoice = () => {
+    const v = store.get('hazre-consent');
+    if (v === 'yes') return { a: true, m: true };
+    if (v === 'no') return { a: false, m: false };
+    try { const o = JSON.parse(v || 'null'); return o && typeof o === 'object' ? o : null; } catch (e) { return null; }
+  };
+  const loadAnalytics = (c = { a: true, m: true }) => {
+    if (c.a && ga && !window.gtag) {
       const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga); document.head.appendChild(s);
       window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
       gtag('js', new Date()); gtag('config', ga, { anonymize_ip: true });
     }
-    if (px && !window.fbq) {
+    if (c.m && px && !window.fbq) {
       /* eslint-disable */
       !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', px); fbq('track', 'PageView');
     }
   };
   if (consent) {
-    const choice = store.get('hazre-consent');
-    if (choice === 'yes') loadAnalytics(); else if (!choice) consent.hidden = false;
+    const prefs = $('#cz-prefs', consent), toggle = $('[data-cz-toggle]', consent);
+    const boxes = $$('[data-cz]', consent);
+    const saveBtn = $('[data-consent="save"]', consent);
+    const show = () => {
+      const c = readChoice() || { a: false, m: false };
+      boxes.forEach(b => { b.checked = !!c[b.dataset.cz]; });
+      consent.hidden = false;
+      requestAnimationFrame(() => consent.classList.add('in'));
+    };
+    const hide = () => { consent.classList.remove('in'); setTimeout(() => { consent.hidden = true; }, 300); };
+    const setPrefs = open => {
+      prefs.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Sakrij postavke' : 'Postavke';
+      saveBtn.hidden = !open;
+      consent.classList.toggle('has-prefs', open);
+    };
+    const choice = readChoice();
+    if (choice) loadAnalytics(choice); else setTimeout(show, 900);
+    toggle.addEventListener('click', () => setPrefs(prefs.hidden));
     $$('[data-consent]', consent).forEach(b => b.addEventListener('click', () => {
-      store.set('hazre-consent', b.dataset.consent); consent.hidden = true;
-      if (b.dataset.consent === 'yes') loadAnalytics();
+      const kind = b.dataset.consent;
+      const c = kind === 'yes' ? { a: true, m: true } : kind === 'no' ? { a: false, m: false }
+        : Object.fromEntries(boxes.map(x => [x.dataset.cz, x.checked]));
+      store.set('hazre-consent', JSON.stringify(c));
+      hide();
+      loadAnalytics(c);
     }));
   }
-  $$('[data-consent-open]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); if (consent) consent.hidden = false; }));
+  $$('[data-consent-open]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    if (!consent) return;
+    const c = readChoice() || { a: false, m: false };
+    $$('[data-cz]', consent).forEach(b => { b.checked = !!c[b.dataset.cz]; });
+    consent.hidden = false;
+    requestAnimationFrame(() => consent.classList.add('in'));
+    const t = $('[data-cz-toggle]', consent);
+    if (t && $('#cz-prefs').hidden) t.click();
+  }));
 })();
 
 // Natpis u podnožju: slova izranjaju kad se dođe do dna stranice
