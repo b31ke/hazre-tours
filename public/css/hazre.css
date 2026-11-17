@@ -857,3 +857,6 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 560px) { .faq-a { padding-left: 18px; } }
 @media (max-width: 860px) { .faq-side { position: static; } }
 .faq-grid { align-items: center; } .faq-side { position: static; }
+/* Kontakt kartica visoka koliko sadržaj, prati skrolanje pored duže forme */
+.contact-grid { align-items: start; }
+@media (min-width: 961px) { .contact-card { position: sticky; top: calc(var(--head-h) + 20px); } }
