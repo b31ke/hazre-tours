@@ -991,3 +991,16 @@ details[open] > summary i::after { rotate: 0deg; }
 .fcard-row { padding: 10px 14px; font-size: 13.5px; }
 .fcard-row:not(.is-phone) span:last-child { overflow-wrap: normal; word-break: normal; }
 @media (min-width: 1101px) { .foot-motto { font-size: 20px !important; white-space: nowrap; } .foot-brand { column-gap: 22px; } .foot-brand .foot-logo img { height: 58px; } }
+/* Podnožje: pet poravnatih kolona (logo, linija polazaka, putovanja, agencija, kontakt) */
+.foot-grid { grid-template-columns: 1.15fr .95fr .95fr 1fr 1.45fr !important; gap: 28px; }
+.foot-brand { display: grid !important; grid-template-columns: 1fr !important; gap: 14px; align-content: start; }
+.foot-brand .foot-logo img { height: 64px !important; }
+.foot-motto { font-size: 24px !important; white-space: normal !important; }
+.flm { margin: 0 !important; grid-row: auto !important; grid-column: auto !important; }
+.flm-stops { grid-template-columns: 1fr !important; grid-template-rows: none !important; grid-auto-flow: row !important; }
+.flm-stops li:nth-child(5)::before { bottom: 0; }
+.flm-stops li:nth-child(6)::before { top: 0; }
+.flm-stops li { padding-block: 3px; font-size: 14px; }
+@media (max-width: 1100px) { .foot-grid { grid-template-columns: 1fr 1fr 1fr !important; } .foot-brand { grid-column: 1 / -1 !important; } }
+@media (max-width: 700px) { .foot-grid { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr !important; } }
