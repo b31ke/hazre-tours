@@ -106,13 +106,6 @@ $JsonLD
             </div>
             <% end_if %>
 
-            <%-- forma je izvan "with $Trip" da vidi podatke stranice (token, link) --%>
-            <% end_with %>
-            <details class="change glass">
-                <summary><span><b>Sviđa vam se putovanje, ali biste nešto promijenili?</b><small>Termin, hotel, trajanje ili putujete kao grupa: pošaljite želje pa pravimo ponudu.</small></span><i aria-hidden="true"></i></summary>
-                <% include InquiryForm FormType='izmjena' %>
-            </details>
-            <% with $Trip %>
         </div>
 
         <aside class="trip-side">
