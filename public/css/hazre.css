@@ -1379,3 +1379,10 @@ details[open] > summary i::after { rotate: 0deg; }
   .nav-call span { position: absolute; left: 8px; top: 50%; translate: 0 -50%; }
   .nav-call b { text-align: center; letter-spacing: .02em; }
 }
+/* Meni na telefonu: kompaktna narandžasta kapsula u sredini (ne preko cijele širine) */
+@media (max-width: 1340px) {
+  .nav-foot { justify-items: center; }
+  .nav-call { justify-self: center; width: auto; min-height: 0; justify-content: flex-start; gap: 12px; padding: 7px 24px 7px 7px !important; }
+  .nav-call span { position: static; translate: none; width: 38px; height: 38px; }
+  .nav-call b { font-size: 18px; }
+}
