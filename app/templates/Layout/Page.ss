@@ -9,7 +9,18 @@
     <svg class="ph-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 H1440 V30 C 1180 0, 900 56, 720 32 S 260 4, 0 30 Z" fill="#fff"/></svg>
 </section>
 <section class="block page-body">
-    <div class="wrap<% if $PageForm %> pb-grid<% end_if %>">
+    <div class="wrap<% if $PageForm %> pb-grid<% end_if %><% if $PageForm == 'autobus' %> bus-feature<% end_if %>">
+        <% if $PageForm == 'autobus' %>
+        <figure class="bus-photo">
+            <img src="images/hazre-autobusi.webp" alt="Autobusi Hazre Tours" width="792" height="990" loading="lazy">
+            <span class="bp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg>Naš vozni park</span>
+            <figcaption>
+                <b>Vlastiti autobusi turističke klase</b>
+                <span class="bp-chips"><span>Klima</span><span>WC</span><span>TV i audio</span><span>Iskusni vozači</span></span>
+            </figcaption>
+        </figure>
+        <div class="bus-side">
+        <% end_if %>
         <% if $Content %><article class="typo pb-text">$Content</article><% end_if %>
         <% if $PageForm %>
         <ol class="pb-steps">
@@ -23,6 +34,10 @@
             <li><span class="pbs-n">3</span><div><b>Putujete bez brige</b><p>Vi uživate, a mi vodimo računa o svemu ostalom.</p></div></li>
             <% end_if %>
         </ol>
+        <% end_if %>
+        <% if $PageForm == 'autobus' %>
+        <a class="btn btn-sun btn-lg bus-cta" href="#kontakt">Zatražite ponudu za prevoz</a>
+        </div>
         <% end_if %>
         $Form
     </div>

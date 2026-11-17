@@ -1162,3 +1162,23 @@ details[open] > summary i::after { rotate: 0deg; }
 .dd-list li[aria-selected="true"]::after { content: ""; position: absolute; right: 14px; top: 50%; width: 6px; height: 11px; border-right: 2.5px solid var(--orange); border-bottom: 2.5px solid var(--orange); rotate: 45deg; translate: 0 -65%; }
 .dd-list li[aria-disabled="true"] { color: #B5BFCE; cursor: not-allowed; background: none; }
 .filter-panel .dd-btn { min-height: 44px; padding-block: 10px; font-size: 15px; border-radius: 10px; border-color: var(--line); }
+
+/* Najam autobusa: fotografija voznog parka pored teksta i koraka */
+.bus-feature { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(24px, 4vw, 56px); }
+@media (max-width: 900px) { .bus-feature { grid-template-columns: 1fr; } }
+.bus-photo { position: relative; margin: 0; border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 5; max-height: 640px; box-shadow: 0 34px 70px -34px rgba(19, 46, 126, .7); isolation: isolate; }
+@media (max-width: 900px) { .bus-photo { aspect-ratio: 4 / 4.2; } }
+.bus-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; transition: scale 1.4s ease; }
+.bus-photo:hover img { scale: 1.04; }
+.bus-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 25, 70, .25) 0%, transparent 30%, transparent 55%, rgba(10, 25, 70, .8) 100%); pointer-events: none; }
+.bp-badge { position: absolute; z-index: 1; top: 18px; left: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, .95); color: var(--royal); font: 700 13.5px var(--head); box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .5); }
+.bp-badge svg { color: var(--orange-d); }
+.bus-photo figcaption { position: absolute; z-index: 1; left: 18px; right: 18px; bottom: 18px; display: grid; gap: 10px; padding: 16px 18px; border-radius: 18px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; }
+.bus-photo figcaption b { font: 700 17px var(--head); }
+.bp-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.bp-chips span { padding: 4px 11px; border-radius: 999px; background: var(--orange); color: var(--royal-d); font: 700 12px var(--head); }
+.bus-side { display: grid; gap: 22px; align-content: center; }
+.bus-feature .pb-steps { grid-template-columns: 1fr; gap: 12px; }
+.bus-feature .pb-steps li { padding: 16px 18px; }
+.bus-feature .pb-steps li:not(:last-child)::after { right: auto; left: 38px; top: auto; bottom: -11px; rotate: 135deg; translate: 0 0; }
+.bus-cta { justify-self: start; }
