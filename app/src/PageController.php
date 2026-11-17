@@ -132,7 +132,7 @@ namespace {
                     'addressLocality' => 'Srebrenik',
                     'addressCountry' => 'BA',
                 ],
-                'foundingDate' => '2008',
+                'foundingDate' => '1996',
                 'sameAs' => array_values(array_filter([$c->FacebookURL, $c->InstagramURL, $c->TikTokURL])),
             ];
             return DBField::create_field('HTMLFragment', '<script type="application/ld+json">'

@@ -404,7 +404,7 @@ class ImportTask extends BuildTask
         $pages = [
             ['putovanje-po-mjeri', 'Putovanje po mjeri', 2, true, null, $this->customContent(), 'pomjeri', 'Recite nam kuda, kada i s kim, a mi složimo program, prevoz i smještaj.'],
             ['najam-autobusa', 'Najam autobusa', 3, true, null, $this->busContent(), 'autobus', 'Ekskurzije, sportski klubovi, firme, svadbe i transferi, našim autobusima i našim vozačima.'],
-            ['o-nama', 'O nama', 4, true, '/o-nama/', $this->aboutContent(), '', 'Prevoznik od 2008., putnička agencija od 2016.'],
+            ['o-nama', 'O nama', 4, true, '/o-nama/', $this->aboutContent(), '', 'Prevoznik od 1996., putnička agencija od 2016.'],
             ['uslovi-putovanja', 'Uslovi putovanja', 5, false, '/uslovi-putovanja/', null, '', ''],
             ['politika-privatnosti', 'Politika privatnosti', 6, false, '/politika-privatnositi/', null, '', ''],
         ];
@@ -467,7 +467,7 @@ HTML;
     private function busContent(): string
     {
         return <<<HTML
-<p>Hazre Tours je osnovan 2008. godine kao prevoznička firma. Vlastiti vozni park i iskusni vozači su temelj svega što radimo, pa autobus iznajmljujemo i za vaša putovanja.</p>
+<p>Hazre Tours je osnovan 1996. godine kao prevoznička firma. Vlastiti vozni park i iskusni vozači su temelj svega što radimo, pa autobus iznajmljujemo i za vaša putovanja.</p>
 <h2>Za koga vozimo</h2>
 <ul>
 <li><strong>Škole:</strong> ekskurzije i izleti, po programu škole ili našem.</li>
@@ -595,7 +595,7 @@ HTML;
     {
         return <<<HTML
 <p>Dobrodošli u Hazre Tours, vašeg pouzdanog partnera za nezaboravna putovanja i siguran prevoz.</p>
-<p>Priča o nama počinje 2008. godine, kada je Hazre Tours osnovan kao prevoznička firma s ciljem da putnicima pruži udobnost i sigurnost na putu. Prateći potrebe naših vjernih klijenata i želju da ponudimo kompletnu uslugu, od 2016. godine uspješno poslujemo i kao putnička agencija. Spajanjem dugogodišnjeg prevoznog iskustva i ljubavi prema turizmu danas kreiramo aranžmane koji se pamte.</p>
+<p>Priča o nama počinje 1996. godine, kada je Hazre Tours osnovan kao prevoznička firma s ciljem da putnicima pruži udobnost i sigurnost na putu. Prateći potrebe naših vjernih klijenata i želju da ponudimo kompletnu uslugu, od 2016. godine uspješno poslujemo i kao putnička agencija. Spajanjem dugogodišnjeg prevoznog iskustva i ljubavi prema turizmu danas kreiramo aranžmane koji se pamte.</p>
 <h2>Naša ponuda</h2>
 <ul>
 <li><strong>Jednodnevna i višednevna putovanja:</strong> obilasci evropskih metropola i skrivenih dragulja regije.</li>

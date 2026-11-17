@@ -199,7 +199,7 @@ class HomePage extends Page
     /** Brojevi u traci povjerenja. */
     public function YearsOnRoad(): int
     {
-        return (int) date('Y') - 2008;
+        return (int) date('Y') - 1996;
     }
 
     public function DestinationCount(): int

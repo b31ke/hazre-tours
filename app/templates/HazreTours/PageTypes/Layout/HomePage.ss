@@ -22,7 +22,7 @@
                 <a class="btn btn-ghost btn-lg" href="putovanje-po-mjeri">Putovanje po mjeri</a>
             </div>
             <ul class="trust">
-                <li><b>Od 2008.</b> na putu</li>
+                <li><b>Od 1996.</b> na putu</li>
                 <li><b>Vlastiti</b> autobusi</li>
                 <li><b>$CityCount</b> mjesta polaska</li>
             </ul>
@@ -132,7 +132,7 @@
         <div class="why-copy">
             <p class="why-kicker">Zašto baš Hazre Tours?</p>
             <h2 id="why-h">Prvo prevoznik,<br><em>onda agencija</em></h2>
-            <p class="why-lead">Od 2008. vozimo putnike, a od 2016. pravimo i putovanja. Autobus je naš, vozač je naš i plan puta je naš, pa ne zavisimo od tuđeg prevoza i znamo svaki kilometar rute.</p>
+            <p class="why-lead">Od 1996. vozimo putnike, a od 2016. pravimo i putovanja. Autobus je naš, vozač je naš i plan puta je naš, pa ne zavisimo od tuđeg prevoza i znamo svaki kilometar rute.</p>
             <ul class="why-stats">
                 <li><b>$YearsOnRoad</b><span>godina na putu</span></li>
                 <li><b>$CityCount</b><span>mjesta polaska</span></li>
