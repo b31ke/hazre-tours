@@ -101,7 +101,7 @@ RC=("$RCLONE" --log-file "$LOG" --log-level NOTICE --retries 3 --low-level-retri
 
 # prvo ono malo i nezamjenjivo: mora stići i u noći kad slike ne stignu
 # Na Google Drive idu samo ŠIFROVANE kopije baze i .env (ključ ostaje na serveru i kod vlasnika).
-KEYFILE="${KEYFILE:-$HOME/.hazre-toursckup-kljuc}"
+KEYFILE="${KEYFILE:-$HOME/.hazre-backup-kljuc}"
 if [ ! -s "$KEYFILE" ]; then
     (umask 077 && openssl rand -base64 32 > "$KEYFILE") || fail "ne mogu napraviti ključ za šifrovanje"
     echo "NOVI KLJUČ ZA BACKUP hazre-tours (bez njega se kopije s Google Drivea ne mogu otvoriti)." >&2
