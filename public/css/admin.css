@@ -317,3 +317,7 @@ body.cms { background: var(--hz-bg) !important; }
 .cms-menu.collapsed .hz-help__logo img { height: 12px; }
 .cms-menu .sticky-toggle__button, .cms-menu .cms-panel-toggle__button { color: rgba(255, 255, 255, .7) !important; }
 .hz-help, .cms-help__toggle, .cms-help__toggle--show, .cms-menu .sticky-toggle { background: transparent !important; }
+/* Meni "Izrada i podrška": skriven dok nije otvoren, otvara se iznad dugmeta */
+.hz-help { position: relative; }
+.hz-help:not(.cms-help__toggle--show) .cms-help__links { display: none !important; }
+.hz-help.cms-help__toggle--show .cms-help__links { display: block !important; position: absolute !important; left: 6px; bottom: calc(100% + 8px); top: auto !important; width: 210px; height: auto !important; max-height: none !important; overflow: visible !important; z-index: 50; }
