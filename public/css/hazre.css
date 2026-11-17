@@ -897,9 +897,6 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 520px) { .foot-grid { grid-template-columns: 1fr; } }
 .foot-brand { display: grid; gap: 12px; align-content: start; }
 .foot-brand p { margin: 0; max-width: 34ch; color: #C9D4F0; }
-.foot-cities-h { font: 600 12px var(--head) !important; letter-spacing: .12em; text-transform: uppercase; color: var(--orange) !important; margin-top: 4px !important; }
-.foot-cities { display: flex; flex-wrap: wrap; gap: 6px; }
-.foot-cities span { padding: 4px 11px; border-radius: 999px; font: 500 12.5px var(--head); color: #E3EAFB; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14); }
 .foot-h { position: relative; padding-bottom: 10px; margin-bottom: 8px !important; font: 700 14px var(--head) !important; letter-spacing: .1em !important; }
 .foot-h::after { content: ""; position: absolute; left: 0; bottom: 0; width: 28px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--orange), #FFC65C); }
 .foot-col { display: grid; gap: 4px; align-content: start; }
@@ -923,3 +920,11 @@ details[open] > summary i::after { rotate: 0deg; }
 .to-top span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--orange); color: var(--royal-d); transition: translate .25s; }
 .to-top:hover span { translate: 0 -4px; }
 @media (prefers-reduced-motion: reduce) { .foot-bus { animation: none; left: 8%; } }
+/* Podnožje, lijeva kolona: manji logo, moto rukom pisan, polasci u jednom redu */
+.foot-brand { gap: 14px; }
+.foot-brand img { height: 52px; padding: 8px 14px; border-radius: 14px; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .5); }
+.foot-motto { margin: 2px 0 0 !important; font: 400 clamp(24px, 2.4vw, 30px)/1.15 "Kaushan Script", "Segoe Script", cursive; color: #fff !important; }
+.foot-motto em { font-style: normal; color: var(--orange); }
+.foot-from { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.6; color: #B9C6E8 !important; }
+.foot-from svg { flex: none; margin-top: 2px; color: var(--orange); }
+.foot-from b { color: #fff; font-weight: 600; }
