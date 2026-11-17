@@ -1199,3 +1199,31 @@ details[open] > summary i::after { rotate: 0deg; }
 .bus-feature .pb-steps p { font-size: 14px; }
 .bus-feature .pb-steps li:not(:last-child)::after { left: 30px; bottom: -9px; width: 9px; height: 9px; }
 .bus-cta { margin-top: 4px; }
+
+/* O nama: autobus dolazi na cestu */
+.bus-show { position: relative; overflow: hidden; padding-block: clamp(40px, 6vw, 72px) clamp(36px, 5vw, 60px); background: linear-gradient(180deg, #fff 0%, var(--bg-alt) 100%); }
+.bs-head { display: grid; justify-items: center; text-align: center; gap: 8px; }
+.bs-head h2 { margin: 0; font-size: clamp(26px, 3.4vw, 40px); color: var(--royal-d); }
+.bs-head p { margin: 0; max-width: 56ch; }
+.bs-stage { position: relative; max-width: 1100px; margin: clamp(18px, 3vw, 30px) auto 0; padding-inline: 20px; }
+.bs-road { position: absolute; left: 0; right: 0; bottom: 4%; height: 18px; border-radius: 999px; background: linear-gradient(180deg, #DCE3EF, #C9D3E3); }
+.bs-road::after { content: ""; position: absolute; left: 4%; right: 4%; top: 50%; height: 3px; translate: 0 -50%; background: repeating-linear-gradient(90deg, #fff 0 34px, transparent 34px 68px); opacity: .9; }
+.bs-bus { position: relative; display: block; width: min(100%, 980px); height: auto; margin-inline: auto; filter: drop-shadow(0 26px 22px rgba(19, 46, 126, .28)); translate: -70vw 0; opacity: 0; transition: translate 1.6s cubic-bezier(.16, .84, .3, 1), opacity .6s ease; }
+.bus-show.in .bs-bus { translate: 0 0; opacity: 1; animation: bs-idle 3.2s ease-in-out 1.7s infinite; }
+@keyframes bs-idle { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
+.bs-facts { list-style: none; margin: clamp(18px, 3vw, 28px) auto 0; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.bs-facts li { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 22px -16px rgba(27, 63, 168, .5); font: 600 14px var(--head); color: var(--royal-d); }
+.bs-facts li span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--orange); color: var(--royal-d); font-size: 12px; }
+@media (prefers-reduced-motion: reduce) { .bs-bus { translate: 0 0; opacity: 1; transition: none; } .bus-show.in .bs-bus { animation: none; } }
+/* Autobus na vrhu stranice O nama: ulazi s lijeve strane i lagano se zaljulja kad stane */
+.bus-show { padding-top: clamp(24px, 3vw, 40px); }
+.bs-bus { translate: -110vw 0; transition: translate 2s cubic-bezier(.22, .9, .3, 1) .2s, opacity .4s ease .2s; }
+.bus-show.in .bs-bus { animation: bs-stop .7s ease-out 2.1s, bs-idle 3.2s ease-in-out 2.8s infinite; }
+@keyframes bs-stop { 0% { transform: rotate(0); } 35% { transform: rotate(-.8deg); } 70% { transform: rotate(.3deg); } 100% { transform: rotate(0); } }
+@keyframes bs-idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.bs-bus { transform-origin: 70% 100%; }
+/* O nama: umjesto ceste mekana sjena ispod autobusa (pojavi se dok autobus stiže) */
+.bs-road { left: 50%; right: auto; bottom: 1%; width: min(84%, 900px); height: 46px; translate: -50% 0; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(15, 35, 95, .42) 0%, rgba(15, 35, 95, .18) 45%, transparent 72%); filter: blur(4px); opacity: 0; scale: .4 1; transition: opacity 1.2s ease 1s, scale 1.4s cubic-bezier(.22, .9, .3, 1) .8s; }
+.bs-road::after { display: none; }
+.bus-show.in .bs-road { opacity: 1; scale: 1 1; }
+.bs-bus { filter: drop-shadow(0 10px 8px rgba(19, 46, 126, .22)); }

@@ -8,6 +8,24 @@
     </div>
     <svg class="ph-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 H1440 V30 C 1180 0, 900 56, 720 32 S 260 4, 0 30 Z" fill="#fff"/></svg>
 </section>
+<% if $URLSegment == 'o-nama' %>
+<section class="bus-show js-inview" aria-labelledby="bus-show-h">
+    <div class="wrap bs-head">
+        <p class="script-kicker">Prepoznat ćete nas na cesti</p>
+        <h2 id="bus-show-h">Putujete s nama, a ne s nekim drugim</h2>
+        <p class="muted">Vozimo vlastitim autobusima, s vozačima koji ove rute znaju napamet.</p>
+    </div>
+    <div class="bs-stage">
+        <div class="bs-road" aria-hidden="true"></div>
+        <img class="bs-bus" src="images/hazre-bus.webp" alt="Autobus Hazre Tours" width="1002" height="304">
+    </div>
+    <ul class="wrap bs-facts">
+        <li><span aria-hidden="true">✓</span>Vlastiti autobusi turističke klase</li>
+        <li><span aria-hidden="true">✓</span>Iskusni vozači</li>
+        <li><span aria-hidden="true">✓</span>Polasci iz $FooterCities.Count gradova</li>
+    </ul>
+</section>
+<% end_if %>
 <section class="block page-body">
     <div class="wrap<% if $PageForm %> pb-grid<% end_if %><% if $PageForm == 'autobus' %> bus-feature<% end_if %>">
         <% if $PageForm == 'autobus' %>

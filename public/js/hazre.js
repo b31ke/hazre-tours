@@ -470,3 +470,15 @@
 
   document.querySelectorAll('.field select, .filter-panel select').forEach(enhance);
 })();
+
+// Sekcije koje se animiraju kad dođu na ekran (npr. autobus na stranici O nama)
+(() => {
+  const els = [...document.querySelectorAll('.js-inview')];
+  if (!els.length) return;
+  const check = () => {
+    els.forEach(el => { if (!el.classList.contains('in') && el.getBoundingClientRect().top < innerHeight * 0.8) el.classList.add('in'); });
+    if (els.every(el => el.classList.contains('in'))) removeEventListener('scroll', check);
+  };
+  addEventListener('scroll', check, { passive: true });
+  check();
+})();
