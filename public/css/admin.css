@@ -302,3 +302,18 @@ body.cms { background: var(--hz-bg) !important; }
 .cms-content-actions .action--delete { color: #D64535 !important; background: transparent !important; border: 1px solid transparent !important; }
 .cms-content-actions .action--delete:hover { background: #FDECEA !important; border-color: #F6C9C3 !important; }
 .cms-content-actions .btn-outline-primary, #Form_ItemEditForm_action_doSave { color: var(--hz-royal-dd) !important; }
+/* Dno menija: BE SHIRT logo umjesto Silverstripe pomoći */
+.cms-menu .toolbar--south { background: rgba(0, 0, 0, .12) !important; }
+.hz-help .cms-help__menu { display: inline-flex !important; align-items: center; gap: 6px; padding: 6px 8px 6px 6px !important; border-radius: 12px !important; background: transparent !important; border: 0 !important; color: rgba(255, 255, 255, .7) !important; }
+.hz-help .cms-help__menu:hover { background: rgba(255, 255, 255, .1) !important; color: #fff !important; }
+.hz-help__logo { display: inline-flex; align-items: center; padding: 7px 10px; border-radius: 10px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .18); line-height: 0; }
+.hz-help__logo img { height: 16px; width: auto; opacity: .9; }
+.hz-help .cms-help__menu:hover .hz-help__logo img { opacity: 1; }
+.hz-help .cms-help__caret { color: inherit !important; font-size: 12px; }
+.hz-help .cms-help__links { border-radius: 14px !important; padding: 8px !important; background: #fff !important; box-shadow: 0 20px 40px -18px rgba(14, 36, 102, .55) !important; border: 1px solid var(--hz-line) !important; }
+.hz-help__title { display: block; padding: 4px 10px 6px; font: 600 11px "Poppins", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #8E9DC8; }
+.hz-help .cms-help__link { display: block; padding: 8px 10px !important; border-radius: 9px; color: var(--hz-royal-dd) !important; font: 500 13.5px "Poppins", sans-serif !important; text-decoration: none !important; }
+.hz-help .cms-help__link:hover { background: #EEF3FF; color: var(--hz-royal) !important; }
+.cms-menu.collapsed .hz-help__logo img { height: 12px; }
+.cms-menu .sticky-toggle__button, .cms-menu .cms-panel-toggle__button { color: rgba(255, 255, 255, .7) !important; }
+.hz-help, .cms-help__toggle, .cms-help__toggle--show, .cms-menu .sticky-toggle { background: transparent !important; }
