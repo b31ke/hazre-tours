@@ -1437,3 +1437,29 @@ details[open] > summary i::after { rotate: 0deg; }
   .foot-contact { grid-column: 1 / -1 !important; }
   .foot-mark { margin: 18px 0 4px !important; }
 }
+
+/* Naslovna na telefonu: kraće i snažnije, sve stane u jedan ekran (desktop nepromijenjen) */
+@media (max-width: 640px) {
+  .hero-grid { gap: 18px; padding-block: 22px 0; }
+  .hero-copy { gap: 14px; }
+  .hero-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: .12em; padding: 7px 14px 7px 10px; border-radius: 999px; background: rgba(255, 255, 255, .85); box-shadow: 0 6px 18px -10px rgba(27, 63, 168, .45); color: var(--royal); }
+  .hero-kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(247, 161, 26, .22); flex: none; }
+  .hk-rest, .hl-rest, .hb-long { display: none; }
+  .hero h1 { font-size: 40px; line-height: 1.04; max-width: none; }
+  .hero-lead { font-size: 16.5px; line-height: 1.5; }
+  .hero-btns { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 10px; width: 100%; }
+  .hero-btns .btn { justify-content: center; text-align: center; padding: 14px 8px; font-size: 13.5px; white-space: nowrap; min-width: 0; }
+  .trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; width: 100%; font-size: 11.5px; background: rgba(255, 255, 255, .7); border-radius: 16px; padding: 10px 4px; box-shadow: 0 8px 22px -14px rgba(27, 63, 168, .4); }
+  .trust li { display: grid; justify-items: center; text-align: center; gap: 1px; line-height: 1.25; }
+  .trust li + li { border-left: 1px solid rgba(27, 63, 168, .12); }
+  .trust li::before { display: none; }
+  .trust b { font: 700 16px var(--head); color: var(--royal); }
+  .hero-art { height: 250px; margin-top: 4px; }
+  .pc-1 { width: 74%; height: 88%; top: 4%; }
+  .pc-2 { width: 44%; height: 58%; top: 0; }
+  .next-strip { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none; gap: 8px; padding: 18px 16px 12px; margin-inline: 0; max-width: none; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .next-strip::-webkit-scrollbar { display: none; }
+  .next-strip .ns-h { position: absolute; top: 0; left: 16px; font-size: 11px; }
+  .next-strip a { flex: none; scroll-snap-align: start; white-space: nowrap; font-size: 13.5px; padding: 9px 14px; }
+  .next-strip .ns-all { padding-right: 40px; }
+}

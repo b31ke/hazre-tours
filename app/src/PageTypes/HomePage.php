@@ -65,6 +65,22 @@ class HomePage extends Page
         return DBField::create_field('HTMLFragment', preg_replace('/\*([^*]+)\*/', '<em>$1</em>', $safe));
     }
 
+    /** Mali naslov: dio iza "·" je u spanu koji se na telefonu krije (desktop isti). */
+    public function HeroEyebrowHTML(): DBField
+    {
+        $safe = htmlspecialchars((string) $this->HeroEyebrow, ENT_QUOTES);
+        $html = preg_replace('/^(.+?)(\s*·\s*.+)$/u', '$1<span class="hk-rest">$2</span>', $safe, 1);
+        return DBField::create_field('HTMLFragment', $html);
+    }
+
+    /** Tekst ispod naslova: sve iza prve rečenice je u spanu koji se na telefonu krije (desktop isti). */
+    public function HeroLeadHTML(): DBField
+    {
+        $safe = htmlspecialchars((string) $this->HeroLead, ENT_QUOTES);
+        $html = preg_replace('/^(.+?[.!?])(\s+\S.*)$/us', '$1<span class="hl-rest">$2</span>', $safe, 1);
+        return DBField::create_field('HTMLFragment', $html);
+    }
+
     public function UpcomingTrips(): ArrayList
     {
         return Trip::liveList();

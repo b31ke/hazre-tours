@@ -14,12 +14,12 @@
     <div class="hero-sun" aria-hidden="true"></div>
     <div class="wrap hero-grid">
         <div class="hero-copy">
-            <% if $HeroEyebrow %><p class="hero-kicker">$HeroEyebrow</p><% end_if %>
+            <% if $HeroEyebrow %><p class="hero-kicker">$HeroEyebrowHTML</p><% end_if %>
             <h1 id="hero-h">$HeroTitleHTML</h1>
-            <% if $HeroLead %><p class="hero-lead">$HeroLead</p><% end_if %>
+            <% if $HeroLead %><p class="hero-lead">$HeroLeadHTML</p><% end_if %>
             <div class="hero-btns">
                 <a class="btn btn-orange btn-lg" href="#aranzmani">Pogledaj ponudu</a>
-                <a class="btn btn-ghost btn-lg" href="putovanje-po-mjeri">Putovanje po mjeri</a>
+                <a class="btn btn-ghost btn-lg" href="putovanje-po-mjeri"><span><span class="hb-long">Putovanje </span>po mjeri</span></a>
             </div>
             <ul class="trust">
                 <li><b>Od 1996.</b> na putu</li>
