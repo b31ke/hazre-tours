@@ -1227,3 +1227,24 @@ details[open] > summary i::after { rotate: 0deg; }
 .bs-road::after { display: none; }
 .bus-show.in .bs-road { opacity: 1; scale: 1 1; }
 .bs-bus { filter: drop-shadow(0 10px 8px rgba(19, 46, 126, .22)); }
+
+/* O nama: uvod, priča i kartice (Naša ponuda, Zašto Hazre Tours) */
+.about-text { max-width: none !important; padding-left: 0; counter-reset: offer; }
+.about-text::before { display: none; }
+.about-text > p:first-child { max-width: 34ch; margin: 0 0 18px; font: 600 clamp(22px, 2.6vw, 30px)/1.3 var(--head); color: var(--royal-d); }
+.about-text > p:first-child::after { content: ""; display: block; width: 56px; height: 4px; margin-top: 16px; border-radius: 4px; background: linear-gradient(90deg, var(--orange), #FFC65C); }
+.about-text > p { max-width: 74ch; font-size: 17px; line-height: 1.75; color: var(--text-2); }
+.about-text h2 { display: flex; align-items: center; gap: 12px; margin: clamp(30px, 4vw, 48px) 0 18px; font-size: clamp(22px, 2.4vw, 28px); color: var(--royal-d); }
+.about-text h2::before { content: ""; width: 26px; height: 4px; border-radius: 4px; background: var(--orange); }
+.about-text ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .about-text ul { grid-template-columns: 1fr; } }
+.about-text li { position: relative; margin: 0; padding: 18px 20px 18px 74px; border-radius: 18px; background: #fff; border: 1px solid var(--line); box-shadow: 0 14px 30px -24px rgba(27, 63, 168, .5); font-size: 15px; line-height: 1.55; color: var(--muted); transition: translate .25s, box-shadow .25s; }
+.about-text li:hover { translate: 0 -3px; box-shadow: 0 20px 36px -22px rgba(27, 63, 168, .55); }
+.about-text li::before { content: ""; position: absolute; left: 18px; top: 18px; width: 40px; height: 40px; border-radius: 13px; }
+.about-text li strong { display: block; margin-bottom: 3px; font: 700 16.5px var(--head); color: var(--royal-d); }
+/* Naša ponuda: brojevi u narandžastim kvadratima */
+.about-text h2:first-of-type + ul li { counter-increment: offer; }
+.about-text h2:first-of-type + ul li::before { content: counter(offer, decimal-leading-zero); display: grid; place-items: center; background: linear-gradient(150deg, #FFC65C, var(--orange)); color: var(--royal-d); font: 800 14px var(--head); box-shadow: 0 8px 18px -10px rgba(247, 161, 26, .9); }
+/* Zašto Hazre Tours: plave kartice s kvačicom */
+.about-text h2:nth-of-type(2) + ul li { background: linear-gradient(140deg, #F2F6FF, #EAF7FD); border-color: #D9E4FA; }
+.about-text h2:nth-of-type(2) + ul li::before { background: var(--royal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E") center / 18px no-repeat; box-shadow: 0 8px 18px -10px rgba(27, 63, 168, .8); }

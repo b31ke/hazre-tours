@@ -39,7 +39,7 @@
         </figure>
         <div class="bus-side">
         <% end_if %>
-        <% if $Content %><article class="typo pb-text">$Content</article><% end_if %>
+        <% if $Content %><article class="typo pb-text<% if $URLSegment == 'o-nama' %> about-text<% end_if %>">$Content</article><% end_if %>
         <% if $PageForm %>
         <ol class="pb-steps">
             <% if $PageForm == 'autobus' %>
