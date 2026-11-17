@@ -973,3 +973,21 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-mark { margin: clamp(10px, 1.6vw, 20px) 0 6px; font-size: clamp(44px, 8.4vw, 124px); }
 .foot-bottom { padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px)); }
 .foot-legal { gap: 2px; }
+/* Podnožje: logo i slogan lijevo, linija polazaka pored njih (niže podnožje) */
+@media (min-width: 1101px) {
+  .foot-grid { grid-template-columns: 2.3fr .9fr .95fr 1.25fr; gap: 28px; }
+  .foot-brand { grid-template-columns: auto 1fr; column-gap: 28px; align-items: start; }
+  .foot-brand .socials { grid-column: 1; }
+  .flm { grid-column: 2; grid-row: 1 / span 2; margin-top: 2px; }
+}
+.foot-id { display: grid; gap: 10px; justify-items: start; }
+.foot-brand .foot-logo img { height: 64px; }
+.foot-motto { font-size: clamp(22px, 2vw, 26px) !important; }
+.flm-stops { column-gap: 14px; }
+.flm-stops li { padding-top: 4px; padding-bottom: 4px; font-size: 13.5px; white-space: nowrap; }
+@media (max-width: 1100px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-brand { grid-column: 1 / -1; grid-template-columns: auto 1fr; column-gap: 28px; } }
+@media (max-width: 620px) { .foot-brand { grid-template-columns: 1fr; } }
+@media (min-width: 1101px) { .foot-grid { grid-template-columns: 2.15fr .85fr .95fr 1.45fr; } }
+.fcard-row { padding: 10px 14px; font-size: 13.5px; }
+.fcard-row:not(.is-phone) span:last-child { overflow-wrap: normal; word-break: normal; }
+@media (min-width: 1101px) { .foot-motto { font-size: 20px !important; white-space: nowrap; } .foot-brand { column-gap: 22px; } .foot-brand .foot-logo img { height: 58px; } }

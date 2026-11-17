@@ -31,8 +31,10 @@
 
     <div class="wrap foot-grid">
         <div class="foot-brand">
-            <a class="foot-logo" href="$BaseHref" aria-label="$SiteConfig.Title, početna"><img src="images/hazre-logo-light-sm.png" alt="$SiteConfig.Title" width="171" height="70" loading="lazy"></a>
+            <div class="foot-id">
+                <a class="foot-logo" href="$BaseHref" aria-label="$SiteConfig.Title, početna"><img src="images/hazre-logo-light-sm.png" alt="$SiteConfig.Title" width="171" height="70" loading="lazy"></a>
             <p class="foot-motto">Gdje god krenete,<br><em>mi vozimo</em></p>
+            </div>
             <div class="flm">
                 <p class="flm-h"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg>Naša linija polazaka</p>
                 <ol class="flm-stops"><% loop $FooterCities %><li<% if $IsHome %> class="home"<% end_if %>><span>$Name</span><% if $IsHome %><small>sjedište</small><% end_if %></li><% end_loop %></ol>
