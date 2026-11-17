@@ -1403,3 +1403,11 @@ details[open] > summary i::after { rotate: 0deg; }
   .dep-table td:nth-child(6) { grid-area: status; align-self: center; }
   .dep-table td:nth-child(3), .dep-table td:nth-child(4) { display: none; }
 }
+/* Najam autobusa na telefonu: natpis ispod fotografije, ne preko autobusa (desktop nepromijenjen) */
+@media (max-width: 900px) {
+  .bus-photo { display: flex; flex-direction: column; aspect-ratio: auto !important; max-height: none; height: auto; background: linear-gradient(140deg, var(--royal-d), var(--royal)); }
+  .bus-photo img { height: auto; aspect-ratio: 4 / 3.4; object-position: 50% 62%; }
+  .bus-photo::after { background: linear-gradient(180deg, rgba(10, 25, 70, .25) 0%, transparent 28%); height: auto; bottom: auto; aspect-ratio: 4 / 3.4; }
+  .bus-photo figcaption { position: static; margin: 0; border-radius: 0; border: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 16px 18px 18px; }
+  .bus-photo figcaption b { font-size: 16.5px; }
+}
