@@ -20,8 +20,8 @@ class LoginStyleExtension extends Extension
 document.addEventListener('DOMContentLoaded', function () {
   var f = document.querySelector('.silverstripe-brand');
   if (!f) return;
-  f.innerHTML = '<span class="hz-created">Created by</span>'
-    + '<a class="hz-created__logo" href="https://beshirt.ba" target="_blank" rel="noopener" aria-label="BE SHIRT d.o.o.">'
+  f.innerHTML = '<a class="hz-created" href="https://beshirt.ba" target="_blank" rel="noopener" aria-label="Created by BE SHIRT d.o.o.">'
+    + '<span class="hz-created__by">Created by</span><span class="hz-created__sep" aria-hidden="true"></span>'
     + '<img src=' + JSON.stringify($logo) + ' alt="BE SHIRT d.o.o." width="92" height="25"></a>';
   f.classList.add('hz-brand');
 });

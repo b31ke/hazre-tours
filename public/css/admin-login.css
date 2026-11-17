@@ -57,3 +57,13 @@ body {
 .hz-created__logo:hover { background: rgba(255, 255, 255, .12); }
 .hz-created__logo img { height: 22px; width: auto; opacity: .9; }
 .hz-created__logo:hover img { opacity: 1; }
+/* "Created by" kao staklena pilula */
+.silverstripe-brand.hz-brand { margin-top: 26px !important; }
+.hz-created { display: inline-flex !important; align-items: center; gap: 12px; padding: 9px 16px 9px 18px; border-radius: 999px; text-decoration: none !important;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12); transition: background .25s, border-color .25s, translate .25s, box-shadow .25s; }
+.hz-created:hover { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .3); translate: 0 -2px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 12px 26px -14px rgba(0, 0, 0, .6); }
+.hz-created__by { font: 600 10.5px "Poppins", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .6); }
+.hz-created__sep { width: 1px; height: 16px; background: rgba(255, 255, 255, .25); }
+.hz-created img { height: 18px; width: auto; opacity: .92; transition: opacity .25s; }
+.hz-created:hover img { opacity: 1; }
