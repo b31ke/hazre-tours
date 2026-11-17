@@ -13,7 +13,7 @@
         <% if $PageForm == 'autobus' %>
         <figure class="bus-photo">
             <img src="images/hazre-autobusi.webp" alt="Autobusi Hazre Tours" width="792" height="990" loading="lazy">
-            <span class="bp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg>Naš vozni park</span>
+            <span class="bp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg>Udobno, sigurno, na vrijeme</span>
             <figcaption>
                 <b>Vlastiti autobusi turističke klase</b>
                 <span class="bp-chips"><span>Klima</span><span>WC</span><span>TV i audio</span><span>Iskusni vozači</span></span>
