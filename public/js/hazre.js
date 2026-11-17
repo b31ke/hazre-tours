@@ -19,13 +19,25 @@
 
   const nav = $('#main-nav');
   const toggle = $('.menu-toggle');
-  const closeNav = () => { if (nav) { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; } };
-  toggle && toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
+  const setNav = open => {
+    if (!nav) return;
+    nav.classList.toggle('open', open);
+    toggle && toggle.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
-  });
+    document.body.classList.toggle('nav-open', open);
+    if (open) { const c = $('.nav-close', nav); c && c.focus(); } else if (toggle) toggle.focus({ preventScroll: true });
+  };
+  const closeNav = () => { if (nav && nav.classList.contains('open')) setNav(false); };
+  toggle && toggle.addEventListener('click', () => setNav(!nav.classList.contains('open')));
   nav && $$('a', nav).forEach(a => a.addEventListener('click', closeNav));
+  $('.nav-close') && $('.nav-close').addEventListener('click', closeNav);
+  $('.nav-backdrop') && $('.nav-backdrop').addEventListener('click', closeNav);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+  $$('.drop-toggle').forEach(b => b.addEventListener('click', () => {
+    const li = b.closest('.has-drop');
+    const open = li.classList.toggle('open');
+    b.setAttribute('aria-expanded', String(open));
+  }));
 
   /* ---------- Slider na početnoj ---------- */
   const slider = $('.slider');
