@@ -84,7 +84,29 @@ class HazreSettings extends Extension
     public function PhoneList(): ArrayList
     {
         $rows = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $this->getOwner()->Phones))));
-        return ArrayList::create(array_map(fn ($p) => ArrayData::create(['Number' => $p, 'Tel' => self::tel($p)]), $rows));
+        return ArrayList::create(array_map(fn ($p) => ArrayData::create([
+            'Number' => $p,
+            'Tel' => self::tel($p),
+            'IsMobile' => str_starts_with(ltrim(preg_replace('/\D/', '', $p), '0'), '6') || str_starts_with(preg_replace('/\D/', '', $p), '3876'),
+        ]), $rows));
+    }
+
+    /** Ostali brojevi (bez glavnog) za pločice u kontaktu. */
+    public function OtherPhones(): ArrayList
+    {
+        $list = $this->PhoneList()->toArray();
+        array_shift($list);
+        return ArrayList::create($list);
+    }
+
+    /** Link na mapu: uneseni link ili pretraga adrese na Google mapama. */
+    public function MapsLink(): string
+    {
+        $o = $this->getOwner();
+        if ($o->MapURL) {
+            return (string) $o->MapURL;
+        }
+        return $o->Address ? 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode('Hazre Tours, ' . $o->Address) : '';
     }
 
     public function MainPhone(): ?ArrayData

@@ -168,14 +168,34 @@
     <svg class="why-wave bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 H1440 V40 C 1200 0, 960 0, 720 30 S 240 70, 0 30 Z" fill="#F3F7FC"/></svg>
 </section>
 
-<section class="block alt" aria-labelledby="svc-h">
+<section class="block alt svc-block" aria-labelledby="svc-h">
     <div class="wrap">
-        <div class="center-head"><h2 id="svc-h">Naše usluge</h2></div>
+        <div class="center-head"><p class="script-kicker">Šta sve radimo</p><h2 id="svc-h">Naše usluge</h2></div>
         <div class="services">
-            <a class="service" href="putovanja"><h3>Izleti i putovanja</h3><p>Advent, šoping, evropski gradovi i vikend ture s vodičem.</p><span>Pogledaj ponudu →</span></a>
-            <a class="service" href="putovanje-po-mjeri"><h3>Putovanje po mjeri</h3><p>Vaš termin, vaš hotel, vaš program. Za porodice, firme i udruženja.</p><span>Pošalji upit →</span></a>
-            <a class="service" href="najam-autobusa"><h3>Najam autobusa</h3><p>Ekskurzije, sportski klubovi, svadbe i transferi.</p><span>Zatraži ponudu →</span></a>
-            <a class="service" href="putovanje-po-mjeri"><h3>Hoteli i ljetovanja</h3><p>Više od 200.000 hotela u 140 zemalja, uz vaučer iz agencije.</p><span>Pošalji upit →</span></a>
+            <a class="service s-o" href="putovanja">
+                <span class="svc-no">01</span>
+                <span class="svc-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></span>
+                <h3>Izleti i putovanja</h3><p>Advent, šoping, evropski gradovi i vikend ture s vodičem.</p>
+                <span class="svc-go">Pogledaj ponudu <i aria-hidden="true">→</i></span>
+            </a>
+            <a class="service s-b" href="putovanje-po-mjeri">
+                <span class="svc-no">02</span>
+                <span class="svc-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><path d="m9.5 10 1.8 1.8L15 8.2"/></svg></span>
+                <h3>Putovanje po mjeri</h3><p>Vaš termin, vaš hotel, vaš program. Za porodice, firme i udruženja.</p>
+                <span class="svc-go">Pošalji upit <i aria-hidden="true">→</i></span>
+            </a>
+            <a class="service s-r" href="najam-autobusa">
+                <span class="svc-no">03</span>
+                <span class="svc-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18M8 4v7M16 4v7"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg></span>
+                <h3>Najam autobusa</h3><p>Ekskurzije, sportski klubovi, svadbe i transferi.</p>
+                <span class="svc-go">Zatraži ponudu <i aria-hidden="true">→</i></span>
+            </a>
+            <a class="service s-t" href="putovanje-po-mjeri">
+                <span class="svc-no">04</span>
+                <span class="svc-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="6" r="3"/><path d="M2 20c3-2 5-2 7 0s4 2 7 0 4-2 6 0"/><path d="M3 16c3-2 5-2 7 0s4 2 7 0"/></svg></span>
+                <h3>Hoteli i ljetovanja</h3><p>Više od 200.000 hotela u 140 zemalja, uz vaučer iz agencije.</p>
+                <span class="svc-go">Pošalji upit <i aria-hidden="true">→</i></span>
+            </a>
         </div>
     </div>
 </section>
@@ -211,11 +231,18 @@
 </section>
 <% end_if %>
 
-<section class="block alt" aria-labelledby="faq-h">
-    <div class="wrap faq-wrap">
-        <div class="center-head">
+<section class="block alt faq-block" aria-labelledby="faq-h">
+    <div class="wrap faq-grid">
+        <div class="faq-side">
+            <p class="script-kicker">Imate pitanje?</p>
             <h2 id="faq-h">Česta pitanja</h2>
-            <p>Prijava, osiguranje, sjedišta i dokumenti. Sve ostalo je u <a href="uslovi-putovanja">opštim uslovima putovanja</a>.</p>
+            <p class="muted">Prijava, osiguranje, sjedišta i dokumenti. Sve ostalo je u <a href="uslovi-putovanja">opštim uslovima putovanja</a>.</p>
+            <% with $SiteConfig.MainPhone %>
+            <a class="faq-help" href="tel:$Tel">
+                <span class="faq-help-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span>
+                <span><small>Niste našli odgovor? Pozovite</small><b>$Number</b></span>
+            </a>
+            <% end_with %>
         </div>
         <% include FaqList Items=$GeneralFaqs %>
     </div>
