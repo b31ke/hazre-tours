@@ -1,0 +1,28 @@
+bs_BA:
+  SilverStripe\CMS\Controllers\CMSMain:
+    MENUTITLE: Stranice
+  SilverStripe\CMS\Controllers\CMSPagesController:
+    MENUTITLE: Stranice
+  SilverStripe\CMS\Controllers\CMSPageEditController:
+    MENUTITLE: Stranice
+  SilverStripe\CMS\Controllers\CMSPageSettingsController:
+    MENUTITLE: Stranice
+  SilverStripe\CMS\Controllers\CMSPageHistoryController:
+    MENUTITLE: Historija
+  SilverStripe\CMS\Controllers\CMSPageAddController:
+    MENUTITLE: 'Dodaj stranicu'
+  SilverStripe\Reports\ReportAdmin:
+    MENUTITLE: Izvještaji
+  SilverStripe\Admin\SecurityAdmin:
+    MENUTITLE: Korisnici
+  SilverStripe\SiteConfig\SiteConfigLeftAndMain:
+    MENUTITLE: Postavke
+  SilverStripe\VersionedAdmin\ArchiveAdmin:
+    MENUTITLE: Arhiva
+  SilverStripe\Admin\CMSProfileController:
+    MENUTITLE: 'Moj profil'
+  SilverStripe\AssetAdmin\Controller\AssetAdmin:
+    MENUTITLE: Datoteke
+  SilverStripe\Forms\GridField\GridField:
+    Add: 'Dodaj: {name}'
+    AddNew: 'Dodaj: {name}'

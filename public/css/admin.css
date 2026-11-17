@@ -1,0 +1,112 @@
+/* Hazre Tours – tema admin panela (boje loga: kraljevsko plava, narandžasta, tirkizna) */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap");
+
+:root {
+  --hz-royal: #1B3FA8;
+  --hz-royal-d: #132E7E;
+  --hz-royal-dd: #0E2466;
+  --hz-orange: #F7A11A;
+  --hz-orange-d: #D98300;
+  --hz-blue: #17AEDF;
+  --hz-bg: #F3F7FC;
+  --hz-line: #DCE4F2;
+}
+
+/* Lijevi meni: plavi, kao zaglavlja na sajtu */
+.cms-menu, .cms-menu .cms-panel-content, .cms-menu .toolbar--south {
+  background: linear-gradient(180deg, var(--hz-royal) 0%, var(--hz-royal-d) 55%, var(--hz-royal-dd) 100%) !important;
+  border-right: 0 !important;
+}
+.cms-menu .cms-panel-content, .cms-menu .toolbar--south { background: transparent !important; }
+.cms-menu__header { background: transparent !important; border-bottom: 1px solid rgba(255, 255, 255, .12) !important; padding: 14px 14px 12px !important; }
+.cms-menu .toolbar--south { border-top: 1px solid rgba(255, 255, 255, .12) !important; }
+
+/* Logo u meniju */
+.hazre-sitename { display: grid !important; gap: 6px; padding: 0 !important; height: auto !important; }
+.hazre-sitename__logo { display: block !important; width: auto !important; height: auto !important; padding: 0 !important; line-height: 0; background: none !important; }
+.hazre-logo-full { height: 52px; width: auto; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .3)); }
+.hazre-logo-mini { display: none; width: 32px; height: 32px; border-radius: 8px; }
+.hazre-sitename__site { display: inline-block !important; color: rgba(255, 255, 255, .7) !important; font: 600 12px "Poppins", sans-serif !important; letter-spacing: .04em; text-decoration: none !important; padding: 0 !important; }
+.hazre-sitename__site:hover { color: var(--hz-orange) !important; }
+.cms-menu.collapsed .hazre-logo-full, .cms-menu.collapsed .hazre-sitename__site { display: none !important; }
+.cms-menu.collapsed .hazre-logo-mini { display: block; }
+
+/* Korisnik (Moj profil, Odjava) */
+.cms-login-status, .cms-login-status a, .cms-login-status .cms-login-status__profile-link { color: rgba(255, 255, 255, .85) !important; }
+.cms-login-status a:hover { color: var(--hz-orange) !important; }
+
+/* Stavke menija */
+.cms-menu__list li a, .cms-menu__list li a .text, .cms-menu__list li a .menu__icon { color: rgba(255, 255, 255, .86) !important; }
+.cms-menu__list li a { font-family: "Poppins", sans-serif !important; font-weight: 500 !important; border-radius: 10px; margin: 2px 8px; transition: background .15s, color .15s; }
+.cms-menu__list li a:hover, .cms-menu__list li a:focus { background: rgba(255, 255, 255, .1) !important; color: #fff !important; }
+.cms-menu__list li a:hover .text, .cms-menu__list li a:hover .menu__icon { color: #fff !important; }
+.cms-menu__list li.current > a, .cms-menu__list li.current > a:hover, .cms-menu__list li.opened > a {
+  background: var(--hz-orange) !important; color: var(--hz-royal-dd) !important; box-shadow: 0 8px 18px -10px rgba(247, 161, 26, .9);
+}
+.cms-menu__list li.current > a .text, .cms-menu__list li.current > a .menu__icon { color: var(--hz-royal-dd) !important; }
+.cms-menu__list li ul li a { margin-left: 18px; }
+.cms-panel-toggle a, .cms-panel-toggle .toggle-expand, .cms-panel-toggle .toggle-collapse { color: rgba(255, 255, 255, .8) !important; }
+.cms-panel-toggle a:hover { color: var(--hz-orange) !important; }
+
+/* Gornja traka sadržaja i naslovi */
+.cms-content-header, .toolbar--north { background: #fff !important; border-bottom: 1px solid var(--hz-line) !important; }
+.cms-content-header h2, .toolbar--north h2, .breadcrumbs-wrapper .crumb, .cms-content-header .crumb { font-family: "Poppins", sans-serif !important; font-weight: 600 !important; color: var(--hz-royal-d) !important; }
+.breadcrumbs-wrapper a.crumb, .cms-content-header a.crumb { color: var(--hz-royal) !important; }
+.cms-content, .cms-content-fields, .cms-edit-form, .panel--padded { background: var(--hz-bg); }
+
+/* Tabovi */
+.cms-content-header-tabs .nav-link, .ui-tabs-nav .ui-tabs-anchor, .nav-tabs .nav-link { color: #51607A !important; font-family: "Poppins", sans-serif; font-weight: 500; }
+.cms-content-header-tabs .nav-link.active, .nav-tabs .nav-link.active, .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
+  color: var(--hz-orange-d) !important; border-bottom-color: var(--hz-orange) !important; box-shadow: inset 0 -3px 0 var(--hz-orange) !important;
+}
+
+/* Dugmad */
+.btn-primary, .btn-primary:not(:disabled):not(.disabled) {
+  background: var(--hz-royal) !important; border-color: var(--hz-royal) !important; color: #fff !important; border-radius: 10px !important; font-weight: 600 !important;
+}
+.btn-primary:hover, .btn-primary:focus { background: var(--hz-royal-d) !important; border-color: var(--hz-royal-d) !important; }
+.btn-primary.btn--loading, .btn-primary:active { background: var(--hz-royal-dd) !important; }
+/* Glavna akcija (Sačuvaj, Objavi, Dodaj) narandžasta kao "Rezerviši" na sajtu */
+#Form_ItemEditForm_action_doSave, #Form_EditForm_action_publish, #Form_EditForm_action_save, .btn-primary.font-icon-check-mark-circle,
+.grid-field__toolbar .btn-primary, a.btn.btn-primary.font-icon-plus-circled, a.btn.btn-primary.font-icon-plus {
+  background: var(--hz-orange) !important; border-color: var(--hz-orange) !important; color: var(--hz-royal-dd) !important;
+  box-shadow: 0 8px 18px -10px rgba(247, 161, 26, .9);
+}
+#Form_ItemEditForm_action_doSave:hover, #Form_EditForm_action_publish:hover, .grid-field__toolbar .btn-primary:hover, a.btn.btn-primary.font-icon-plus-circled:hover {
+  background: #FFB33A !important; border-color: #FFB33A !important;
+}
+.btn-outline-primary { color: var(--hz-royal) !important; border-color: var(--hz-royal) !important; border-radius: 10px !important; }
+.btn-outline-primary:hover { background: var(--hz-royal) !important; color: #fff !important; }
+.btn-secondary, .btn-outline-secondary { border-radius: 10px !important; }
+
+/* Linkovi */
+.cms a:not(.btn):not(.nav-link):not(.crumb), .cms-content a:not(.btn):not(.nav-link) { color: var(--hz-royal); }
+
+/* Polja */
+.form-control, .field input.text, .field textarea, .field select, .chosen-container-single .chosen-single, .Select-control {
+  border-radius: 10px !important; border-color: #CBD5DF !important;
+}
+.form-control:focus, .field input.text:focus, .field textarea:focus, .Select.is-focused > .Select-control {
+  border-color: var(--hz-blue) !important; box-shadow: 0 0 0 3px rgba(23, 174, 223, .18) !important;
+}
+.form__field-label, .field > label.left, .form-group > label { color: var(--hz-royal-dd); font-weight: 600; }
+.form__field-description, .description { color: #6B7A93 !important; }
+input[type="checkbox"]:checked, .form-check-input:checked { accent-color: var(--hz-orange); }
+
+/* Tabele (GridField) */
+.grid-field__table thead th, .grid-field__table .grid-field__col-compact, table.grid-field__table th { background: #fff !important; color: var(--hz-royal-dd) !important; font-family: "Poppins", sans-serif; font-weight: 600 !important; border-bottom: 2px solid var(--hz-line) !important; }
+.grid-field__table thead th a, .grid-field__sort { color: var(--hz-royal-dd) !important; }
+.grid-field__table tbody tr:hover > td { background: #EEF3FF !important; }
+.grid-field__table tbody tr.ss-gridfield-item:nth-child(even) > td { background: #FAFCFF; }
+.grid-field__table { border-radius: 14px; overflow: hidden; box-shadow: 0 12px 30px -24px rgba(27, 63, 168, .5); }
+.grid-field__paginator .pagination .page-item.active .page-link { background: var(--hz-royal) !important; border-color: var(--hz-royal) !important; }
+
+/* Poruke */
+.alert-success, .message.good { border-left: 4px solid #1E9E5A !important; }
+.alert-warning, .message.warning { border-left: 4px solid var(--hz-orange) !important; }
+
+/* Učitavanje */
+.cms-content-loading-spinner, .cms-loading-container { background: var(--hz-bg) !important; }
+.cms-menu__list li, .cms-menu__list li a { background: transparent !important; border: 0 !important; }
+.cms-menu__list li a:hover, .cms-menu__list li a:focus { background: rgba(255, 255, 255, .1) !important; }
+.cms-menu__list li.current > a, .cms-menu__list li.current > a:hover, .cms-menu__list li.opened > a { background: var(--hz-orange) !important; }

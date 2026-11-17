@@ -1,0 +1,46 @@
+/* Hazre Tours – stranica za prijavu u admin */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Kaushan+Script&display=swap");
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(60% 70% at 100% 0%, rgba(23, 174, 223, .55), transparent 60%),
+    radial-gradient(50% 60% at 0% 100%, rgba(247, 161, 26, .28), transparent 60%),
+    linear-gradient(140deg, #0E2466 0%, #1B3FA8 60%, #1F6FD0 100%) !important;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 16px;
+}
+.app-brand { margin: 0 0 18px !important; text-align: center; }
+.app-brand__link { display: inline-flex !important; flex-direction: column; align-items: center; gap: 10px; text-decoration: none !important; }
+.app-brand__link::before {
+  content: ""; display: block; width: 230px; height: 94px;
+  background: url("../images/hazre-logo-light-sm.png") center / contain no-repeat;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35));
+}
+.app-brand__logo, .app-brand svg { display: none !important; }
+.app-brand__name { margin: 0 !important; font: 400 26px/1 "Kaushan Script", cursive !important; color: #8FDDF5 !important; }
+.app-brand__name::after { content: " · admin"; font: 600 13px "Poppins", sans-serif; color: rgba(255, 255, 255, .7); letter-spacing: .08em; text-transform: uppercase; }
+
+.login-form {
+  width: min(100%, 420px) !important; margin: 0 auto !important; padding: 30px 30px 26px !important;
+  background: #fff !important; border-radius: 22px !important; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .55) !important; border: 0 !important;
+}
+.login-form__title { font: 700 22px "Poppins", sans-serif !important; color: #132E7E !important; }
+.login-form label, .login-form .form__field-label { color: #0E2466 !important; font-weight: 600 !important; }
+.login-form input.text, .login-form input[type="text"], .login-form input[type="email"], .login-form input[type="password"] {
+  border-radius: 12px !important; border: 1px solid #CBD5DF !important; padding: 12px 14px !important; height: auto !important; font-size: 16px !important;
+}
+.login-form input:focus { border-color: #17AEDF !important; box-shadow: 0 0 0 3px rgba(23, 174, 223, .2) !important; outline: none !important; }
+.login-form .btn-primary, .login-form button[type="submit"], .login-form input[type="submit"] {
+  width: 100%; padding: 13px 18px !important; border: 0 !important; border-radius: 999px !important;
+  background: #F7A11A !important; color: #0E2466 !important; font: 700 15px "Poppins", sans-serif !important; letter-spacing: .04em; text-transform: uppercase;
+  box-shadow: 0 14px 28px -14px rgba(247, 161, 26, .95) !important;
+}
+.login-form .btn-primary:hover, .login-form button[type="submit"]:hover { background: #FFB33A !important; }
+.login-form a { color: #1B3FA8 !important; }
+.login-form a:hover { color: #D98300 !important; }
+.login-form input[type="checkbox"] { accent-color: #F7A11A; }
+.login-form__message--bad, .login-form__message--error { border-radius: 12px; }
+
+.silverstripe-brand { margin-top: 22px !important; opacity: .55; }
+.silverstripe-brand svg, .silverstripe-brand path { fill: #fff !important; color: #fff !important; }
+.login-form input.text, .login-form input[type="email"], .login-form input[type="password"], .login-form input[type="text"] { width: 100% !important; max-width: none !important; box-sizing: border-box; }

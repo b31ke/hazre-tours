@@ -5,9 +5,12 @@ After:
   - '#rootroutes'
   - '#cmsdefaultadmin'
 ---
+# Naziv i link u adminu; tema u bojama sajta (css/admin.css) i logo u meniju
 SilverStripe\Admin\LeftAndMain:
   application_name: 'Hazre Tours'
   application_link: '/'
+  extra_requirements_css:
+    - 'css/admin.css'
 
 # Prva stranica u adminu: Aranžmani
 SilverStripe\Admin\AdminRootController:
@@ -16,3 +19,8 @@ SilverStripe\Admin\AdminRootController:
 # Jezik: bosanski (admin, prijava, formati datuma)
 SilverStripe\i18n\i18n:
   default_locale: 'bs_BA'
+
+# Stranica za prijavu u istom stilu
+SilverStripe\Security\Security:
+  extensions:
+    - HazreTours\Extensions\LoginStyleExtension
