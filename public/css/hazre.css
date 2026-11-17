@@ -1098,3 +1098,9 @@ details[open] > summary i::after { rotate: 0deg; }
 .notes { counter-reset: note; }
 .notes .notes-list li { counter-increment: note; padding-left: 52px; }
 .notes .notes-list li::before { content: counter(note); left: 14px; top: 11px; width: 26px; height: 26px; display: grid; place-items: center; background: #EEF3FF; color: var(--royal); font: 700 12.5px var(--head); }
+/* Dijeljenje: veće ikone u obojenim krugovima */
+.share { gap: 10px; }
+.sh { width: 46px; height: 46px; border: 0; }
+.sh svg { width: 23px; height: 23px; }
+.sh.viber { background: #F0EDFF; } .sh.wa { background: #E6F7EC; } .sh.fb { background: #E8F1FE; }
+.sh:not(.viber):not(.wa):not(.fb) { background: #EEF3FF; }
