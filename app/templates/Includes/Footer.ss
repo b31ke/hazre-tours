@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <p class="foot-mark" aria-hidden="true">HAZRE TOURS</p>
+    <p class="foot-mark" aria-hidden="true"><span style="--i:0">H</span><span style="--i:1">A</span><span style="--i:2">Z</span><span style="--i:3">R</span><span style="--i:4">E</span><span class="fm-sp"> </span><span style="--i:6">T</span><span style="--i:7">O</span><span style="--i:8">U</span><span style="--i:9">R</span><span style="--i:10">S</span></p>
 
     <div class="wrap foot-bottom">
         <span>© $CurrentYear <% if $SiteConfig.CompanyName %>$SiteConfig.CompanyName<% else %>$SiteConfig.Title<% end_if %><% if $SiteConfig.LicenseNumber %> · Licenca $SiteConfig.LicenseNumber<% end_if %></span>

@@ -941,3 +941,25 @@ details[open] > summary i::after { rotate: 0deg; }
 .flm-stops li.home { color: #fff; font-weight: 700; }
 .flm-stops li.home::after { width: 17px; height: 17px; left: -2px; background: var(--orange); border-color: #fff; box-shadow: 0 0 0 4px rgba(247, 161, 26, .3); }
 .flm-stops small { padding: 1px 7px; border-radius: 999px; background: var(--orange); color: var(--royal-d); font: 700 10px var(--head); text-transform: uppercase; letter-spacing: .06em; }
+/* Veliki natpis u podnožju: iznad linije, slova izranjaju iz magle jedno po jedno, preko njih prelazi odsjaj */
+.foot-mark { display: flex; justify-content: center; margin: clamp(22px, 3vw, 36px) 0 clamp(14px, 2vw, 24px); background: none; -webkit-text-stroke: 0; color: inherit;
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, rgba(0, 0, 0, .25) 100%); mask-image: linear-gradient(180deg, #000 35%, rgba(0, 0, 0, .25) 100%); }
+.foot-mark span { display: inline-block; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .16);
+  background: linear-gradient(100deg, rgba(255, 255, 255, .04) 0 38%, rgba(255, 255, 255, .42) 48%, rgba(143, 221, 245, .3) 52%, rgba(255, 255, 255, .04) 62% 100%) 0 0 / 1100% 100% no-repeat;
+  -webkit-background-clip: text; background-clip: text;
+  opacity: 0; translate: 0 .35em; filter: blur(14px);
+  transition: opacity 1s ease, translate 1s cubic-bezier(.2, .8, .2, 1), filter 1s ease; transition-delay: calc(var(--i) * 70ms);
+  animation: fm-shine 7s linear infinite; animation-delay: calc(var(--i) * 0.09s); }
+.foot-mark .fm-sp { width: .3em; animation: none; }
+.foot-mark.in span { opacity: 1; translate: 0 0; filter: blur(0); }
+@keyframes fm-shine { 0% { background-position: 100% 0; } 60%, 100% { background-position: 0% 0; } }
+@media (prefers-reduced-motion: reduce) { .foot-mark span { opacity: 1; translate: 0 0; filter: none; transition: none; animation: none; } }
+/* Diskretnije: tanji obris i blag, spor odsjaj */
+.foot-mark span { -webkit-text-stroke: 1px rgba(255, 255, 255, .09);
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, .02) 0 40%, rgba(255, 255, 255, .16) 49%, rgba(143, 221, 245, .12) 51%, rgba(255, 255, 255, .02) 60% 100%);
+  animation-duration: 11s; transition-duration: 1.6s; }
+.foot-mark span { -webkit-text-stroke: 1px rgba(255, 255, 255, .13);
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, .055) 0 40%, rgba(255, 255, 255, .24) 49%, rgba(143, 221, 245, .18) 51%, rgba(255, 255, 255, .055) 60% 100%); }
+/* blur kvari slova obojena preko pozadine (background-clip: text), zato bez filtera */
+.foot-mark span { filter: none !important; translate: 0 .25em; transition-property: opacity, translate; }
+.foot-mark.in span { translate: 0 0; }

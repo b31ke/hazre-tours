@@ -336,3 +336,24 @@
   }
   $$('[data-consent-open]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); if (consent) consent.hidden = false; }));
 })();
+
+// Natpis u podnožju: slova izranjaju kad se dođe do dna stranice
+(() => {
+  const mark = document.querySelector('.foot-mark');
+  if (!mark) return;
+  if (!('IntersectionObserver' in window)) { mark.classList.add('in'); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { mark.classList.add('in'); io.disconnect(); } });
+  }, { threshold: 0.3 });
+  io.observe(mark);
+})();
+// rezerva: ako posmatrač ne javi (npr. pozadinski prozor), provjeri pri skrolanju
+(() => {
+  const mark = document.querySelector('.foot-mark');
+  if (!mark) return;
+  const check = () => {
+    if (mark.getBoundingClientRect().top < innerHeight * 0.92) { mark.classList.add('in'); removeEventListener('scroll', check); }
+  };
+  addEventListener('scroll', check, { passive: true });
+  check();
+})();
