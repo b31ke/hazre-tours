@@ -880,3 +880,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .news .check { color: rgba(255, 255, 255, .85); font-size: 14px; }
 @media (max-width: 480px) { .news-row { flex-wrap: wrap; border-radius: 22px; } .news-btn { width: 100%; justify-content: center; } .news-plane { width: 40px; height: 40px; top: 4%; } }
 @media (prefers-reduced-motion: reduce) { .news-plane { animation: none; } }
+/* Kartica novosti cijela iznad podnožja, na istoj svijetloj pozadini kao kontakt iznad */
+.news { background: var(--bg-alt); padding: 0 0 clamp(40px, 5vw, 64px); }
