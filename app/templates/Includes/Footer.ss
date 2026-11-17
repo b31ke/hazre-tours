@@ -31,9 +31,8 @@
 
     <div class="wrap foot-grid">
         <div class="foot-brand">
-            <img src="images/hazre-logo-sm.png" alt="$SiteConfig.Title" width="171" height="70" loading="lazy">
+            <a class="foot-logo" href="$BaseHref" aria-label="$SiteConfig.Title, početna"><img src="images/hazre-logo-light-sm.png" alt="$SiteConfig.Title" width="171" height="70" loading="lazy"></a>
             <p class="foot-motto">Gdje god krenete,<br><em>mi vozimo</em></p>
-            <p class="foot-from"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="3"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/></svg><span><b>Polasci iz:</b> <% loop $FooterCities %>$Name<% if not $IsLast %> · <% end_if %><% end_loop %></span></p>
             <div class="socials">
                 <% if $SiteConfig.FacebookURL %><a href="$SiteConfig.FacebookURL" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4.4V11H7v4h3v9h4v-9h3l1-4h-4V8.6c0-.4.3-.6.6-.6z"/></svg></a><% end_if %>
                 <% if $SiteConfig.InstagramURL %><a href="$SiteConfig.InstagramURL" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg></a><% end_if %>

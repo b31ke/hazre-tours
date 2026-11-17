@@ -925,6 +925,6 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-brand img { height: 52px; padding: 8px 14px; border-radius: 14px; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .5); }
 .foot-motto { margin: 2px 0 0 !important; font: 400 clamp(24px, 2.4vw, 30px)/1.15 "Kaushan Script", "Segoe Script", cursive; color: #fff !important; }
 .foot-motto em { font-style: normal; color: var(--orange); }
-.foot-from { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.6; color: #B9C6E8 !important; }
-.foot-from svg { flex: none; margin-top: 2px; color: var(--orange); }
-.foot-from b { color: #fff; font-weight: 600; }
+/* Podnožje: svijetli logo bez okvira i linija polazaka kao na voznom redu */
+.foot-logo { display: inline-block; line-height: 0; }
+.foot-brand .foot-logo img { height: 74px; width: auto; padding: 0; background: none; border-radius: 0; box-shadow: none; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .35)); }
