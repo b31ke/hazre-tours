@@ -50,6 +50,40 @@ PRVI PUT (jednom)
    U adminu: Settings -> Kontakt -> provjeri adresu (stari sajt ima dvije različite) i e-mail za upite.
 
 
+PRVI PUT S LOKALNOM BAZOM I SLIKAMA (preporučeno: sav sređen sadržaj ide na server)
+----------------------------------------------------------------------------------
+Umjesto koraka 5-7 iznad. Koraci 1-4 (domena, PHP 8.4, baza, SSL) ostaju isti.
+
+A) Na računaru, u folderu projekta, napravi sva tri fajla (u deploy\paket\):
+
+     powershell -ExecutionPolicy Bypass -File deploy\napravi-paket.ps1
+     ddev export-db --gzip --file=deploy/paket/hazre-baza.sql.gz
+     ddev exec "cd public && rm -f /var/www/html/deploy/paket/hazre-slike.zip && find assets -type f ! -name '*__*' | zip -q -@ /var/www/html/deploy/paket/hazre-slike.zip"
+
+   hazre-paket.zip   kod (oko 3 MB; biblioteke server sam instalira)
+   hazre-baza.sql.gz baza (aranžmani, stranice, kategorije, postavke)
+   hazre-slike.zip   originalne slike i dokumenti (oko 50 MB; umanjene kopije server pravi sam)
+
+B) Pošalji sva tri na server:
+
+     scp -i "C:\Users\Bakir\Desktop\BE SHIRT d.o.o\beshirt-deploy" -P 2218 deploy\paket\hazre-paket.zip deploy\paket\hazre-baza.sql.gz deploy\paket\hazre-slike.zip beshirtb@185.212.108.159:
+
+C) Na serveru (ssh kao u koraku 7):
+
+     mkdir -p ~/hazre-tours && unzip -oq ~/hazre-paket.zip -d ~/hazre-tours && rm ~/hazre-paket.zip
+     cp ~/hazre-tours/deploy/env-produkcija.primjer ~/hazre-tours/.env && chmod 600 ~/hazre-tours/.env
+     nano ~/hazre-tours/.env          (adresa, lozinka baze, admin, pošiljalac maila)
+
+     gunzip -c ~/hazre-baza.sql.gz | mysql -u beshirtb_hazre -p beshirtb_hazre     (traži lozinku baze)
+     unzip -oq ~/hazre-slike.zip -d ~/hazre-tours/public && rm ~/hazre-slike.zip
+     bash ~/hazre-tours/deploy/postavi.sh
+
+   postavi.sh instalira biblioteke i osvježi bazu. Uvoz sa starog sajta tada samo dopuni ono što
+   nedostaje i ne prepisuje ništa iz lokalne baze. Bazu (hazre-baza.sql.gz) obriši sa servera kad sajt proradi.
+
+D) U adminu obriši testni upit (Aranžmani i upiti -> Upiti) i provjeri Postavke -> Kontakt.
+
+
 SVAKA SLJEDEĆA VERZIJA
 ----------------------
   Na računaru:  powershell -ExecutionPolicy Bypass -File deploy\napravi-paket.ps1
