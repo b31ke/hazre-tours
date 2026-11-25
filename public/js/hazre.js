@@ -637,3 +637,30 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
 
   if (mm('(prefers-reduced-motion: reduce)').matches) hs.classList.add('is-paused');
 })();
+
+/* Brojke koje se odbroje od 0 do vrijednosti kad se pojave na ekranu */
+(function () {
+  var els = document.querySelectorAll('.js-count');
+  if (!els.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
+    var to = parseInt(el.dataset.to, 10) || 0, t0 = null, dur = 1400 + Math.min(to, 40) * 15;
+    if (reduce || to < 2) { el.textContent = to; return; }
+    function step(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * e);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = '0';
+    requestAnimationFrame(step);
+    setTimeout(function () { el.textContent = to; }, dur + 400);
+  }
+  if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+  var io = new IntersectionObserver(function (en) {
+    en.forEach(function (x) { if (x.isIntersecting) { run(x.target); io.unobserve(x.target); } });
+  }, { threshold: .6 });
+  els.forEach(function (el) { io.observe(el); });
+})();
