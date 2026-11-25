@@ -45,10 +45,13 @@
                     </div>
                 </li>
                 <li><a class="nav-link<% if $BodyClass == 'CalendarController' %> on<% end_if %>" href="kalendar">Kalendar</a></li>
-                <% loop $Menu(1) %><% if $URLSegment != 'home' %>
+                <% loop $Menu(1) %><% if $URLSegment != 'home' %><% if not $IsFaqPage %>
                 <li><a class="nav-link<% if $isCurrent || $isSection %> on<% end_if %>" href="$Link">$MenuTitle</a></li>
-                <% end_if %><% end_loop %>
+                <% end_if %><% end_if %><% end_loop %>
                 <li><a class="nav-link" href="#kontakt">Kontakt</a></li>
+                <% loop $Menu(1) %><% if $IsFaqPage %>
+                <li><a class="nav-link<% if $isCurrent %> on<% end_if %>" href="$Link">$MenuTitle</a></li>
+                <% end_if %><% end_loop %>
             </ul>
             <div class="nav-foot">
                 <% with $SiteConfig.MainPhone %><a class="nav-call" href="tel:$Tel"><span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span><b>$Number</b></a><% end_with %>

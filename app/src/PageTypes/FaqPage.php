@@ -21,6 +21,12 @@ class FaqPage extends Page
 
     private static string $icon_class = 'font-icon-help-circled';
 
+    /** Za meni: ova stranica ide iza Kontakta. */
+    public function IsFaqPage(): bool
+    {
+        return true;
+    }
+
     /** @return DataList<FaqItem> */
     public function GeneralFaqs(): DataList
     {
