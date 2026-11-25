@@ -25,15 +25,16 @@
 
     <div class="wrap hs-top">
         <h1 class="hs-brand">$HeroTitleHTML</h1>
+        <p class="hs-count" aria-hidden="true"><b class="hs-cur">01</b><span>/ 0$HeroSlides.Count</span></p>
     </div>
 
     <div class="wrap hs-nav">
         <div class="hs-thumbs" role="tablist" aria-label="Izaberite putovanje">
             <% loop $HeroSlides %>
-            <button type="button" class="hs-thumb<% if $IsFirst %> is-active<% end_if %>" data-go="$Pos(0)" role="tab" aria-selected="<% if $IsFirst %>true<% else %>false<% end_if %>">
+            <button type="button" class="hs-thumb<% if $IsFirst %> is-active<% end_if %>" data-go="$Pos(0)" role="tab" aria-selected="<% if $IsFirst %>true<% else %>false<% end_if %>" aria-label="<% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %>">
+                <span class="hs-ph"><% if $PhotoID %><img src="$Photo.Fill(168,120).Convert('webp').URL" alt="" loading="lazy"><% else_if $PosterID %><img src="$Poster.Fill(168,120).Convert('webp').URL" alt="" loading="lazy"><% end_if %></span>
+                <span class="hs-tt"><small>0$Pos<% with $NextTerm %> · $StartDate.Format('dd.MM.')<% end_with %></small><b><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></b></span>
                 <span class="hs-bar"><i></i></span>
-                <span class="hs-num">0$Pos</span>
-                <span class="hs-tt"><b><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></b><% with $NextTerm %><small>$StartDate.Format('dd.MM.')</small><% end_with %></span>
             </button>
             <% end_loop %>
         </div>

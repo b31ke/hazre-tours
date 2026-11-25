@@ -551,44 +551,88 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
 })();
 
-/* Veliki slider na naslovnoj: automatski prelaz (traka napretka), strelice, prevlačenje prstom, tastatura */
+/* Veliki slider na naslovnoj: zavjesa-prelaz, naslov riječ po riječ, slova destinacije,
+   traka napretka pokreće sljedeći slajd, strelice, prst, tastatura, blaga paralaksa mišem */
 (function () {
   var hs = document.querySelector('.hs');
   if (!hs) return;
-  var slides = hs.querySelectorAll('.hs-slide'), thumbs = hs.querySelectorAll('.hs-thumb'), n = slides.length, cur = 0;
-  if (n < 2) { var nav = hs.querySelector('.hs-nav'); if (nav) nav.hidden = true; return; }
-  function go(i) {
+  var slides = hs.querySelectorAll('.hs-slide'), thumbs = hs.querySelectorAll('.hs-thumb'), n = slides.length, cur = 0, leaveT = 0, moveT = 0;
+  var counter = hs.querySelector('.hs-cur');
+
+  /* naslov u riječi, destinacija u slova (za animaciju) */
+  hs.querySelectorAll('.hs-title a').forEach(function (a) {
+    var words = a.textContent.trim().split(/\s+/);
+    a.innerHTML = words.map(function (w, i) { return '<span class="w"><span style="--i:' + i + '">' + w.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span></span>'; }).join(' ');
+  });
+  hs.querySelectorAll('.hs-dest').forEach(function (d) {
+    var t = d.textContent.trim();
+    d.innerHTML = Array.prototype.map.call(t, function (c, i) { return c === ' ' ? ' ' : '<span class="ch" style="--i:' + i + '">' + c.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>'; }).join('');
+  });
+
+  if (n < 2) { var nav = hs.querySelector('.hs-nav'); if (nav) nav.hidden = true; var cnt = hs.querySelector('.hs-count'); if (cnt) cnt.hidden = true; return; }
+
+  /* sve slike unaprijed, da prelaz nikad ne pokaže praznu pozadinu */
+  function preload() { slides.forEach(function (s) { var im = s.querySelector('img[loading="lazy"]'); if (im) im.removeAttribute('loading'); }); }
+  if (document.readyState === 'complete') setTimeout(preload, 600); else window.addEventListener('load', function () { setTimeout(preload, 600); });
+
+  function go(i, back) {
     i = (i + n) % n;
     if (i === cur) return;
-    slides[cur].classList.remove('is-active'); slides[cur].setAttribute('aria-hidden', 'true');
-    slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden');
+    if (back === undefined) back = i < cur;
+    hs.classList.toggle('is-back', back);
+    slides.forEach(function (s) { s.classList.remove('is-leaving'); });
+    void hs.offsetWidth; /* da novi slajd krene iz skrivene pozicije s prave strane */
+    var prev = slides[cur], next = slides[i];
+    prev.classList.remove('is-active'); prev.classList.add('is-leaving'); prev.setAttribute('aria-hidden', 'true');
+    next.classList.add('is-active'); next.removeAttribute('aria-hidden');
+    hs.classList.remove('is-moving'); void hs.offsetWidth; hs.classList.add('is-moving');
+    clearTimeout(leaveT); leaveT = setTimeout(function () { prev.classList.remove('is-leaving'); }, 1400);
+    clearTimeout(moveT); moveT = setTimeout(function () { hs.classList.remove('is-moving'); }, 1400);
     thumbs.forEach(function (t, k) {
-      t.classList.toggle('is-done', k < i);
       t.classList.toggle('is-active', k === i);
       t.setAttribute('aria-selected', k === i ? 'true' : 'false');
     });
-    [i, (i + 1) % n].forEach(function (k) { var im = slides[k].querySelector('img[loading="lazy"]'); if (im) im.removeAttribute('loading'); });
+    if (counter) {
+      counter.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
+      counter.classList.remove('is-flip'); void counter.offsetWidth; counter.classList.add('is-flip');
+    }
+    var im = next.querySelector('img[loading="lazy"]'); if (im) im.removeAttribute('loading');
     cur = i;
   }
-  /* kraj trake napretka = sljedeći slajd (pauza zaustavlja traku, pa i prelaz) */
-  hs.addEventListener('animationend', function (e) { if (e.animationName === 'hs-prog') go(cur + 1); });
+
+  hs.addEventListener('animationend', function (e) { if (e.animationName === 'hs-prog') go(cur + 1, false); });
   thumbs.forEach(function (t) { t.addEventListener('click', function () { go(+t.dataset.go); }); });
-  hs.querySelectorAll('.hs-arrow').forEach(function (b) { b.addEventListener('click', function () { go(cur + (+b.dataset.dir)); }); });
-  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-    hs.addEventListener('mouseenter', function () { hs.classList.add('is-paused'); });
-    hs.addEventListener('mouseleave', function () { hs.classList.remove('is-paused'); });
-  }
+  hs.querySelectorAll('.hs-arrow').forEach(function (b) { b.addEventListener('click', function () { go(cur + (+b.dataset.dir), +b.dataset.dir < 0); }); });
   hs.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft') go(cur - 1);
+    if (e.key === 'ArrowRight') go(cur + 1, false); else if (e.key === 'ArrowLeft') go(cur - 1, true);
   });
+
+  var mm = window.matchMedia ? window.matchMedia.bind(window) : function () { return { matches: false }; };
+  if (mm('(hover: hover) and (pointer: fine)').matches) {
+    hs.addEventListener('mouseenter', function () { hs.classList.add('is-paused'); });
+    hs.addEventListener('mouseleave', function () { hs.classList.remove('is-paused'); hs.style.setProperty('--mx', 0); hs.style.setProperty('--my', 0); });
+    if (!mm('(prefers-reduced-motion: reduce)').matches) {
+      var raf = 0;
+      hs.addEventListener('mousemove', function (e) {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          var r = hs.getBoundingClientRect();
+          hs.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5).toFixed(3));
+          hs.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5).toFixed(3));
+        });
+      });
+    }
+  }
+
   var x0 = null, y0 = 0;
   hs.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
   hs.addEventListener('touchend', function (e) {
     if (x0 === null) return;
     var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) go(cur + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) go(cur + (dx < 0 ? 1 : -1), dx > 0);
     x0 = null;
   }, { passive: true });
-  /* ako korisnik ne želi animacije: bez automatskog prelaza */
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) hs.classList.add('is-paused');
+
+  if (mm('(prefers-reduced-motion: reduce)').matches) hs.classList.add('is-paused');
 })();
