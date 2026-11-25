@@ -1739,3 +1739,17 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (min-width: 1101px) { .foot-brand { align-self: center; } }
 /* logo i slogan po visini u sredini same mape (bez naslova iznad i teksta ispod mape) */
 @media (min-width: 1101px) { .foot-brand { align-self: stretch !important; align-content: center !important; padding: 46px 0 29px; } }
+
+/* Česta pitanja: pregledni odgovori (pasusi, liste, red "naziv: vrijednost") */
+.faq-a p { margin: 0 0 10px; line-height: 1.65; }
+.faq-a p:last-child { margin-bottom: 0; }
+.faq-a strong { color: var(--royal); font-weight: 700; }
+.faq-list { list-style: none; margin: 4px 0 14px; padding: 0; display: grid; gap: 6px; }
+.faq-list:last-child { margin-bottom: 0; }
+.faq-list li { position: relative; padding-left: 20px; line-height: 1.55; }
+.faq-list li::before { content: ""; position: absolute; left: 4px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+.faq-list li.kv { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 9px 14px 9px 34px; border-radius: 12px; background: #F3F7FE; border: 1px solid #E3EBFA; }
+.faq-list li.kv::before { left: 14px; top: 50%; translate: 0 -50%; }
+.faq-list li.kv b { flex: none; min-width: 4.2em; text-align: center; padding: 3px 10px; border-radius: 999px; background: #FFF3DD; color: var(--orange-d); font: 700 14px var(--head); }
+.faq-list li.kv span strong { color: inherit; font-weight: 600; }
+@media (max-width: 560px) { .faq-list li.kv { padding: 8px 10px 8px 28px; gap: 10px; } .faq-list li.kv::before { left: 11px; } }
