@@ -10,6 +10,7 @@ use HazreTours\Model\FaqItem;
 use Page;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
@@ -36,6 +37,7 @@ class HomePage extends Page
         'HeroTitle' => 'Varchar(150)',
         'HeroLead' => 'Text',
         'TripsTitle' => 'Varchar(150)',
+        'HeroMode' => "Enum('slider,klasicni','slider')",
     ];
 
     private static array $has_one = [
@@ -49,6 +51,7 @@ class HomePage extends Page
         $fields = parent::getCMSFields();
         $fields->removeByName(['PageForm', 'Intro']);
         $fields->addFieldsToTab('Root.Main', [
+            DropdownField::create('HeroMode', 'Izgled vrha naslovne', ['slider' => 'Veliki slider s aranžmanima', 'klasicni' => 'Klasični (naslov i razglednice)']),
             TextField::create('HeroEyebrow', 'Mali naslov iznad'),
             TextField::create('HeroTitle', 'Glavni naslov')->setDescription('Riječ između *zvjezdica* se ističe bojom, npr. "Putujte *sigurno*, našim autobusima".'),
             TextareaField::create('HeroLead', 'Tekst ispod naslova')->setRows(3),
@@ -142,10 +145,23 @@ class HomePage extends Page
         return ArrayList::create($out);
     }
 
-    /** Slider u vrhu: istaknuti pa najbliži polasci, najviše 5. */
+    /** Slider u vrhu: do 5 različitih destinacija s fotografijom, najbliži polazak prvi. */
     public function HeroSlides(): ArrayList
     {
-        return Trip::liveList()->limit(5);
+        $out = [];
+        $seen = [];
+        foreach (Trip::liveList() as $trip) {
+            $dest = $trip->DestinationName ?: $trip->Title;
+            if (isset($seen[$dest]) || !($trip->PhotoID || $trip->PosterID)) {
+                continue;
+            }
+            $seen[$dest] = true;
+            $out[] = $trip;
+            if (count($out) === 5) {
+                break;
+            }
+        }
+        return ArrayList::create($out);
     }
 
     /** Ploča polazaka: najbližih 8 polazaka. */

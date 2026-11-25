@@ -550,3 +550,45 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   apply();
   mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
 })();
+
+/* Veliki slider na naslovnoj: automatski prelaz (traka napretka), strelice, prevlačenje prstom, tastatura */
+(function () {
+  var hs = document.querySelector('.hs');
+  if (!hs) return;
+  var slides = hs.querySelectorAll('.hs-slide'), thumbs = hs.querySelectorAll('.hs-thumb'), n = slides.length, cur = 0;
+  if (n < 2) { var nav = hs.querySelector('.hs-nav'); if (nav) nav.hidden = true; return; }
+  function go(i) {
+    i = (i + n) % n;
+    if (i === cur) return;
+    slides[cur].classList.remove('is-active'); slides[cur].setAttribute('aria-hidden', 'true');
+    slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden');
+    thumbs.forEach(function (t, k) {
+      t.classList.toggle('is-done', k < i);
+      t.classList.toggle('is-active', k === i);
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+    });
+    [i, (i + 1) % n].forEach(function (k) { var im = slides[k].querySelector('img[loading="lazy"]'); if (im) im.removeAttribute('loading'); });
+    cur = i;
+  }
+  /* kraj trake napretka = sljedeći slajd (pauza zaustavlja traku, pa i prelaz) */
+  hs.addEventListener('animationend', function (e) { if (e.animationName === 'hs-prog') go(cur + 1); });
+  thumbs.forEach(function (t) { t.addEventListener('click', function () { go(+t.dataset.go); }); });
+  hs.querySelectorAll('.hs-arrow').forEach(function (b) { b.addEventListener('click', function () { go(cur + (+b.dataset.dir)); }); });
+  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    hs.addEventListener('mouseenter', function () { hs.classList.add('is-paused'); });
+    hs.addEventListener('mouseleave', function () { hs.classList.remove('is-paused'); });
+  }
+  hs.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft') go(cur - 1);
+  });
+  var x0 = null, y0 = 0;
+  hs.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  hs.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) go(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive: true });
+  /* ako korisnik ne želi animacije: bez automatskog prelaza */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) hs.classList.add('is-paused');
+})();
