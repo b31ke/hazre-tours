@@ -91,9 +91,9 @@
             <h2 id="why-h">Prvo prevoznik,<br><em>onda agencija</em></h2>
             <p class="why-lead">Od 1996. vozimo putnike, a od 2016. pravimo i putovanja. Autobus je naš, vozač je naš i plan puta je naš, pa ne zavisimo od tuđeg prevoza i znamo svaki kilometar rute.</p>
             <ul class="why-stats js-inview">
-                <li><span class="ws-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><b class="js-count" data-to="$YearsOnRoad">$YearsOnRoad</b><span>godina na putu</span><i class="ws-bar" aria-hidden="true"></i></li>
-                <li><span class="ws-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><b class="js-count" data-to="$CityCount">$CityCount</b><span>mjesta polaska</span><i class="ws-bar" aria-hidden="true"></i></li>
-                <li><span class="ws-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><b class="js-count" data-to="$AllTripsCount">$AllTripsCount</b><span>aktivnih putovanja</span><i class="ws-bar" aria-hidden="true"></i></li>
+                <li><b class="js-count" data-to="$YearsOnRoad">$YearsOnRoad</b><span>godina na putu</span><i class="ws-bar" aria-hidden="true"></i></li>
+                <li><b class="js-count" data-to="$CityCount">$CityCount</b><span>mjesta polaska</span><i class="ws-bar" aria-hidden="true"></i></li>
+                <li><b class="js-count" data-to="$AllTripsCount">$AllTripsCount</b><span>aktivnih putovanja</span><i class="ws-bar" aria-hidden="true"></i></li>
             </ul>
             <a class="btn btn-orange btn-lg" href="o-nama">Upoznajte nas</a>
         </div>
