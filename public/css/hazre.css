@@ -1782,3 +1782,8 @@ details[open] > summary i::after { rotate: 0deg; }
 .why-stats li:nth-child(2) .ws-bar::after { transition-delay: .35s; }
 .why-stats li:nth-child(3) .ws-bar::after { transition-delay: .5s; }
 @media (max-width: 420px) { .why-stats { gap: 8px !important; } .why-stats li { padding: 12px 10px 16px; border-radius: 14px; } .ws-ico { width: 30px; height: 30px; } .why-stats span { font-size: 12px !important; } .ws-bar { left: 10px; right: 10px; } }
+/* brojke u karticama centrirane */
+.why-stats li { justify-items: center; align-content: center; text-align: center; padding: 20px 12px 24px; }
+.why-stats li { padding-inline: 8px; }
+.why-stats span { white-space: nowrap; font-size: 13px !important; }
+@media (max-width: 420px) { .why-stats span { white-space: normal; font-size: 12px !important; } }
