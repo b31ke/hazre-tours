@@ -1683,3 +1683,16 @@ details[open] > summary i::after { rotate: 0deg; }
   /* naziv grada uvijek stane u širinu ekrana */
   .hs-dest { left: 16px; right: 16px; font-size: min(92px, calc((100vw - 32px) / (var(--len, 8) * .74))); letter-spacing: -.02em; }
 }
+
+/* Društvene mreže u traci zaglavlja: desno od telefona, prave brend boje */
+.tb-socials { display: flex; align-items: center; gap: 7px; padding-left: 16px; margin-left: -4px; border-left: 1px solid rgba(255, 255, 255, .28); }
+.tb-socials .tb-soc { position: relative; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: #fff; background: var(--soc-bg); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 4px 12px -4px var(--soc-glow); transition: translate .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s, scale .25s; scale: 1; }
+.tb-socials .tb-soc svg { width: 16px; height: 16px; }
+.tb-socials .tb-soc:hover, .tb-socials .tb-soc:focus-visible { translate: 0 -2px; scale: 1.08; background: var(--soc-bg); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 8px 20px -4px var(--soc-glow), 0 0 0 3px rgba(255, 255, 255, .28); outline: none; }
+.tb-soc.is-fb { --soc-bg: linear-gradient(180deg, #2C8CFF 0%, #0866FF 100%); --soc-glow: rgba(8, 102, 255, .85); }
+.tb-soc.is-ig { --soc-bg: radial-gradient(circle at 28% 108%, #FFDD55 0%, #FFDD55 10%, #FF543E 42%, #C837AB 68%, #6A3FE0 100%); --soc-glow: rgba(200, 55, 171, .85); }
+.tb-soc.is-tt { --soc-bg: #0B0B0F; --soc-glow: rgba(37, 244, 238, .7); }
+.tb-soc.is-tt svg { filter: drop-shadow(1.2px 1px 0 #FE2C55) drop-shadow(-1.2px -1px 0 #25F4EE); }
+.tb-soc.is-vb { --soc-bg: linear-gradient(180deg, #8B7BFF 0%, #7360F2 100%); --soc-glow: rgba(115, 96, 242, .85); }
+.tb-soc.is-vb svg { width: 19px; height: 19px; }
+@media (max-width: 900px) { .tb-socials { display: none; } }
