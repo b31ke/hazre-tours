@@ -1698,7 +1698,7 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 900px) { .tb-socials { display: none; } }
 
 /* Podnožje: mapa mjesta polaska (sjeveroistočna BiH) umjesto liste */
-@media (min-width: 1101px) { .foot-grid { grid-template-columns: 1.05fr 1.75fr .85fr .9fr 1.35fr !important; } }
+@media (min-width: 1101px) { .foot-grid { grid-template-columns: 1.75fr 1.55fr .8fr .85fr 1.25fr !important; } }
 @media (max-width: 700px) { .bm { grid-column: 1 / -1; } }
 .bm { min-width: 0; }
 .bm-map { margin: 0; position: relative; }
@@ -1728,3 +1728,7 @@ details[open] > summary i::after { rotate: 0deg; }
 .bm-map.js-inview .bm-route { stroke-opacity: 0; transition: stroke-opacity .8s ease calc(.4s + var(--i) * .08s); }
 .bm-map.js-inview.in .bm-route { stroke-opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .bm-route, .bm-ping { animation: none; } }
+
+/* Podnožje: logo duplo veći */
+.foot-brand .foot-logo img { height: auto !important; width: min(100%, 312px); }
+@media (max-width: 640px) { .foot-brand .foot-logo { justify-self: center; } .foot-brand .foot-logo img { width: 270px; max-width: 100%; display: block; margin-inline: auto; } }
