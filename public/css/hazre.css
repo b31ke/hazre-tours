@@ -1557,7 +1557,7 @@ details[open] > summary i::after { rotate: 0deg; }
 .hs-kicker b { color: var(--orange); }
 .hs-pulse { width: 9px; height: 9px; border-radius: 50%; background: #3BE08A; box-shadow: 0 0 0 0 rgba(59, 224, 138, .7); animation: hs-pulse 1.8s infinite; }
 @keyframes hs-pulse { 70% { box-shadow: 0 0 0 10px rgba(59, 224, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 224, 138, 0); } }
-.hs-title { margin: 0; font: 700 clamp(44px, 5.8vw, 86px)/1.0 var(--head); letter-spacing: -.03em; text-shadow: 0 8px 50px rgba(0, 0, 0, .4); }
+.hs-title { margin: 0; font: 700 clamp(44px, 5.8vw, 86px)/1.0 var(--head); letter-spacing: -.03em; filter: drop-shadow(0 6px 24px rgba(0, 0, 0, .35)); }
 .hs-title a { color: #fff; text-decoration: none; }
 .hs-lead { margin: 0; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.55; color: rgba(255, 255, 255, .86); max-width: 50ch; }
 .hs-cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px; margin-top: 8px; }
