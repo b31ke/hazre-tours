@@ -1732,3 +1732,8 @@ details[open] > summary i::after { rotate: 0deg; }
 /* Podnožje: logo duplo veći */
 .foot-brand .foot-logo img { height: auto !important; width: min(100%, 312px); }
 @media (max-width: 640px) { .foot-brand .foot-logo { justify-self: center; } .foot-brand .foot-logo img { width: 270px; max-width: 100%; display: block; margin-inline: auto; } }
+
+/* Podnožje: logo i slogan centrirani, bez ikona mreža, po visini u sredini u odnosu na kolone desno */
+.foot-brand { justify-items: center; text-align: center; align-content: center; }
+.foot-brand .foot-motto { text-align: center; }
+@media (min-width: 1101px) { .foot-brand { align-self: center; } }
