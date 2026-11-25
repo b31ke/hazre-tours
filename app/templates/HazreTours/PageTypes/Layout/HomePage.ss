@@ -166,12 +166,15 @@
                 <h3>Najam autobusa</h3><p>Ekskurzije, sportski klubovi, svadbe i transferi.</p>
                 <span class="svc-go">Zatraži ponudu <i aria-hidden="true">→</i></span>
             </a>
+            <%-- Isključeno: Hoteli i ljetovanja (za ponovno uključivanje ukloni oznake komentara) --%>
+            <%--
             <a class="service s-t" href="putovanje-po-mjeri">
                 <span class="svc-no">04</span>
                 <span class="svc-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="6" r="3"/><path d="M2 20c3-2 5-2 7 0s4 2 7 0 4-2 6 0"/><path d="M3 16c3-2 5-2 7 0s4 2 7 0"/></svg></span>
                 <h3>Hoteli i ljetovanja</h3><p>Više od 200.000 hotela u 140 zemalja, uz vaučer iz agencije.</p>
                 <span class="svc-go">Pošalji upit <i aria-hidden="true">→</i></span>
             </a>
+            --%>
         </div>
     </div>
 </section>
