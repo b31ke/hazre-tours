@@ -3,7 +3,7 @@
         <% loop $HeroSlides %>
         <article class="hs-slide<% if $IsFirst %> is-active<% end_if %>" data-i="$Pos(0)" aria-roledescription="slide" aria-label="$Pos od $TotalItems"<% if not $IsFirst %> aria-hidden="true"<% end_if %>>
             <div class="hs-bg<% if not $PhotoID %> is-poster<% end_if %>">
-                <img src="<% if $PhotoID %>$HeroPhotoURL<% else %>$CardImageURL<% end_if %>" alt="" <% if $IsFirst %>fetchpriority="high"<% else %>loading="lazy"<% end_if %>>
+                <img src="<% if $PhotoID %>$HeroPhotoURL<% else %>$CardImageURL<% end_if %>"<% if $PhotoID %> srcset="$PhotoURL 1200w, $HeroPhotoURL 1920w" sizes="100vw"<% end_if %> alt="" decoding="async" <% if $IsFirst %>fetchpriority="high"<% else %>loading="lazy"<% end_if %>>
             </div>
             <p class="hs-dest" aria-hidden="true"><% if $DestinationName %>$DestinationName<% else %>$Title<% end_if %></p>
             <div class="wrap hs-in">

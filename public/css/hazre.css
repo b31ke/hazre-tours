@@ -1654,3 +1654,32 @@ details[open] > summary i::after { rotate: 0deg; }
   .hs-thumb.is-active .hs-bar i { animation: none; scale: 1 1; }
   .hs-cta .btn::after { display: none; }
 }
+
+/* Slider na telefonu i tabletu: lakši prelaz (klizanje umjesto zavjese, bez zamućenja i filtera) da ne koči */
+@media (max-width: 900px) {
+  .hs-slide, .hs.is-back .hs-slide:not(.is-active):not(.is-leaving) { clip-path: none; translate: 100% 0; }
+  .hs.is-back .hs-slide:not(.is-active):not(.is-leaving) { translate: -100% 0; }
+  .hs-slide.is-active { clip-path: none; translate: 0 0; transition: translate .9s cubic-bezier(.65, 0, .25, 1); will-change: translate; }
+  .hs-slide.is-leaving { clip-path: none; translate: -28% 0; transition: translate .9s cubic-bezier(.65, 0, .25, 1); }
+  .hs.is-back .hs-slide.is-leaving { translate: 28% 0; }
+  .hs-slide.is-active::before { display: none; }
+  .hs-slide.is-leaving::after { opacity: 1; }
+  .hs-bg { inset: 0; transform: none; transition: none; }
+  .hs-bg img, .hs.is-back .hs-slide:not(.is-active):not(.is-leaving) .hs-bg img { scale: 1.12; translate: 0 0; filter: none; will-change: scale; }
+  .hs-slide.is-active .hs-bg img { scale: 1.02; translate: 0 0; transition: scale 9s linear; }
+  .hs-slide.is-leaving .hs-bg img, .hs.is-back .hs-slide.is-leaving .hs-bg img { scale: 1.02; translate: 0 0; filter: none; transition: none; }
+  .hs-kicker, .hs-price, .hs-thumb, .hs-arrow { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .hs-kicker { background: rgba(10, 30, 95, .55); }
+  .hs-price { background: linear-gradient(135deg, rgba(20, 45, 130, .78), rgba(10, 28, 90, .7)); }
+  .hs-title { filter: none; text-shadow: none; }
+  .hs-pv b { filter: none; }
+  .hs-pulse { animation: none; box-shadow: 0 0 0 3px rgba(59, 224, 138, .25); }
+  .hs-dest { transform: none; transition: none; }
+  .hs-dest .ch, .hs-slide.is-active .hs-dest .ch, .hs-slide.is-leaving .hs-dest .ch { opacity: 1; translate: 0 0; transition: none; }
+  .hs-dest { opacity: 0; transition: opacity .6s ease; }
+  .hs-slide.is-active .hs-dest { opacity: 1; transition: opacity 1s ease .45s; }
+}
+@media (max-width: 640px) {
+  /* naziv grada uvijek stane u širinu ekrana */
+  .hs-dest { left: 16px; right: 16px; font-size: min(92px, calc((100vw - 32px) / (var(--len, 8) * .74))); letter-spacing: -.02em; }
+}

@@ -567,6 +567,7 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   hs.querySelectorAll('.hs-dest').forEach(function (d) {
     var t = d.textContent.trim();
     d.innerHTML = Array.prototype.map.call(t, function (c, i) { return c === ' ' ? ' ' : '<span class="ch" style="--i:' + i + '">' + c.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span>'; }).join('');
+    d.style.setProperty('--len', Math.max(t.length, 4));
   });
 
   if (n < 2) { var nav = hs.querySelector('.hs-nav'); if (nav) nav.hidden = true; var cnt = hs.querySelector('.hs-count'); if (cnt) cnt.hidden = true; return; }
