@@ -174,21 +174,4 @@
     </div>
 </section>
 
-<section class="block alt faq-block" aria-labelledby="faq-h">
-    <div class="wrap faq-grid">
-        <div class="faq-side">
-            <p class="script-kicker">Imate pitanje?</p>
-            <h2 id="faq-h">Česta pitanja</h2>
-            <p class="muted">Prijava, osiguranje, sjedišta i dokumenti. Sve ostalo je u <a href="uslovi-putovanja">opštim uslovima putovanja</a>.</p>
-            <% with $SiteConfig.MainPhone %>
-            <a class="faq-help" href="tel:$Tel">
-                <span class="faq-help-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg></span>
-                <span><small>Niste našli odgovor? Pozovite</small><b>$Number</b></span>
-            </a>
-            <% end_with %>
-        </div>
-        <% include FaqList Items=$GeneralFaqs %>
-    </div>
-</section>
-
 <% include ContactSection FormType='rezervacija' %>
