@@ -1566,10 +1566,14 @@ details[open] > summary i::after { rotate: 0deg; }
 @keyframes hs-shine { 0%, 60% { translate: -120% 0; } 100% { translate: 120% 0; } }
 .hs-cta .btn span { transition: translate .25s; }
 .hs-cta .btn:hover span { translate: 5px 0; }
-.hs-price { display: flex; align-items: baseline; gap: 6px; margin: 0; padding-left: 24px; border-left: 2px solid rgba(255, 255, 255, .25); }
-.hs-price small { align-self: center; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: rgba(255, 255, 255, .7); max-width: 4.5em; line-height: 1.2; }
-.hs-price b { font: 800 50px/1 var(--head); color: var(--orange); letter-spacing: -.02em; text-shadow: 0 6px 30px rgba(247, 161, 26, .45); }
-.hs-price span { font: 700 18px var(--head); color: #fff; }
+.hs-price { position: relative; overflow: hidden; display: grid; gap: 4px; margin: 0; padding: 12px 24px 13px 22px; border-radius: 18px; background: linear-gradient(135deg, rgba(255, 255, 255, .17) 0%, rgba(255, 255, 255, .04) 100%); border: 1px solid rgba(255, 210, 122, .5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 20px 44px -20px rgba(0, 0, 0, .7), 0 0 0 4px rgba(247, 161, 26, .08); }
+.hs-price::before { content: ""; position: absolute; left: 22px; right: 24px; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #FFD27A, transparent); opacity: .9; }
+.hs-price::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255, 236, 200, .35) 50%, transparent 65%); translate: -130% 0; animation: hs-shine 5s ease-in-out 3s infinite; pointer-events: none; }
+.hs-price small { display: flex; align-items: center; gap: 8px; font: 600 10.5px var(--head); letter-spacing: .24em; text-transform: uppercase; color: #FFE1A8; }
+.hs-price small::after { content: ""; flex: 1; min-width: 18px; height: 1px; background: linear-gradient(90deg, rgba(255, 225, 168, .7), transparent); }
+.hs-pv { display: flex; align-items: flex-start; gap: 5px; line-height: 1; }
+.hs-pv b { font: 800 52px/.9 var(--head); letter-spacing: -.035em; background: linear-gradient(180deg, #FFF1CF 0%, #FFC555 42%, #F7A11A 70%, #D97800 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 18px rgba(247, 161, 26, .45)); }
+.hs-pv sup { top: 0; margin-top: 5px; font: 700 15px var(--head); letter-spacing: .12em; color: #fff; opacity: .92; }
 
 /* gornji red: slogan lijevo, brojač desno */
 .hs-top { position: absolute; z-index: 4; left: 0; right: 0; top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; }
@@ -1625,10 +1629,12 @@ details[open] > summary i::after { rotate: 0deg; }
   .hs-lead { font-size: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .hs-cta { gap: 10px 14px; width: 100%; flex-wrap: nowrap; }
   .hs-cta .btn { padding: 14px 16px; font-size: 13.5px; }
-  .hs-price { padding-left: 14px; gap: 4px; }
-  .hs-price small { display: none; }
-  .hs-price b { font-size: 32px; }
-  .hs-price span { font-size: 15px; }
+  .hs-price { padding: 9px 16px 10px 15px; gap: 2px; border-radius: 15px; }
+  .hs-price::before { left: 15px; right: 16px; }
+  .hs-price small { font-size: 9px; letter-spacing: .18em; }
+  .hs-price small::after { display: none; }
+  .hs-pv b { font-size: 34px; }
+  .hs-pv sup { font-size: 12px; margin-top: 3px; }
   .hs-dest { top: 84px; bottom: auto; right: auto; left: 16px; font-size: 92px; -webkit-text-stroke-width: 1.2px; }
   .hs-top { top: 20px; }
   .hs-brand { font-size: 11px; letter-spacing: .1em; gap: 8px; }
