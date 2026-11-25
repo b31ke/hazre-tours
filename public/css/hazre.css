@@ -1737,3 +1737,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .foot-brand { justify-items: center; text-align: center; align-content: center; }
 .foot-brand .foot-motto { text-align: center; }
 @media (min-width: 1101px) { .foot-brand { align-self: center; } }
+/* logo i slogan po visini u sredini same mape (bez naslova iznad i teksta ispod mape) */
+@media (min-width: 1101px) { .foot-brand { align-self: stretch !important; align-content: center !important; padding: 46px 0 29px; } }
