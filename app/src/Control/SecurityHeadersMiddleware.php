@@ -17,7 +17,7 @@ class SecurityHeadersMiddleware implements HTTPMiddleware
 {
     public function process(HTTPRequest $request, callable $delegate)
     {
-        if (function_exists('header_remove')) {
+        if (function_exists('header_remove') && !headers_sent()) {
             header_remove('X-Powered-By');
         }
         /** @var HTTPResponse $response */

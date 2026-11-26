@@ -34,6 +34,14 @@ fi
 if [ -n "$CPANEL_BLOCK" ] && ! grep -q "BEGIN cPanel-generated handler" "$HTACCESS"; then
   printf '\n%s\n' "$CPANEL_BLOCK" >> "$HTACCESS"
 fi
+# PHP ograničenja za upload fotografija (telefonske slike su 3–10 MB, a za pravljenje sličica treba više memorije).
+# Dodaje se samo ako već nije upisano; cPanel MultiPHP INI Editor može ove vrijednosti i sam mijenjati.
+for INI in "$SITE/public/.user.ini" "$SITE/public/php.ini"; do
+  if [ -f "$INI" ] && ! grep -q "hazre: upload" "$INI"; then
+    printf '\n; hazre: upload fotografija i pravljenje sličica\nupload_max_filesize = 20M\npost_max_size = 25M\nmemory_limit = 512M\nmax_execution_time = 120\n' >> "$INI"
+  fi
+done
+
 if ! grep -q "BEGIN cPanel-generated handler" "$HTACCESS"; then
   echo "PAŽNJA: u public/.htaccess nema cPanel PHP podešavanja. cPanel -> MultiPHP Manager -> domena sajta -> PHP 8.4 -> Apply." >&2
 fi
