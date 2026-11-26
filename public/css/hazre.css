@@ -1826,3 +1826,7 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 480px) { .xl-hat { width: 30px; height: 26px; left: -9px; top: -12px; } .xl { height: 58px; } }
 
 @media (prefers-reduced-motion: reduce) { .xl .xl-g, .xl .xl-b, .xl-greet, .xl-greet span, .xl-greet i, .xl-hat { animation: none; } .xl .xl-g { opacity: .8; } }
+/* Praznična tema: gornji red slidera ispod lampica, čestitka u istom redu na sredini */
+.is-festive .hs-top { top: 80px; }
+.hs .xl-greet { top: 80px; }
+@media (max-width: 640px) { .is-festive .hs-top { top: 62px; } }
