@@ -1790,3 +1790,7 @@ details[open] > summary i::after { rotate: 0deg; }
 
 /* Kontakt kartice s telefonima: ikona i tekst centrirani (na telefonu ostaje red s ikonom lijevo) */
 @media (min-width: 481px) { .cc-tile:not(.wide) { align-items: center; text-align: center; } .cc-tile:not(.wide) > span:not(.cc-ico):not(.cc-map) { justify-items: center; } }
+
+/* Polja forme: dugačak tekst u padajućem meniju (npr. termin s cijenom) ne smije izaći iz svoje kolone i preklopiti susjedno polje */
+.field { grid-template-columns: minmax(0, 1fr); }
+.field select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
