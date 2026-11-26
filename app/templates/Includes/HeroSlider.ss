@@ -15,7 +15,7 @@
                     <% if $Highlight %><p class="hs-lead">$Highlight</p><% else_if $Summary %><p class="hs-lead">$Summary.LimitCharacters(150)</p><% end_if %>
                     <div class="hs-cta">
                         <a class="btn btn-orange btn-lg" href="$Link">Pogledaj aranžman <span aria-hidden="true">→</span></a>
-                        <p class="hs-price"><small><% if $HasPriceFrom %>Već od<% else %>Cijena<% end_if %></small><span class="hs-pv"><b>$MinPrice</b><sup>KM</sup></span></p>
+                        <p class="hs-price"><svg class="hs-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="hsr-$ID" d="M50 50m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/></defs><text><textPath href="#hsr-$ID" textLength="255"><% if $HasPriceFrom %>VEĆ OD<% else %>CIJENA<% end_if %> ✦ $MinPrice KM ✦ <% if $HasPriceFrom %>VEĆ OD<% else %>CIJENA<% end_if %> ✦ $MinPrice KM ✦</textPath></text></svg><small><% if $HasPriceFrom %>Već od<% else %>Cijena<% end_if %></small><span class="hs-pv"><b>$MinPrice</b><sup>KM</sup></span></p>
                     </div>
                 </div>
             </div>

@@ -1855,30 +1855,38 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (max-width: 640px) { .xf { scale: .7; } }
 @media (prefers-reduced-motion: reduce) { .xf { animation: none; } }
 
-/* Slider: cijena i dugme kao jedna "karta" (stakleni panel, zlatni rub koji kruži, perforacija između cijene i dugmeta) */
-@property --hsa { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-.hs .hs-cta { position: relative; display: inline-flex; flex-wrap: nowrap; align-items: stretch; gap: 0; margin-top: 14px; padding: 8px; border-radius: 26px; background: linear-gradient(135deg, rgba(14, 32, 100, .72), rgba(6, 18, 64, .6)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .75), 0 0 46px -10px rgba(247, 161, 26, .35), inset 0 1px 0 rgba(255, 255, 255, .14); }
-.hs .hs-cta::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.6px; background: conic-gradient(from var(--hsa), rgba(255, 210, 122, .12) 0deg, #FFE3A3 40deg, #F7A11A 80deg, rgba(255, 210, 122, .12) 140deg, rgba(255, 255, 255, .08) 220deg, #FFD27A 290deg, rgba(255, 210, 122, .12) 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; animation: hs-ring 6s linear infinite; }
-@keyframes hs-ring { to { --hsa: 360deg; } }
-.hs .hs-cta .hs-price { order: -1; position: relative; display: grid; align-content: center; gap: 3px; padding: 6px 26px 6px 18px; margin-right: 8px; border: 0; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; overflow: visible; }
-.hs .hs-cta .hs-price::before { display: none; }
-.hs .hs-cta .hs-price::after { content: ""; position: absolute; right: 0; top: 4px; bottom: 4px; width: 0; border-right: 2px dashed rgba(255, 225, 168, .38); background: none; translate: none; animation: none; }
-.hs .hs-cta .hs-price small { font-size: 10px; letter-spacing: .26em; }
+/* Slider WOW: zlatni pečat s cijenom (rotirajući natpis), veće dugme sa sjajem, zadnja riječ naslova u zlatu */
+.hs .hs-cta { gap: 18px 30px; align-items: center; margin-top: 16px; }
+.hs .hs-cta .btn { padding: 22px 38px; font-size: 16px; letter-spacing: .07em; border-radius: 60px; background: linear-gradient(135deg, #FFB43A 0%, #F7A11A 45%, #E8860A 100%); box-shadow: 0 22px 46px -14px rgba(247, 161, 26, .95), inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -3px 0 rgba(150, 70, 0, .25); animation: hs-pulse 2.6s ease-in-out infinite; }
+.hs .hs-cta .btn span { display: inline-grid; place-items: center; width: 32px; height: 32px; margin-left: 6px; border-radius: 50%; background: #fff; color: #E8860A; font-weight: 800; }
+@keyframes hs-pulse { 0%, 100% { box-shadow: 0 22px 46px -14px rgba(247, 161, 26, .95), 0 0 0 0 rgba(255, 196, 80, .55), inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -3px 0 rgba(150, 70, 0, .25); } 65% { box-shadow: 0 22px 46px -14px rgba(247, 161, 26, .95), 0 0 0 16px rgba(255, 196, 80, 0), inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -3px 0 rgba(150, 70, 0, .25); } }
+
+.hs .hs-cta .hs-price { width: 150px; height: 150px; flex: none; display: grid; place-content: center; justify-items: center; gap: 0; padding: 0; border-radius: 50%; border: 0; rotate: -10deg; background: radial-gradient(circle at 35% 28%, #FFF3C4 0%, #FFD45E 28%, #F7A11A 62%, #C96A00 100%); box-shadow: 0 24px 50px -16px rgba(0, 0, 0, .7), 0 0 60px -6px rgba(255, 190, 60, .65), inset 0 -6px 14px rgba(140, 60, 0, .35), inset 0 4px 10px rgba(255, 255, 255, .55); backdrop-filter: none; -webkit-backdrop-filter: none; overflow: hidden; animation: hs-seal 4s ease-in-out infinite; }
+.hs .hs-cta .hs-price::before { content: ""; display: block; position: absolute; inset: 22px; left: 22px; right: 22px; top: 22px; height: auto; border-radius: 50%; border: 1.5px dashed rgba(90, 40, 0, .45); background: none; opacity: 1; }
+.hs .hs-cta .hs-price::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .7) 50%, transparent 65%); translate: -130% 0; animation: hs-shine 4.2s ease-in-out infinite; }
+.hs-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: hs-ring-spin 16s linear infinite; }
+.hs-ring text { font: 800 8.4px var(--head); letter-spacing: .1em; fill: #7A3A00; }
+@keyframes hs-ring-spin { to { rotate: 360deg; } }
+@keyframes hs-seal { 0%, 100% { rotate: -10deg; scale: 1; } 50% { rotate: -5deg; scale: 1.04; } }
+.hs .hs-cta .hs-price small { position: relative; font: 800 9px var(--head); letter-spacing: .22em; color: #6B3300; margin-bottom: 2px; }
 .hs .hs-cta .hs-price small::after { display: none; }
-.hs .hs-cta .hs-pv b { font-size: 50px; filter: drop-shadow(0 4px 14px rgba(247, 161, 26, .45)); }
-.hs .hs-cta .btn { align-self: stretch; display: inline-flex; align-items: center; gap: 12px; padding: 0 30px; border-radius: 19px; font-size: 15px; letter-spacing: .06em; box-shadow: 0 12px 30px -10px rgba(247, 161, 26, .9), inset 0 1px 0 rgba(255, 255, 255, .45); animation: hs-pulse 2.6s ease-in-out infinite; }
-.hs .hs-cta .btn span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: rgba(255, 255, 255, .28); }
-@keyframes hs-pulse { 0%, 100% { box-shadow: 0 12px 30px -10px rgba(247, 161, 26, .9), 0 0 0 0 rgba(247, 161, 26, .5), inset 0 1px 0 rgba(255, 255, 255, .45); } 60% { box-shadow: 0 12px 30px -10px rgba(247, 161, 26, .9), 0 0 0 12px rgba(247, 161, 26, 0), inset 0 1px 0 rgba(255, 255, 255, .45); } }
+.hs .hs-cta .hs-pv { position: relative; align-items: flex-start; gap: 2px; }
+.hs .hs-cta .hs-pv b { font: 800 50px/.9 var(--head); letter-spacing: -.04em; background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #0B2470; -webkit-text-fill-color: #0B2470; filter: drop-shadow(0 2px 0 rgba(255, 255, 255, .55)); }
+.hs .hs-cta .hs-pv sup { margin-top: 4px; font: 800 14px var(--head); color: #0B2470; opacity: 1; }
+
+.hs-title .w:last-child > span { background: linear-gradient(100deg, #FFD27A 0%, #FFC555 25%, #FFF5D6 45%, #FFB627 65%, #F7A11A 100%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: hs-gold 5s linear infinite; }
+@keyframes hs-gold { to { background-position: -250% 0; } }
 .hs .hs-lead { padding-left: 14px; border-left: 3px solid #F7A11A; }
-@media (max-width: 900px) {
-  .hs .hs-cta { backdrop-filter: none; -webkit-backdrop-filter: none; background: linear-gradient(135deg, rgba(14, 32, 100, .92), rgba(6, 18, 64, .88)); }
-}
+
 @media (max-width: 640px) {
-  .hs .hs-cta { display: flex; width: 100%; padding: 6px; border-radius: 20px; margin-top: 10px; }
-  .hs .hs-cta .hs-price { padding: 4px 16px 4px 12px; margin-right: 6px; }
-  .hs .hs-cta .hs-price small { font-size: 8.5px; letter-spacing: .2em; }
-  .hs .hs-cta .hs-pv b { font-size: 34px; }
-  .hs .hs-cta .btn { flex: 1; justify-content: center; padding: 14px 12px; border-radius: 15px; font-size: 13px; gap: 8px; }
+  .hs .hs-cta { gap: 12px; flex-wrap: nowrap; }
+  .hs .hs-cta .btn { flex: 1; justify-content: center; padding: 17px 14px; font-size: 13px; }
   .hs .hs-cta .btn span { width: 24px; height: 24px; }
+  .hs .hs-cta .hs-price { width: 104px; height: 104px; }
+  .hs .hs-cta .hs-price::before { inset: 15px; }
+  .hs .hs-cta .hs-price small { font-size: 7px; }
+  .hs .hs-cta .hs-pv b { font-size: 34px; }
+  .hs .hs-cta .hs-pv sup { font-size: 10px; margin-top: 2px; }
+  .hs-ring text { font-size: 9px; }
 }
-@media (prefers-reduced-motion: reduce) { .hs .hs-cta::before, .hs .hs-cta .btn { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .hs .hs-cta .btn, .hs .hs-cta .hs-price, .hs-ring, .hs-title .w:last-child > span { animation: none; } }
