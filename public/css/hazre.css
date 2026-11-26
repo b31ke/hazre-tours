@@ -2004,3 +2004,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .chat-box .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 140px; padding: 13px 20px; }
 .chat-box .btn svg { width: 20px; height: 20px; flex: none; }
 @media (max-width: 480px) { .contact-card .chat-box { padding: 14px; } .contact-card .chat-box .chat-btns { width: 100%; } .chat-box .btn { flex: 1; min-width: 0; } }
+.contact-card .chat-box .chat-btns { flex: 1 1 260px; }
+.chat-box .btn { flex: 1; min-width: 0; }
