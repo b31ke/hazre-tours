@@ -2033,3 +2033,11 @@ details[open] > summary i::after { rotate: 0deg; }
 .stmt-ok-ico { display: inline-grid; place-items: center; width: 64px; height: 64px; margin-bottom: 10px; border-radius: 50%; background: #DDF6E6; color: #14713A; font-size: 32px; font-weight: 800; }
 @media (max-width: 640px) { .stmt-docs { grid-template-columns: 1fr; } .stmt-btn { justify-self: stretch; } }
 .stmt-fs select { width: 100%; max-width: 100%; font: 400 16px var(--body); border: 1px solid #CBD5DF; border-radius: 12px; padding: 12px 14px; background: #fff; text-overflow: ellipsis; }
+
+/* Izjava: istaknut blok "Važno: pročitajte prije potvrde" s numerisanim dokumentima */
+.stmt-important { display: grid; gap: 12px; padding: clamp(18px, 3vw, 26px); border-radius: 22px; background: #FFF8EA; border: 1px solid #F7C76A; border-left: 6px solid #F7A11A; }
+.stmt-important p { margin: 0; line-height: 1.6; }
+.stmt-important-h { display: flex; align-items: center; gap: 10px; font: 700 18px var(--head); color: #8A5200; }
+.stmt-important-h span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #F7A11A; color: #fff; font-weight: 800; }
+.stmt-doc { grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; }
+.stmt-doc em { grid-row: span 2; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, .22); font: 800 16px var(--head); font-style: normal; }

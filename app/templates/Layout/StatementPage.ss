@@ -13,7 +13,7 @@
             <% with $Stmt %>
             <div class="stmt-card">
                 <p class="stmt-hello">Poštovani/a <b>$HolderName</b>,</p>
-                <p>prije polaska molimo vas da pročitate dokumente ispod i potvrdite izjavu. Potvrda traje manje od minute.</p>
+                <p>prije potvrde ove izjave molimo vas da <b>pažljivo pročitate</b> Opšte uslove putovanja i Politiku privatnosti Hazre Toursa (linkovi su ispod) i provjerite tačnost svojih podataka.</p>
                 <dl class="stmt-data">
                     <% if not $NeedsTerm %>
                     <div><dt>Aranžman</dt><dd>$Trip</dd></div>
@@ -24,9 +24,15 @@
             </div>
             <% end_with %>
 
-            <div class="stmt-docs">
-                <a class="stmt-doc" href="/uslovi-putovanja" target="_blank" rel="noopener noreferrer"><b>Opšti uslovi putovanja</b><span>Otvara se u novoj kartici</span></a>
-                <a class="stmt-doc" href="/politika-privatnosti" target="_blank" rel="noopener noreferrer"><b>Politika privatnosti</b><span>Otvara se u novoj kartici</span></a>
+            <div class="stmt-important">
+                <p class="stmt-important-h"><span aria-hidden="true">!</span>Važno: pročitajte prije potvrde</p>
+                <p>Prije potvrde izjave molimo vas da pažljivo pročitate sljedeće dokumente:</p>
+                <div class="stmt-docs">
+                    <a class="stmt-doc" href="/uslovi-putovanja" target="_blank" rel="noopener noreferrer"><em>1</em><b>Opšti uslovi putovanja Hazre Tours</b><span>Otvara se u novoj kartici</span></a>
+                    <a class="stmt-doc" href="/politika-privatnosti" target="_blank" rel="noopener noreferrer"><em>2</em><b>Politika privatnosti Hazre Tours</b><span>Otvara se u novoj kartici</span></a>
+                </div>
+                <p>Potvrdom ove izjave potvrđujete da ste imali mogućnost upoznati se s Opštim uslovima putovanja, da ih prihvatate i da ste upoznati s informacijama o obradi i zaštiti ličnih podataka. Izjava važi i za saputnike koje navedete.</p>
+                <p><b>Molimo vas da pažljivo pročitate navedene dokumente i provjerite tačnost unesenih podataka.</b></p>
             </div>
 
             <form class="stmt-form" method="post" action="$Link" novalidate>

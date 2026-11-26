@@ -300,7 +300,7 @@ class TravelerStatement extends DataObject
             $lines[] = 'Termin: *' . $this->getTermLabel() . '*';
         }
         $lines[] = '';
-        $lines[] = 'Prije polaska molimo vas da pročitate i potvrdite izjavu o prihvatanju Opštih uslova putovanja. Potvrda traje manje od minute:';
+        $lines[] = 'Prije polaska molimo vas da potvrdite izjavu o upoznavanju i prihvatanju Opštih uslova putovanja. Prije potvrde *pažljivo pročitajte Opšte uslove putovanja i Politiku privatnosti* (linkovi su na stranici izjave), jer potvrdom izjave potvrđujete da ste s njima upoznati i da ih prihvatate:';
         $lines[] = '';
         $lines[] = $this->Link();
         $lines[] = '';
