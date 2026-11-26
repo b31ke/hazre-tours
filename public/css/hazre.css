@@ -1952,3 +1952,22 @@ details[open] > summary i::after { rotate: 0deg; }
   .hs .hs-cta .hs-pv b { font-size: clamp(72px, 7vw, 104px); }
   .hs .hs-cta .btn { padding: 18px 32px; }
 }
+
+/* Slider: cijena pored dugmeta, vertikalno centrirana u odnosu na dugme */
+.hs .hs-cta { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 16px 22px; }
+.hs .hs-cta .hs-price { order: 0; padding: 8px 22px 9px 16px; gap: 12px; }
+.hs .hs-cta .hs-price small { font-size: 10.5px; padding-left: 10px; }
+.hs .hs-cta .hs-pv b { font-size: clamp(56px, 5vw, 72px); }
+.hs .hs-cta .hs-pv sup { font-size: 18px; margin-top: 6px; }
+@media (max-width: 640px) {
+  .hs .hs-cta { flex-wrap: nowrap; gap: 10px; }
+  .hs .hs-cta .btn { width: auto; flex: 1; min-width: 0; padding: 16px 10px; font-size: 12.5px; gap: 6px; }
+  .hs .hs-cta .btn span { width: 22px; height: 22px; margin-left: 2px; }
+  .hs .hs-cta .hs-price { width: auto; flex: none; padding: 6px 12px 7px 8px; gap: 8px; border-radius: 16px; }
+  .hs .hs-cta .hs-price small { font-size: 8px; padding-left: 7px; letter-spacing: .16em; }
+  .hs .hs-cta .hs-pv b { font-size: 44px; }
+  .hs .hs-cta .hs-pv sup { font-size: 12px; margin-top: 3px; }
+}
+
+/* Zadnja riječ naslova: ujednačen zlatni prelaz odozgo prema dolje (bez oštrog reza boje usred riječi) */
+.hs-title .w:last-child > span { background: linear-gradient(180deg, #FFE9B0 0%, #FFC95A 45%, #F7A11A 100%); background-size: 100% 100%; animation: none; }
