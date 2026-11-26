@@ -1915,3 +1915,7 @@ details[open] > summary i::after { rotate: 0deg; }
 }
 .hs .hs-cta .hs-price { rotate: 0deg; animation: hs-seal2 4s ease-in-out infinite; }
 @keyframes hs-seal2 { 0%, 100% { scale: 1; } 50% { scale: 1.04; } }
+/* Pečat s cijenom: samo iznos i valuta, unutrašnji krug malo veći */
+.hs .hs-cta .hs-price::before { inset: 14px; }
+.hs .hs-cta .hs-pv b { font-size: 52px; }
+@media (max-width: 640px) { .hs .hs-cta .hs-price::before { inset: 10px; } .hs .hs-cta .hs-pv b { font-size: 36px; } }
