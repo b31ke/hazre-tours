@@ -194,7 +194,8 @@ class StatementController extends PageController
                 array_keys(TravelerStatement::selectableTerms()),
                 TravelerStatement::selectableTerms()
             )),
-            'Companions' => implode("\n", $s->CompanionList()),
+            // za <textarea>: već escapirano, bez pretvaranja novih redova u <br>
+            'Companions' => \SilverStripe\ORM\FieldType\DBField::create_field('HTMLFragment', htmlspecialchars(implode("\n", $s->CompanionList()), ENT_QUOTES)),
             'CompanionList' => ArrayList::create(array_map(fn ($n) => ArrayData::create(['Name' => $n]), $s->CompanionList())),
         ]);
     }
