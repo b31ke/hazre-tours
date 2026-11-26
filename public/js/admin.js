@@ -21,3 +21,15 @@
   setInterval(mark, 400);
   document.addEventListener('DOMContentLoaded', mark);
 })();
+
+/* Izjave putnika: dugmad "Kopiraj link" / "Kopiraj poruku" (admin učitava stranice AJAX-om, pa delegiramo na document) */
+document.addEventListener('click', function (e) {
+  var b = e.target.closest && e.target.closest('.hz-copy');
+  if (!b) return;
+  e.preventDefault();
+  var text = b.getAttribute('data-copy') || '', old = b.textContent;
+  function done() { b.textContent = 'Kopirano ✓'; setTimeout(function () { b.textContent = old; }, 1800); }
+  if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(done); return; }
+  var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+  try { document.execCommand('copy'); done(); } catch (err) {} document.body.removeChild(t);
+});

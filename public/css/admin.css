@@ -339,3 +339,14 @@ body.cms { background: var(--hz-bg) !important; }
 .cms-menu .cms-login-status { padding: 8px 6px 8px 8px !important; gap: 6px; }
 .cms-menu .cms-login-status__profile-link { gap: 8px; }
 .cms-menu .cms-login-status__profile-icon, .cms-menu .cms-login-status__logout-link { width: 30px; height: 30px; }
+
+/* Izjave putnika: panel s ličnim linkom i evidencija potvrde */
+.hz-stmt { margin: 0 0 18px; padding: 16px 18px; border-radius: 12px; background: #F3F7FC; border: 1px solid #D9E3F0; }
+.hz-stmt__badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 12px; background: #FFF1D6; color: #8A5200; }
+.hz-stmt__badge.is-ok { background: #DDF6E6; color: #14713A; }
+.hz-stmt__lbl { margin: 12px 0 6px; font-weight: 700; }
+.hz-stmt__link { font-family: monospace; }
+.hz-stmt__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.hz-stmt__hint { margin: 10px 0 0; color: #5B6E7C; font-size: 12px; }
+.hz-stmt--proof table td { padding: 3px 14px 3px 0; vertical-align: top; }
+.hz-stmt--proof ul { margin: 0; padding-left: 18px; }

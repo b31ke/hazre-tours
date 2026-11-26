@@ -26,9 +26,11 @@ class EditorGroupExtension extends Extension
             ]);
             $group->write();
         }
-        $code = 'CMS_ACCESS_' . TripAdmin::class;
-        if (!Permission::get()->filter(['GroupID' => $group->ID, 'Code' => $code])->exists()) {
-            Permission::grant($group->ID, $code);
+        // Aranžmani i upiti + Izjave putnika (agencija ih pravi za putnike koji su rezervisali)
+        foreach (['CMS_ACCESS_' . TripAdmin::class, 'CMS_ACCESS_' . \HazreTours\Admin\StatementAdmin::class] as $code) {
+            if (!Permission::get()->filter(['GroupID' => $group->ID, 'Code' => $code])->exists()) {
+                Permission::grant($group->ID, $code);
+            }
         }
     }
 }

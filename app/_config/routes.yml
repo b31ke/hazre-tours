@@ -15,6 +15,8 @@ SilverStripe\Control\Director:
     'kalendar': 'HazreTours\Control\CalendarController'
     'upit': '%$HazreRateLimitedInquiry'
     'newsletter': '%$HazreRateLimitedNewsletter'
+    # Izjava putnika: samo preko ličnog linka iz admina (nije nigdje povezana na sajtu)
+    'izjava//$Token': '%$HazreRateLimitedStatement'
     'sitemap.xml': 'HazreTours\Control\SeoController'
     'robots.txt': 'HazreTours\Control\SeoController'
 
@@ -38,3 +40,16 @@ SilverStripe\Core\Injector\Injector:
       RequestHandler: '%$HazreTours\Control\NewsletterController'
       Middlewares:
         - '%$HazreInquiryRateLimit'
+  # Izjava putnika: najviše 20 otvaranja/slanja u minuti po IP adresi (zaštita od pogađanja linkova)
+  HazreStatementRateLimit:
+    class: SilverStripe\Control\Middleware\RateLimitMiddleware
+    properties:
+      ExtraKey: 'hazreizjava'
+      MaxAttempts: 20
+      Decay: 1
+  HazreRateLimitedStatement:
+    class: SilverStripe\Control\Middleware\RequestHandlerMiddlewareAdapter
+    properties:
+      RequestHandler: '%$HazreTours\Control\StatementController'
+      Middlewares:
+        - '%$HazreStatementRateLimit'
