@@ -1830,3 +1830,4 @@ details[open] > summary i::after { rotate: 0deg; }
 .is-festive .hs-top { top: 80px; }
 .hs .xl-greet { top: 80px; }
 @media (max-width: 640px) { .is-festive .hs-top { top: 62px; } }
+@media (max-width: 640px) { .is-festive .hs-dest { top: 120px; } }
