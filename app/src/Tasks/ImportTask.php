@@ -605,10 +605,12 @@ HTML;
 </ul>
 <h2>Zašto Hazre Tours?</h2>
 <ul>
-<li><strong>Iskustvo u prevozu i turizmu:</strong> pouzdanost prevoznika i usluga moderne turističke agencije.</li>
-<li><strong>Vlastiti vozni park:</strong> tehnička ispravnost, udobnost i sigurnost na svakom kilometru.</li>
-<li><strong>Profesionalan tim:</strong> iskusni vozači, licencirani vodiči i ljubazno osoblje.</li>
+<li><strong>Tradicija i iskustvo:</strong> prevoznik od 1996. i putnička agencija od 2016., spoj pouzdanog prevoza i moderne turističke usluge.</li>
+<li><strong>Vlastiti moderan vozni park:</strong> tehnička ispravnost, udobnost i sigurnost na svakom kilometru.</li>
+<li><strong>Profesionalan i iskusan tim:</strong> iskusni vozači, licencirani vodiči i ljubazno osoblje.</li>
 <li><strong>Dobar omjer cijene i kvaliteta:</strong> aranžmani dostupni svima, uz visok nivo usluge.</li>
+<li><strong>Putovanja po mjeri i najam autobusa:</strong> složimo putovanje po vašim željama ili vam damo autobus s vozačem za vašu grupu.</li>
+<li><strong>Sigurnost i poštovanje dogovora:</strong> polazimo na vrijeme i držimo se dogovorenog plana puta, programa i cijene.</li>
 </ul>
 HTML;
     }

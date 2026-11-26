@@ -12,7 +12,7 @@
 <section class="bus-show js-inview" aria-labelledby="bus-show-h">
     <div class="wrap bs-head">
         <p class="script-kicker">Prepoznat ćete nas na cesti</p>
-        <h2 id="bus-show-h">Putujete s nama, a ne s nekim drugim</h2>
+        <h2 id="bus-show-h">Naš autobus, naš vozač, vaše putovanje</h2>
         <p class="muted">Vozimo vlastitim autobusima, s vozačima koji ove rute znaju napamet.</p>
     </div>
     <div class="bs-stage">
