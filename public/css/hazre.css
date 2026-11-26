@@ -1839,3 +1839,10 @@ details[open] > summary i::after { rotate: 0deg; }
 .xl-hat { left: 9px; top: -20px; width: 62px; height: 39px; rotate: -3deg; animation-name: xl-hat3; }
 @keyframes xl-hat3 { 0%, 100% { rotate: -3deg; } 50% { rotate: 0deg; } }
 @media (max-width: 480px) { .xl-hat { left: 7px; top: -16px; width: 49px; height: 31px; } }
+/* Djed Mraz lijevo od loga: maše i pokazuje na logo */
+.xl-santa { position: absolute; right: calc(100% + 2px); bottom: -6px; width: 50px; height: 66px; pointer-events: none; transform-origin: 50% 100%; animation: xl-santa 3.2s ease-in-out infinite; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .15)); }
+.xl-santa .xl-wave { transform-box: view-box; transform-origin: 20px 63px; animation: xl-wave 1s ease-in-out infinite alternate; }
+@keyframes xl-wave { from { rotate: -22deg; } to { rotate: 18deg; } }
+@keyframes xl-santa { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
+@media (max-width: 480px) { .xl-santa { width: 40px; height: 53px; bottom: -4px; } }
+@media (prefers-reduced-motion: reduce) { .xl-santa, .xl-santa .xl-wave { animation: none; } }
