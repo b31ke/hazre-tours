@@ -37,8 +37,9 @@
             </div>
 
             <% if $SiteConfig.ViberLink || $SiteConfig.WhatsAppLink %>
+            <p class="chat-lbl">Piši nam</p>
             <div class="chat-btns">
-                <% if $SiteConfig.ViberLink %><a class="btn btn-viber" href="$SiteConfig.ViberLink">Piši nam na Viber</a><% end_if %>
+                <% if $SiteConfig.ViberLink %><a class="btn btn-viber" href="$SiteConfig.ViberLink">Viber</a><% end_if %>
                 <% if $SiteConfig.WhatsAppLink %><a class="btn btn-wa" href="$SiteConfig.WhatsAppLink" rel="noopener">WhatsApp</a><% end_if %>
             </div>
             <% end_if %>

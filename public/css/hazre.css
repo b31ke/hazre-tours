@@ -1986,3 +1986,10 @@ details[open] > summary i::after { rotate: 0deg; }
 @media (prefers-reduced-motion: reduce) { .xf, .xf-spark { animation: none; } }
 /* Pahulje: jače vidljive */
 .xf { opacity: .22; } .xf.big { opacity: .2; } .xf.on-dark { opacity: .2; } .xf.on-dark.big { opacity: .18; } .xf-spark { opacity: .5; }
+/* Kontakt: "Piši nam" iznad dugmadi Viber i WhatsApp, tekst u dugmadi bijeli */
+.chat-lbl { margin: 18px 0 8px; font: 700 12px var(--head); letter-spacing: .18em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
+.chat-lbl + .chat-btns { margin-top: 0; }
+.btn-wa { color: #fff; }
+.contact-card .chat-lbl { margin-top: auto; padding-top: 18px; }
+.contact-card .chat-lbl + .chat-btns { margin-top: 0; }
+.btn-wa { background: #1EBE5D; }
