@@ -845,6 +845,30 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   function lum(c) { var m = c.match(/\d+(\.\d+)?/g); if (!m) return 1; return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; }
   var seed = 7; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
   var secs = document.querySelectorAll('main > section, main > div > section');
+  // Footer: pahulje samo u bočnim prazninama (lijevo i desno od sadržaja), da ne prelaze preko elemenata
+  var foot = document.querySelector('footer');
+  if (foot && !foot.querySelector(':scope > .xf-layer')) (function () {
+    var wrap = foot.querySelector('.wrap'); if (!wrap) return;
+    var fr = foot.getBoundingClientRect(), wr = wrap.getBoundingClientRect(), W = foot.clientWidth, H = foot.offsetHeight;
+    var sides = [[0, wr.left - fr.left], [wr.right - fr.left, W]], html = '', placed = [];
+    sides.forEach(function (sd) {
+      var gw = sd[1] - sd[0]; if (gw < 70) return;
+      for (var tries = 0, n = 0; n < 4 && tries < 60; tries++) {
+        var size = Math.round(Math.min(gw - 16, 50 + rnd() * 90)), r = size / 2;
+        var cx = sd[0] + r + 8 + rnd() * Math.max(0, gw - size - 16), cy = r + 8 + rnd() * (H - size - 16), ok = true;
+        for (var p = 0; p < placed.length; p++) { var q = placed[p]; if (Math.hypot(q.x - cx, q.y - cy) < q.r + r + 14) { ok = false; break; } }
+        if (!ok) continue;
+        placed.push({ x: cx, y: cy, r: r }); n++;
+        var gid = 'xfg' + (fid++), t = Math.floor(rnd() * 3);
+        html += '<svg class="xf on-dark" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + Math.round(cx - r) + 'px;top:' + Math.round(cy - r) + 'px;--fd:' + Math.round(60 + rnd() * 70) + 's;--fl:' + (6 + rnd() * 5).toFixed(1) + 's"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#9FE3FF"/></linearGradient></defs>' + flakeSvg(t, gid) + '</svg>';
+      }
+    });
+    if (!html) return;
+    if (getComputedStyle(foot).position === 'static') foot.style.position = 'relative';
+    foot.style.isolation = 'isolate';
+    var layer = document.createElement('div'); layer.className = 'xf-layer'; layer.setAttribute('aria-hidden', 'true'); layer.innerHTML = html;
+    foot.insertBefore(layer, foot.firstChild);
+  })();
   Array.prototype.forEach.call(secs, function (sec) {
     if (sec.matches('.hs, .hero, .page-hero') || sec.offsetHeight < 160 || sec.querySelector(':scope > .xf-layer')) return;
     var cs = getComputedStyle(sec), darkBg = lum(cs.color) > .6;
