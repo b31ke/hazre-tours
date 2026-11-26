@@ -97,7 +97,7 @@ class TravelerStatement extends DataObject
         'HolderName' => ['title' => 'Ime i prezime'],
         'Phone' => ['title' => 'Telefon'],
         'Status' => ['title' => 'Status'],
-        'TermID' => ['title' => 'Termin'],
+        'Trip.Title' => ['title' => 'Aranžman', 'filter' => 'PartialMatchFilter'],
     ];
 
     // ---------- Pristup: samo ko ima "Izjave putnika" u adminu; potvrđenu izjavu niko ne mijenja, briše samo glavni admin
