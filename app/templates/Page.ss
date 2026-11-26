@@ -5,10 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title><% if $MetaTitle %>$MetaTitle<% else_if $URLSegment == 'home' %>$SiteConfig.Title – putnička agencija i prevoznik, Srebrenik<% else %>$Title | $SiteConfig.Title<% end_if %></title>
-    <% if $MetaDescriptionText %><meta name="description" content="$MetaDescriptionText.ATT"><% else_if $MetaDescription %><meta name="description" content="$MetaDescription.ATT"><% end_if %>
+    <% if $MetaDescriptionText %><meta name="description" content="$MetaDescriptionText.ATT"><% else_if $MetaDescription %><meta name="description" content="$MetaDescription.ATT"><% else %><meta name="description" content="Putnička agencija i prevoznik iz Srebrenika od 1996. Putovanja, izleti i najam autobusa, s polascima iz gradova sjeveroistočne BiH."><% end_if %>
     <link rel="canonical" href="$CurrentURL">
-    <meta property="og:title" content="<% if $MetaTitle %>$MetaTitle.ATT<% else %>$Title.ATT<% end_if %>">
-    <% if $MetaDescriptionText %><meta property="og:description" content="$MetaDescriptionText.ATT"><% end_if %>
+    <%-- Naslov i opis kod dijeljenja linka (WhatsApp, Viber, Facebook): isti kao naslov u tabu preglednika --%>
+    <meta property="og:title" content="<% if $MetaTitle %>$MetaTitle.ATT<% else_if $URLSegment == 'home' %>$SiteConfig.Title.ATT – putnička agencija i prevoznik, Srebrenik<% else %>$Title.ATT | $SiteConfig.Title.ATT<% end_if %>">
+    <meta property="og:description" content="<% if $MetaDescriptionText %>$MetaDescriptionText.ATT<% else_if $MetaDescription %>$MetaDescription.ATT<% else %>Putnička agencija i prevoznik iz Srebrenika od 1996. Putovanja, izleti i najam autobusa, s polascima iz gradova sjeveroistočne BiH.<% end_if %>">
     <meta property="og:site_name" content="$SiteConfig.Title.ATT">
     <meta property="og:type" content="website">
     <meta property="og:url" content="$CurrentURL">
