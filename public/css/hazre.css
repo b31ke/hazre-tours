@@ -2083,3 +2083,9 @@ details[open] > summary i::after { rotate: 0deg; }
 .tp-empty { margin: 8px 4px; color: #8A97A6; font-size: 14px; }
 /* Cijene na karticama aranžmana plave (kontrast prema narandžastom dugmetu) */
 .card-price strong { color: var(--royal) !important; background: none !important; -webkit-text-fill-color: currentColor !important; }
+
+/* Padajući meni Putovanja uvijek iznad prazničnih lampica i snježnog ruba (samo desktop meni) */
+@media (min-width: 1341px) {
+  .head-row { position: relative; z-index: 3; }
+  .has-drop .drop { z-index: 5; }
+}
