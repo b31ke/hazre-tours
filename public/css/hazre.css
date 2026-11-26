@@ -1984,3 +1984,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .xf-spark.on-dark { background: linear-gradient(135deg, #fff, #FFE3A3); opacity: .55; }
 @keyframes xf-tw { 0%, 100% { scale: .4; opacity: .15; rotate: 0deg; } 50% { scale: 1.15; opacity: .6; rotate: 45deg; } }
 @media (prefers-reduced-motion: reduce) { .xf, .xf-spark { animation: none; } }
+/* Pahulje: jače vidljive */
+.xf { opacity: .22; } .xf.big { opacity: .2; } .xf.on-dark { opacity: .2; } .xf.on-dark.big { opacity: .18; } .xf-spark { opacity: .5; }
