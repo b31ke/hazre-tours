@@ -893,3 +893,87 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     sec.insertBefore(layer, sec.firstChild);
   });
 })();
+
+/* Izjava putnika: dodavanje i uklanjanje saputnika (svaki u svom polju) */
+(function () {
+  var list = document.querySelector('.comp-list'), add = document.querySelector('.comp-add');
+  if (!list || !add) return;
+  var max = parseInt(list.getAttribute('data-max'), 10) || 40;
+  var tpl = list.querySelector('.comp-row:last-child').cloneNode(true);
+  function rows() { return list.querySelectorAll('.comp-row'); }
+  function sync() { add.hidden = rows().length >= max; }
+  add.addEventListener('click', function () {
+    if (rows().length >= max) return;
+    var r = tpl.cloneNode(true), i = r.querySelector('input');
+    i.value = ''; list.appendChild(r); i.focus(); sync();
+  });
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('.comp-del'); if (!b) return;
+    var row = b.closest('.comp-row');
+    if (rows().length > 1) { row.remove(); } else { row.querySelector('input').value = ''; }
+    sync();
+  });
+  // Enter u polju dodaje novog saputnika umjesto slanja forme
+  list.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); if (e.target.value.trim()) add.click(); }
+  });
+  sync();
+})();
+
+/* Izjava putnika: lijepa lista za izbor aranžmana i termina (prava <select> lista ostaje skrivena i šalje vrijednost) */
+(function () {
+  var sel = document.querySelector('.js-term-pick');
+  if (!sel) return;
+  var wrap = document.createElement('div'); wrap.className = 'tp';
+  var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'tp-btn'; btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+  var panel = document.createElement('div'); panel.className = 'tp-panel'; panel.hidden = true;
+  var search = document.createElement('input'); search.type = 'search'; search.className = 'tp-search'; search.placeholder = 'Pretražite aranžman ili datum…'; search.setAttribute('aria-label', 'Pretraga aranžmana');
+  var list = document.createElement('ul'); list.className = 'tp-list'; list.setAttribute('role', 'listbox');
+  var empty = document.createElement('p'); empty.className = 'tp-empty'; empty.textContent = 'Nema aranžmana za ovu pretragu.'; empty.hidden = true;
+  panel.appendChild(search); panel.appendChild(list); panel.appendChild(empty);
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  Array.prototype.forEach.call(sel.options, function (o) {
+    if (!o.value) return;
+    var li = document.createElement('li'); li.setAttribute('role', 'option'); li.tabIndex = -1; li.dataset.value = o.value;
+    li.innerHTML = '<span class="tp-trip">' + esc(o.dataset.trip || o.text) + '</span><span class="tp-date">' + esc(o.dataset.date || '') + '</span>' + (o.dataset.days ? '<span class="tp-days">' + esc(o.dataset.days) + '</span>' : '');
+    li.dataset.q = (o.text + ' ' + (o.dataset.days || '')).toLowerCase();
+    list.appendChild(li);
+  });
+  function render() {
+    var o = sel.options[sel.selectedIndex];
+    btn.innerHTML = o && o.value
+      ? '<span class="tp-trip">' + esc(o.dataset.trip || o.text) + '</span><span class="tp-date">' + esc(o.dataset.date || '') + '</span>'
+      : '<span class="tp-ph">Izaberite aranžman i termin</span>';
+    list.querySelectorAll('li').forEach(function (li) { li.setAttribute('aria-selected', li.dataset.value === sel.value ? 'true' : 'false'); });
+  }
+  function open() { panel.hidden = false; btn.setAttribute('aria-expanded', 'true'); wrap.classList.add('is-open'); search.value = ''; filter(); search.focus(); }
+  function close(focusBtn) { panel.hidden = true; btn.setAttribute('aria-expanded', 'false'); wrap.classList.remove('is-open'); if (focusBtn) btn.focus(); }
+  function pick(li) { sel.value = li.dataset.value; sel.dispatchEvent(new Event('change', { bubbles: true })); render(); close(true); }
+  function visible() { return Array.prototype.filter.call(list.children, function (li) { return !li.hidden; }); }
+  function filter() {
+    var q = search.value.trim().toLowerCase(), n = 0;
+    list.querySelectorAll('li').forEach(function (li) { li.hidden = q && li.dataset.q.indexOf(q) < 0; if (!li.hidden) n++; });
+    empty.hidden = n > 0;
+  }
+  btn.addEventListener('click', function () { panel.hidden ? open() : close(); });
+  search.addEventListener('input', filter);
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); var v = visible(); if (v[0]) v[0].focus(); }
+    if (e.key === 'Enter') { e.preventDefault(); var w = visible(); if (w.length === 1) pick(w[0]); }
+    if (e.key === 'Escape') close(true);
+  });
+  list.addEventListener('click', function (e) { var li = e.target.closest('li'); if (li) pick(li); });
+  list.addEventListener('keydown', function (e) {
+    var v = visible(), i = v.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (v[i + 1]) v[i + 1].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); (i > 0 ? v[i - 1] : search).focus(); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (v[i]) pick(v[i]); }
+    if (e.key === 'Escape') close(true);
+  });
+  document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+  sel.classList.add('tp-native');
+  sel.tabIndex = -1; sel.setAttribute('aria-hidden', 'true');
+  sel.parentNode.insertBefore(wrap, sel);
+  wrap.appendChild(btn); wrap.appendChild(panel); wrap.appendChild(sel);
+  render();
+})();

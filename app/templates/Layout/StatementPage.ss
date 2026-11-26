@@ -44,17 +44,23 @@
                 <fieldset class="stmt-fs">
                     <legend>Aranžman i termin</legend>
                     <p class="stmt-help">Izaberite putovanje i datum polaska na koji ste prijavljeni.</p>
-                    <select name="term" required>
+                    <select name="term" required class="js-term-pick">
                         <option value="">Izaberite aranžman i termin</option>
-                        <% loop $TermOptions %><option value="$ID">$Label</option><% end_loop %>
+                        <% loop $TermOptions %><option value="$ID" data-trip="$TripTitle.ATT" data-date="$Date.ATT" data-days="$Days.ATT">$Label</option><% end_loop %>
                     </select>
                 </fieldset>
                 <% end_if %><% end_with %>
 
                 <fieldset class="stmt-fs">
                     <legend>Saputnici</legend>
-                    <p class="stmt-help">Ako putujete s drugim osobama, upišite ime i prezime svake osobe u novi red (najviše $MaxCompanions). Ova izjava važi i za njih. Ne upisujte JMBG, broj pasoša ni druge podatke.</p>
-                    <textarea name="companions" rows="4" maxlength="6000" placeholder="Npr.&#10;Amra Hodžić&#10;Emir Hodžić"><% with $Stmt %>$Companions<% end_with %></textarea>
+                    <p class="stmt-help">Ako putujete s drugim osobama, upišite ime i prezime svake osobe (najviše $MaxCompanions). Ova izjava važi i za njih. <b>Ne upisujte JMBG, broj pasoša ni druge podatke.</b></p>
+                    <div class="comp-list" data-max="$MaxCompanions">
+                        <% with $Stmt %><% loop $CompanionList %>
+                        <div class="comp-row"><span class="comp-n" aria-hidden="true"></span><input type="text" name="companions[]" value="$Name.ATT" maxlength="100" placeholder="Ime i prezime saputnika" autocomplete="off" aria-label="Ime i prezime saputnika"><button type="button" class="comp-del" aria-label="Ukloni saputnika">×</button></div>
+                        <% end_loop %><% end_with %>
+                        <div class="comp-row"><span class="comp-n" aria-hidden="true"></span><input type="text" name="companions[]" value="" maxlength="100" placeholder="Ime i prezime saputnika" autocomplete="off" aria-label="Ime i prezime saputnika"><button type="button" class="comp-del" aria-label="Ukloni saputnika">×</button></div>
+                    </div>
+                    <button type="button" class="comp-add"><span aria-hidden="true">+</span> Dodaj saputnika</button>
                 </fieldset>
 
                 <fieldset class="stmt-fs">

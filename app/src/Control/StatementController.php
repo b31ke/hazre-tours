@@ -98,7 +98,10 @@ class StatementController extends PageController
                 $this->errors['checks'] = 'Za potvrdu izjave potrebno je označiti sve potvrde.';
             }
         }
-        $companions = TravelerStatement::parseCompanions(mb_substr((string) $request->postVar('companions'), 0, 6000));
+        // Saputnici dolaze kao zasebna polja (companions[]); stari oblik (jedan tekst) i dalje radi
+        $raw = $request->postVar('companions');
+        $raw = is_array($raw) ? implode("\n", array_map(fn ($v) => is_string($v) ? mb_substr($v, 0, 100) : '', array_slice($raw, 0, 60))) : (string) $raw;
+        $companions = TravelerStatement::parseCompanions(mb_substr($raw, 0, 6000));
         if (count($companions) > TravelerStatement::MAX_COMPANIONS) {
             $this->errors['companions'] = 'Najviše ' . TravelerStatement::MAX_COMPANIONS . ' saputnika. Za veće grupe javite se agenciji.';
         }
@@ -189,15 +192,27 @@ class StatementController extends PageController
             'TripLink' => $s->Trip()->exists() ? $s->Trip()->Link() : '',
             'Term' => $s->getTermLabel(),
             'NeedsTerm' => !$s->TermID,
-            'TermOptions' => ArrayList::create(array_map(
-                fn ($id, $label) => ArrayData::create(['ID' => $id, 'Label' => $label]),
-                array_keys(TravelerStatement::selectableTerms()),
-                TravelerStatement::selectableTerms()
-            )),
+            'TermOptions' => $this->termOptions(),
             // za <textarea>: već escapirano, bez pretvaranja novih redova u <br>
             'Companions' => \SilverStripe\ORM\FieldType\DBField::create_field('HTMLFragment', htmlspecialchars(implode("\n", $s->CompanionList()), ENT_QUOTES)),
             'CompanionList' => ArrayList::create(array_map(fn ($n) => ArrayData::create(['Name' => $n]), $s->CompanionList())),
         ]);
+    }
+
+    /** Termini za izbor: naziv aranžmana i datum odvojeno (za ljepši prikaz liste). */
+    private function termOptions(): ArrayList
+    {
+        $out = [];
+        foreach (\HazreTours\Model\TripTerm::get()->filter(['ID' => array_keys(TravelerStatement::selectableTerms()) ?: [0]])->sort('StartDate') as $t) {
+            $out[] = ArrayData::create([
+                'ID' => $t->ID,
+                'Label' => $t->Trip()->Title . ' – ' . $t->Label(),
+                'TripTitle' => $t->Trip()->Title,
+                'Date' => $t->Label(),
+                'Days' => $t->getDaysLabel(),
+            ]);
+        }
+        return ArrayList::create($out);
     }
 
     public function ConfirmedOn(): string
