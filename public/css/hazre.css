@@ -1994,3 +1994,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .contact-card .chat-lbl + .chat-btns { margin-top: 0; }
 .btn-wa { background: #1EBE5D; }
 .contact-card .chat-lbl { margin-bottom: -8px; }
+/* "Piši nam" istim rukopisnim fontom kao "Javite nam se" */
+.chat-lbl { font: 400 24px/1.1 "Kaushan Script", "Segoe Script", cursive; letter-spacing: 0; text-transform: none; color: #8FDDF5; }
