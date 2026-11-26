@@ -1944,3 +1944,11 @@ details[open] > summary i::after { rotate: 0deg; }
   .hs .hs-cta .hs-pv sup { font-size: 18px; margin-top: 5px; }
   .hs .hs-cta .btn { width: 100%; flex: none; padding: 17px 14px; }
 }
+/* Ogromna cijena: kompaktnije da sve stane između gornjeg reda i sličica */
+@media (min-width: 641px) {
+  .hs-in { padding-bottom: 168px; }
+  .hs .hs-cta { gap: 14px; margin-top: 12px; }
+  .hs .hs-cta .hs-price { padding: 10px 26px 12px 20px; }
+  .hs .hs-cta .hs-pv b { font-size: clamp(72px, 7vw, 104px); }
+  .hs .hs-cta .btn { padding: 18px 32px; }
+}
