@@ -290,21 +290,25 @@ class TravelerStatement extends DataObject
 
     private function shareText(): string
     {
-        // Poruka za Viber/WhatsApp/SMS: link u posebnom redu (tako je klikabilan), *zvjezdice* = podebljano u Viberu i WhatsAppu
+        // Poruka za Viber/WhatsApp/SMS/e-mail: običan tekst (bez oznaka za podebljano, jer ih neke aplikacije prikažu pogrešno),
+        // link u posebnom redu da bude klikabilan
         $first = explode(' ', trim((string) $this->HolderName))[0];
         $phone = \SilverStripe\SiteConfig\SiteConfig::current_site_config()->MainPhone();
         $lines = ['Poštovani/a ' . $first . ',', '', 'zahvaljujemo vam na rezervaciji putovanja s agencijom Hazre Tours.'];
         if ($this->Term()->exists()) {
             $lines[] = '';
-            $lines[] = 'Aranžman: *' . $this->getTripTitle() . '*';
-            $lines[] = 'Termin: *' . $this->getTermLabel() . '*';
+            $lines[] = 'Aranžman: ' . $this->getTripTitle();
+            $lines[] = 'Termin: ' . $this->getTermLabel();
         }
         $lines[] = '';
-        $lines[] = 'Prije polaska molimo vas da potvrdite izjavu o upoznavanju i prihvatanju Opštih uslova putovanja. Prije potvrde *pažljivo pročitajte Opšte uslove putovanja i Politiku privatnosti* (linkovi su na stranici izjave), jer potvrdom izjave potvrđujete da ste s njima upoznati i da ih prihvatate:';
+        $lines[] = 'Prije polaska potrebno je da potvrdite izjavu o upoznavanju i prihvatanju Opštih uslova putovanja.';
         $lines[] = '';
+        $lines[] = 'Molimo vas da prije potvrde pažljivo pročitate Opšte uslove putovanja i Politiku privatnosti. Oba dokumenta nalaze se na stranici izjave, a potvrdom izjave potvrđujete da ste s njima upoznati i da ih prihvatate.';
+        $lines[] = '';
+        $lines[] = 'Izjavu možete potvrditi putem sljedećeg linka:';
         $lines[] = $this->Link();
         $lines[] = '';
-        $lines[] = 'Za sva pitanja stojimo vam na raspolaganju' . ($phone && $phone->Number ? ' na ' . $phone->Number : '') . '.';
+        $lines[] = ($phone && $phone->Number ? 'Za sva pitanja možete nas kontaktirati na broj telefona ' . $phone->Number . '.' : 'Za sva pitanja stojimo vam na raspolaganju.');
         $lines[] = '';
         $lines[] = 'Srdačan pozdrav,';
         $lines[] = 'Hazre Tours';
