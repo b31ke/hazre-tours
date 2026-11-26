@@ -1993,3 +1993,4 @@ details[open] > summary i::after { rotate: 0deg; }
 .contact-card .chat-lbl { margin-top: auto; padding-top: 18px; }
 .contact-card .chat-lbl + .chat-btns { margin-top: 0; }
 .btn-wa { background: #1EBE5D; }
+.contact-card .chat-lbl { margin-bottom: -8px; }
