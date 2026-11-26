@@ -2081,3 +2081,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .tp-list li[aria-selected="true"] .tp-trip, .tp-list li[aria-selected="true"] .tp-days { color: #fff; }
 .tp-list li[aria-selected="true"] .tp-date { background: rgba(255, 255, 255, .2); color: #fff; }
 .tp-empty { margin: 8px 4px; color: #8A97A6; font-size: 14px; }
+/* Cijene na karticama aranžmana plave (kontrast prema narandžastom dugmetu) */
+.card-price strong { color: var(--royal) !important; background: none !important; -webkit-text-fill-color: currentColor !important; }
