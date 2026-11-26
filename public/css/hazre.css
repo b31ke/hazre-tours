@@ -2089,3 +2089,6 @@ details[open] > summary i::after { rotate: 0deg; }
   .head-row { position: relative; z-index: 3; }
   .has-drop .drop { z-index: 5; }
 }
+
+/* Zlatna riječ u naslovu slidera: bez sjaja oko slova, jer ga okvir animacije odsiječe u vidljiv pravougaonik */
+.hs-title .w:last-child > span { text-shadow: none; }
