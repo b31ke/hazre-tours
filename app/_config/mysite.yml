@@ -16,3 +16,7 @@ SilverStripe\Control\Email\Email:
 # Bez demo stranica (Home, About Us, Contact Us) pri dev/build; stranice pravi tasks:hazre-import
 SilverStripe\CMS\Model\SiteTree:
   create_default_pages: false
+
+# Stranice greške (404, 500) nikad ne dodaju tehničku poruku na engleskom ("Error detail: …"), ni u razvojnom načinu
+SilverStripe\ErrorPage\ErrorPage:
+  dev_append_error_message: false
