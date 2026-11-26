@@ -1996,3 +1996,11 @@ details[open] > summary i::after { rotate: 0deg; }
 .contact-card .chat-lbl { margin-bottom: -8px; }
 /* "Piši nam" istim rukopisnim fontom kao "Javite nam se" */
 .chat-lbl { font: 400 24px/1.1 "Kaushan Script", "Segoe Script", cursive; letter-spacing: 0; text-transform: none; color: #8FDDF5; }
+
+/* Kontakt: "Piši nam" i dugmad u jednom panelu, poravnati kao kartice iznad */
+.contact-card .chat-box { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; padding: 14px 16px 14px 20px; border-radius: 16px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18); }
+.contact-card .chat-box .chat-lbl { margin: 0; padding: 0; font-size: 26px; }
+.contact-card .chat-box .chat-btns { margin: 0; flex-wrap: nowrap; gap: 10px; }
+.chat-box .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 140px; padding: 13px 20px; }
+.chat-box .btn svg { width: 20px; height: 20px; flex: none; }
+@media (max-width: 480px) { .contact-card .chat-box { padding: 14px; } .contact-card .chat-box .chat-btns { width: 100%; } .chat-box .btn { flex: 1; min-width: 0; } }
