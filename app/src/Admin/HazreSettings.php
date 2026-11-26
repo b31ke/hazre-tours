@@ -95,7 +95,7 @@ class HazreSettings extends Extension
                 'auto' => 'Automatski (od 1. decembra do 10. januara)',
                 'ukljuceno' => 'Uvijek uključeno',
                 'iskljuceno' => 'Isključeno',
-            ])->setDescription('Lampice ispod menija, snijeg u zaglavlju stranica i kapa na logu.'),
+            ])->setDescription('Snježni rub s ledenicama i lampice ispod menija, snijeg i svjetla u zaglavlju, zlatna čestitka i kapa na logu.'),
         ]);
         $fields->addFieldsToTab('Root.Analitika', [
             LiteralField::create('AnaInfo', '<p>Mjerenje posjeta i oglasa. Pokreće se tek kad posjetilac prihvati kolačiće.</p>'),

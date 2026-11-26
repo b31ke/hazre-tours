@@ -1795,22 +1795,34 @@ details[open] > summary i::after { rotate: 0deg; }
 .field { grid-template-columns: minmax(0, 1fr); }
 .field select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
 
-/* Praznična tema (body.is-festive): lampice ispod menija, snijeg u zaglavlju stranica, kapa na logu */
+/* Praznična tema (body.is-festive): snježni rub s ledenicama i velike lampice ispod menija, bokeh svjetla i snijeg u zaglavlju, čestitka, kapa na logu */
 .is-festive .site-head { border-bottom-color: transparent; }
-.xl { position: absolute; left: 0; right: 0; top: 100%; height: 30px; margin-top: -6px; pointer-events: none; z-index: 2; overflow: hidden; }
-.xl svg { display: block; width: 100%; height: 30px; overflow: visible; }
-.xl .xl-wire { fill: none; stroke: #2C3B4E; stroke-width: 1.6; opacity: .75; }
-.xl .xl-cap { fill: #4B5B6E; }
-.xl .xl-glow { opacity: .55; transform-box: fill-box; transform-origin: center; animation: xl-glow 2.4s ease-in-out infinite; }
-.xl .xl-bulb { animation: xl-bulb 2.4s ease-in-out infinite; }
-.xl .d1 { animation-delay: -.8s; } .xl .d2 { animation-delay: -1.6s; } .xl .d3 { animation-delay: -.4s; } .xl .d4 { animation-delay: -2s; }
-@keyframes xl-glow { 0%, 100% { opacity: .65; scale: 1; } 50% { opacity: .15; scale: .7; } }
-@keyframes xl-bulb { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+.xl { position: absolute; left: 0; right: 0; top: 100%; height: 74px; margin-top: -6px; pointer-events: none; z-index: 2; }
+.xl svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.xl .xl-wire { fill: none; stroke: #1E2B3A; stroke-width: 2; }
+.xl .xl-cap { fill: #5E6B78; }
+.xl .xl-g { opacity: .2; animation: xl-chase 2.8s linear infinite; }
+.xl .xl-b { filter: saturate(.55) brightness(.75); animation: xl-bulb 2.8s linear infinite; }
+@keyframes xl-chase { 0%, 100% { opacity: .95; } 35% { opacity: .95; } 55% { opacity: .12; } 85% { opacity: .12; } }
+@keyframes xl-bulb { 0%, 35%, 100% { filter: saturate(1.15) brightness(1.15); } 55%, 85% { filter: saturate(.6) brightness(.7); } }
+.is-festive.xl-boot .xl .xl-g, .is-festive.xl-boot .xl .xl-b { animation: none; opacity: 0; }
+.is-festive.xl-boot .xl .xl-b { opacity: 1; filter: saturate(.4) brightness(.55); }
 
 .xs-snow { position: absolute; inset: 0; z-index: 3; pointer-events: none; width: 100%; height: 100%; }
 
-.is-festive .logo { position: relative; }
-.xl-hat { position: absolute; left: -11px; top: -13px; width: 34px; height: 30px; rotate: -18deg; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .18)); }
-@media (max-width: 480px) { .xl-hat { width: 28px; height: 25px; left: -9px; top: -11px; } .xl { height: 24px; } .xl svg { height: 24px; } }
+.xl-greet { position: absolute; z-index: 4; left: 50%; top: 66px; translate: -50% 0; display: inline-flex; align-items: center; gap: 12px; padding: 9px 22px; border-radius: 40px; background: rgba(8, 20, 70, .45); border: 1px solid rgba(255, 214, 120, .45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 30px rgba(255, 196, 80, .25), inset 0 0 18px rgba(255, 214, 120, .12); font: 400 26px/1 'Kaushan Script', cursive; white-space: nowrap; pointer-events: none; animation: xl-greet-in 1.2s cubic-bezier(.2, .8, .2, 1) .9s both; }
+.xl-greet span { background: linear-gradient(100deg, #FFE6A8 0%, #FFC555 30%, #FFF6DD 50%, #FFC555 70%, #F7A11A 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: xl-shine 4s linear infinite; }
+.xl-greet i { width: 14px; height: 14px; flex: none; background: #FFD27A; clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); animation: xl-twinkle 1.8s ease-in-out infinite; }
+.xl-greet i:last-child { animation-delay: -.9s; }
+@keyframes xl-shine { to { background-position: -220% 0; } }
+@keyframes xl-twinkle { 0%, 100% { scale: 1; opacity: 1; rotate: 0deg; } 50% { scale: .55; opacity: .6; rotate: 45deg; } }
+@keyframes xl-greet-in { from { opacity: 0; translate: -50% -14px; scale: .92; } }
+.page-hero .xl-greet { top: auto; bottom: 74px; }
+@media (max-width: 1100px) { .xl-greet { display: none; } }
 
-@media (prefers-reduced-motion: reduce) { .xl .xl-glow, .xl .xl-bulb { animation: none; } }
+.is-festive .logo { position: relative; }
+.xl-hat { position: absolute; left: -13px; top: -16px; width: 40px; height: 34px; rotate: -18deg; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .2)); transform-origin: 60% 90%; animation: xl-hat 3.5s ease-in-out infinite; }
+@keyframes xl-hat { 0%, 100% { rotate: -18deg; } 50% { rotate: -12deg; } }
+@media (max-width: 480px) { .xl-hat { width: 30px; height: 26px; left: -9px; top: -12px; } .xl { height: 58px; } }
+
+@media (prefers-reduced-motion: reduce) { .xl .xl-g, .xl .xl-b, .xl-greet, .xl-greet span, .xl-greet i, .xl-hat { animation: none; } .xl .xl-g { opacity: .8; } }

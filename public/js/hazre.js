@@ -665,43 +665,78 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   els.forEach(function (el) { io.observe(el); });
 })();
 
-/* Praznična tema: lampice ispod menija, snijeg u zaglavlju stranice, kapa na logu (samo kad je body.is-festive) */
+/* Praznična tema (samo kad je body.is-festive): snježni rub s ledenicama i lampice koje se pale i trče,
+   bokeh svjetla i snijeg u slojevima u zaglavlju stranice, zlatna čestitka i kapa na logu */
 (function () {
-  if (!document.body.classList.contains('is-festive')) return;
+  var body = document.body;
+  if (!body.classList.contains('is-festive')) return;
   var NS = 'http://www.w3.org/2000/svg';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var COLORS = ['#FF3B3B', '#FFC23A', '#2BD46B', '#36B5FF', '#FF7AD9'];
+  var COLORS = ['#FF2E3F', '#FFC21A', '#22D36A', '#2FA8FF', '#FF5FD2', '#FF8A1F'];
+  var YEAR = new Date().getMonth() === 0 ? new Date().getFullYear() : new Date().getFullYear() + 1;
 
-  // Lampice: žica u lukovima i sijalice na njoj, broj se prilagođava širini
-  var box = document.querySelector('.xl');
   function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
-  function lights() {
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  // Snježni rub, ledenice i lampice (SVG preko cijele širine, ispod menija)
+  var box = document.querySelector('.xl');
+  function strand() {
     if (!box) return;
-    var w = box.clientWidth, h = box.clientHeight || 30, span = w < 600 ? 62 : 84, n = Math.max(4, Math.round(w / span)), step = w / n, sag = h * 0.42;
-    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, preserveAspectRatio: 'none' }), defs = el('defs', {});
+    var w = box.clientWidth, H = box.clientHeight, mob = w < 600, span = mob ? 70 : 96, n = Math.max(4, Math.round(w / span)), step = w / n, top = 11, sag = mob ? 14 : 20;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + H, preserveAspectRatio: 'none' }), defs = el('defs', {});
     COLORS.forEach(function (c, i) {
       var g = el('radialGradient', { id: 'xlg' + i });
-      g.appendChild(el('stop', { offset: '0', 'stop-color': c, 'stop-opacity': '.9' }));
+      g.appendChild(el('stop', { offset: '0', 'stop-color': c, 'stop-opacity': '.95' }));
+      g.appendChild(el('stop', { offset: '.35', 'stop-color': c, 'stop-opacity': '.45' }));
       g.appendChild(el('stop', { offset: '1', 'stop-color': c, 'stop-opacity': '0' }));
       defs.appendChild(g);
     });
+    var ice = el('linearGradient', { id: 'xli', x1: 0, y1: 0, x2: 0, y2: 1 });
+    ice.appendChild(el('stop', { offset: '0', 'stop-color': '#FFFFFF' }));
+    ice.appendChild(el('stop', { offset: '1', 'stop-color': '#BFE3FF', 'stop-opacity': '.35' }));
+    defs.appendChild(ice);
+    var snow = el('linearGradient', { id: 'xls', x1: 0, y1: 0, x2: 0, y2: 1 });
+    snow.appendChild(el('stop', { offset: '0', 'stop-color': '#FFFFFF' }));
+    snow.appendChild(el('stop', { offset: '1', 'stop-color': '#DCEBFA' }));
+    defs.appendChild(snow);
     svg.appendChild(defs);
-    var d = 'M0 4', i, k = 0;
-    for (i = 0; i < n; i++) d += ' Q' + (i * step + step / 2) + ' ' + (4 + sag * 2) + ' ' + ((i + 1) * step) + ' 4';
+
+    // žica u lukovima (iza snijega, da izgleda kao da izlazi ispod njega)
+    var d = 'M0 ' + top, i;
+    for (i = 0; i < n; i++) d += ' Q' + (i * step + step / 2) + ' ' + (top + sag * 2) + ' ' + ((i + 1) * step) + ' ' + top;
     svg.appendChild(el('path', { d: d, class: 'xl-wire' }));
-    // dvije sijalice po luku (na 1/3 i 2/3), nagnute prema žici
+
+    // ledenice
+    var x = 4;
+    while (x < w) {
+      if (Math.random() < .55) {
+        var L = rnd(5, mob ? 13 : 19), hw = rnd(1.6, 3.2);
+        svg.appendChild(el('path', { d: 'M' + (x - hw) + ' 8 Q' + x + ' ' + (8 + L * .6) + ' ' + x + ' ' + (8 + L) + ' Q' + x + ' ' + (8 + L * .6) + ' ' + (x + hw) + ' 8 Z', fill: 'url(#xli)' }));
+      }
+      x += rnd(9, 20);
+    }
+    // snježni rub s grudvicama
+    var cap = 'M0 -6 L' + w + ' -6 L' + w + ' 6', cx = w;
+    while (cx > 0) { var nx = Math.max(0, cx - rnd(16, 38)); cap += ' Q' + ((cx + nx) / 2) + ' ' + rnd(10, 15) + ' ' + nx + ' ' + rnd(5, 8); cx = nx; }
+    cap += ' Z';
+    svg.appendChild(el('path', { d: cap, fill: 'rgba(10,30,80,.18)', transform: 'translate(0 2)' }));
+    svg.appendChild(el('path', { d: cap, fill: 'url(#xls)' }));
+
+    // sijalice (oblik C9), dvije po luku, nagnute niz žicu
+    var k = 0, total = n * 2;
     for (i = 0; i < n; i++) {
       [0.3, 0.7].forEach(function (t) {
-        var x0 = i * step, cx = x0 + step / 2, x1 = x0 + step, cy = 4 + sag * 2;
-        var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * cx + t * t * x1, y = (1 - t) * (1 - t) * 4 + 2 * (1 - t) * t * cy + t * t * 4;
-        var dx = 2 * (1 - t) * (cx - x0) + 2 * t * (x1 - cx), dy = 2 * (1 - t) * (cy - 4) + 2 * t * (4 - cy);
-        var ang = Math.atan2(dy, dx) * 180 / Math.PI, ci = k % COLORS.length, cls = 'd' + (k % 5);
-        var g = el('g', { transform: 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ')' });
-        var glow = el('circle', { cx: 0, cy: 9, r: 11, fill: 'url(#xlg' + ci + ')', class: 'xl-glow ' + cls });
-        var bulb = el('ellipse', { cx: 0, cy: 8.5, rx: 3.4, ry: 5.2, fill: COLORS[ci], class: 'xl-bulb ' + cls });
-        var shine = el('ellipse', { cx: -1.1, cy: 7, rx: .9, ry: 1.8, fill: '#fff', opacity: '.6' });
-        var cap = el('rect', { x: -2.2, y: 1, width: 4.4, height: 3.2, rx: 1, class: 'xl-cap' });
-        g.appendChild(glow); g.appendChild(bulb); g.appendChild(shine); g.appendChild(cap);
+        var x0 = i * step, mx = x0 + step / 2, x1 = x0 + step, my = top + sag * 2;
+        var px = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, py = (1 - t) * (1 - t) * top + 2 * (1 - t) * t * my + t * t * top;
+        var dx = 2 * (1 - t) * (mx - x0) + 2 * t * (x1 - mx), dy = 2 * (1 - t) * (my - top) + 2 * t * (top - my);
+        var ang = Math.atan2(dy, dx) * 180 / Math.PI * .5, ci = k % COLORS.length, s = mob ? .85 : 1;
+        var g = el('g', { transform: 'translate(' + px.toFixed(1) + ' ' + py.toFixed(1) + ') rotate(' + ang.toFixed(1) + ') scale(' + s + ')' });
+        var delay = (-(k / total) * 2.8 * 3).toFixed(2) + 's';
+        var glow = el('circle', { cx: 0, cy: 15, r: 30, fill: 'url(#xlg' + ci + ')', class: 'xl-g', style: 'animation-delay:' + delay });
+        var bulb = el('path', { d: 'M-4.6 6 C-7.4 12 -5.6 21 0 25 C5.6 21 7.4 12 4.6 6 Z', fill: COLORS[ci], class: 'xl-b', style: 'animation-delay:' + delay });
+        var shine = el('path', { d: 'M-2.6 9 C-3.8 13 -3 17 -1.2 19', fill: 'none', stroke: '#fff', 'stroke-width': 1.3, 'stroke-linecap': 'round', opacity: '.75' });
+        var capEl = el('rect', { x: -3.6, y: 0, width: 7.2, height: 7, rx: 1.6, class: 'xl-cap' });
+        g.appendChild(glow); g.appendChild(bulb); g.appendChild(shine); g.appendChild(capEl);
         svg.appendChild(g);
         k++;
       });
@@ -709,38 +744,68 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     box.innerHTML = '';
     box.appendChild(svg);
   }
-  lights();
-  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(lights, 200); });
+  strand();
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(strand, 200); });
+  // lampice se pale nakon kratkog trenutka (efekat "uključivanja")
+  if (!reduce) { body.classList.add('xl-boot'); setTimeout(function () { body.classList.remove('xl-boot'); }, 700); }
 
   // Kapa Djeda Mraza na logu
   var logo = document.querySelector('.site-head .logo');
-  if (logo) {
-    logo.insertAdjacentHTML('beforeend', '<svg class="xl-hat" viewBox="0 0 40 34" aria-hidden="true"><path d="M5 25C7 13 15 4 27 3c5 0 8 3 9 7-4-2-8-1-10 2-2 4-1 9 0 13z" fill="#D7262E"/><path d="M27 3c5 0 8 3 9 7-2-1-4-1-6 0-1-3-2-5-3-7z" fill="#B01E25"/><rect x="2" y="23" width="27" height="8" rx="4" fill="#fff"/><circle cx="36" cy="11" r="3.6" fill="#fff"/></svg>');
-  }
+  if (logo) logo.insertAdjacentHTML('beforeend', '<svg class="xl-hat" viewBox="0 0 40 34" aria-hidden="true"><path d="M5 25C7 13 15 4 27 3c5 0 8 3 9 7-4-2-8-1-10 2-2 4-1 9 0 13z" fill="#D7262E"/><path d="M27 3c5 0 8 3 9 7-2-1-4-1-6 0-1-3-2-5-3-7z" fill="#B01E25"/><rect x="2" y="23" width="27" height="8" rx="4" fill="#fff"/><circle cx="36" cy="11" r="3.6" fill="#fff"/></svg>');
 
-  // Snijeg u zaglavlju stranice (slider, početni hero ili zaglavlje podstranice)
-  if (reduce) return;
-  var hosts = document.querySelectorAll('.hs, .hero, .page-hero');
+  // Zaglavlje stranice: čestitka, bokeh svjetla i snijeg u tri sloja
+  var hosts = document.querySelectorAll('.hs, .page-hero');
   Array.prototype.forEach.call(hosts, function (host) {
     if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    host.insertAdjacentHTML('beforeend', '<div class="xl-greet" aria-hidden="true"><i></i><span>Sretni praznici i sretna ' + YEAR + '.</span><i></i></div>');
+    if (reduce) return;
     var cv = document.createElement('canvas'); cv.className = 'xs-snow'; cv.setAttribute('aria-hidden', 'true');
     host.appendChild(cv);
-    var ctx = cv.getContext('2d'), W, H, dpr, flakes = [], on = false, raf;
+    var ctx = cv.getContext('2d'), W, H, dpr, flakes = [], bokeh = [], on = false, raf, t = 0;
+    function flake(any) {
+      var z = Math.random(), layer = z < .62 ? 0 : z < .93 ? 1 : 2;
+      var r = layer === 0 ? rnd(.6, 1.5) : layer === 1 ? rnd(1.6, 2.8) : rnd(4.5, 8);
+      return { x: Math.random() * W, y: any ? Math.random() * H : -12, r: r, l: layer, v: [.35, .8, 1.3][layer] + Math.random() * .3, s: Math.random() * 6.28, a: [.45, .75, .9][layer], rot: Math.random() * 6.28, vr: rnd(-.02, .02) };
+    }
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2); W = host.clientWidth; H = host.clientHeight;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.round(Math.min(90, W * H / 14000));
-      flakes = [];
-      for (var i = 0; i < n; i++) flakes.push(mk(true));
+      var mob = W < 700, n = Math.round(Math.min(mob ? 70 : 170, W * H / (mob ? 6000 : 7000)));
+      flakes = []; for (var i = 0; i < n; i++) flakes.push(flake(true));
+      bokeh = []; var b = mob ? 7 : 14;
+      for (var j = 0; j < b; j++) bokeh.push({ x: Math.random() * W, y: Math.random() * H, r: rnd(mob ? 24 : 36, mob ? 70 : 120), c: ['255,196,80', '255,70,80', '60,220,130', '80,170,255', '255,120,220'][j % 5], a: rnd(.08, .2), p: Math.random() * 6.28, vy: rnd(-.12, -.04), vx: rnd(-.06, .06) });
     }
-    function mk(any) { var r = Math.random() * 2.4 + .8; return { x: Math.random() * W, y: any ? Math.random() * H : -6, r: r, v: .35 + r * .28, s: Math.random() * 6.28, a: .45 + Math.random() * .5 }; }
-    var dark = host.classList.contains('hero') ? 'rgba(160,200,235,' : 'rgba(255,255,255,';
+    function crystal(f) {
+      ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.rot);
+      ctx.strokeStyle = 'rgba(255,255,255,' + f.a + ')'; ctx.lineWidth = 1.2; ctx.lineCap = 'round';
+      ctx.shadowColor = 'rgba(255,255,255,.8)'; ctx.shadowBlur = 6;
+      ctx.beginPath();
+      for (var i = 0; i < 6; i++) {
+        var a = i * Math.PI / 3, cx = Math.cos(a), sy = Math.sin(a), r = f.r;
+        ctx.moveTo(0, 0); ctx.lineTo(cx * r, sy * r);
+        var bx = cx * r * .55, by = sy * r * .55, a1 = a + .6, a2 = a - .6, br = r * .32;
+        ctx.moveTo(bx, by); ctx.lineTo(bx + Math.cos(a1) * br, by + Math.sin(a1) * br);
+        ctx.moveTo(bx, by); ctx.lineTo(bx + Math.cos(a2) * br, by + Math.sin(a2) * br);
+      }
+      ctx.stroke(); ctx.restore();
+    }
     function frame() {
-      ctx.clearRect(0, 0, W, H);
+      t += .016; ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      for (var j = 0; j < bokeh.length; j++) {
+        var b = bokeh[j]; b.x += b.vx; b.y += b.vy; b.p += .012;
+        if (b.y < -b.r) { b.y = H + b.r; b.x = Math.random() * W; }
+        var al = b.a * (.65 + .35 * Math.sin(b.p)), g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+        g.addColorStop(0, 'rgba(' + b.c + ',' + al + ')'); g.addColorStop(.55, 'rgba(' + b.c + ',' + (al * .55) + ')'); g.addColorStop(1, 'rgba(' + b.c + ',0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283); ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+      var wind = Math.sin(t * .4) * .5;
       for (var i = 0; i < flakes.length; i++) {
-        var f = flakes[i]; f.y += f.v; f.s += .012; f.x += Math.sin(f.s) * .35;
-        if (f.y > H + 6) flakes[i] = f = mk(false);
-        ctx.beginPath(); ctx.fillStyle = dark + f.a + ')'; ctx.arc(f.x, f.y, f.r, 0, 6.283); ctx.fill();
+        var f = flakes[i]; f.y += f.v; f.s += .015; f.x += Math.sin(f.s) * (.25 + f.l * .2) + wind * (f.l + 1) * .4; f.rot += f.vr;
+        if (f.y > H + 12 || f.x < -20 || f.x > W + 20) flakes[i] = f = flake(false);
+        if (f.l === 2) { crystal(f); continue; }
+        ctx.beginPath(); ctx.fillStyle = 'rgba(255,255,255,' + f.a + ')'; ctx.arc(f.x, f.y, f.r, 0, 6.283); ctx.fill();
       }
       if (on) raf = requestAnimationFrame(frame);
     }
@@ -748,9 +813,12 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     var rs; window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(size, 250); });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) {
-        var vis = e[0].isIntersecting;
-        if (vis && !on) { on = true; raf = requestAnimationFrame(frame); } else if (!vis) { on = false; cancelAnimationFrame(raf); }
+        host._xv = e[0].isIntersecting;
+        if (host._xv && !on && !document.hidden) { on = true; raf = requestAnimationFrame(frame); } else if (!host._xv) { on = false; cancelAnimationFrame(raf); }
       }).observe(host);
-    } else { on = true; frame(); }
+    } else { host._xv = true; on = true; frame(); }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { on = false; cancelAnimationFrame(raf); } else if (host._xv && !on) { on = true; raf = requestAnimationFrame(frame); }
+    });
   });
 })();
