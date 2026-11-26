@@ -1973,3 +1973,14 @@ details[open] > summary i::after { rotate: 0deg; }
 .hs-title .w:last-child > span { background: linear-gradient(180deg, #FFE9B0 0%, #FFC95A 45%, #F7A11A 100%); background-size: 100% 100%; animation: none; }
 /* Zadnja riječ naslova: puna zlatna boja sa sjajem (bez background-clip, koji pravi pravougaonik tokom animacije) */
 .hs-title .w:last-child > span { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #FFC23F; -webkit-text-fill-color: #FFC23F; text-shadow: 0 0 28px rgba(255, 190, 60, .45); }
+
+/* Pahulje v2: tri oblika, prelaz boje (plavo → tirkizno / bijelo → ledeno), sjaj, okretanje + lebdenje, zvjezdice oko velikih */
+.xf { stroke: none; stroke-width: 3; opacity: .14; animation: xf-spin var(--fd, 90s) linear infinite, xf-float var(--fl, 8s) ease-in-out infinite alternate; }
+.xf.big { stroke-width: 2.4; opacity: .12; filter: drop-shadow(0 0 10px rgba(23, 174, 223, .35)); }
+.xf.on-dark { opacity: .16; }
+.xf.on-dark.big { opacity: .15; filter: drop-shadow(0 0 12px rgba(160, 225, 255, .5)); }
+@keyframes xf-float { from { translate: 0 -10px; } to { translate: 0 10px; } }
+.xf-spark { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; background: linear-gradient(135deg, #1B3FA8, #17AEDF); clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); opacity: .35; animation: xf-tw 3s ease-in-out infinite; }
+.xf-spark.on-dark { background: linear-gradient(135deg, #fff, #FFE3A3); opacity: .55; }
+@keyframes xf-tw { 0%, 100% { scale: .4; opacity: .15; rotate: 0deg; } 50% { scale: 1.15; opacity: .6; rotate: 45deg; } }
+@media (prefers-reduced-motion: reduce) { .xf, .xf-spark { animation: none; } }

@@ -830,10 +830,18 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
 /* Praznična tema: veliki prozirni obrisi pahulja u pozadini sekcija (bijelih i plavih), ispod sadržaja */
 (function () {
   if (!document.body.classList.contains('is-festive')) return;
-  var arm = 'M50 50V6M50 18l-8-8M50 18l8-8M50 31l-12-10M50 31l12-10M50 41l-6-4M50 41l6-4';
-  var flake = '<g fill="none" stroke-linecap="round" stroke-linejoin="round">';
-  for (var i = 0; i < 6; i++) flake += '<path d="' + arm + '" transform="rotate(' + (i * 60) + ' 50 50)"/>';
-  flake += '<path d="M50 40l8.7 5v10L50 60l-8.7-5V45z"/></g>';
+  var ARMS = [
+    'M50 50V6M50 18l-8-8M50 18l8-8M50 31l-12-10M50 31l12-10M50 41l-6-4M50 41l6-4',
+    'M50 50V5M50 14l-6-6M50 14l6-6M50 24l-9-6M50 24l9-6M50 34l-13-8M50 34l13-8M44 20h12',
+    'M50 50V8M50 22l-10-12M50 22l10-12M42 12l8 6 8-6M50 38l-7-5M50 38l7-5'
+  ];
+  var CORES = ['<path d="M50 40l8.7 5v10L50 60l-8.7-5V45z"/>', '<circle cx="50" cy="50" r="7"/><circle cx="50" cy="50" r="2.5"/>', '<path d="M50 42l6.9 4v8L50 58l-6.9-4v-8z"/><path d="M50 46v8M46.5 48l7 4M53.5 48l-7 4"/>'];
+  function flakeSvg(t, gid) {
+    var g = '<g fill="none" stroke="url(#' + gid + ')" stroke-linecap="round" stroke-linejoin="round">';
+    for (var i = 0; i < 6; i++) g += '<path d="' + ARMS[t] + '" transform="rotate(' + (i * 60) + ' 50 50)"/>';
+    return g + CORES[t] + '</g>';
+  }
+  var fid = 0;
   function lum(c) { var m = c.match(/\d+(\.\d+)?/g); if (!m) return 1; return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; }
   var seed = 7; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
   var secs = document.querySelectorAll('main > section, main > div > section, .site-foot, footer');
@@ -853,7 +861,9 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
       for (var p = 0; p < placed.length; p++) { var q = placed[p]; if (Math.hypot(q.x - cx, q.y - cy) < q.r + r + 14) { ok = false; break; } }
       if (!ok) continue;
       placed.push({ x: cx, y: cy, r: r });
-      html += '<svg class="xf' + (darkBg ? ' on-dark' : '') + (big ? ' big' : '') + '" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + Math.round(cx - r) + 'px;top:' + Math.round(cy - r) + 'px;animation-duration:' + Math.round(60 + rnd() * 70) + 's;animation-direction:' + (placed.length % 2 ? 'reverse' : 'normal') + '">' + flake + '</svg>';
+      var gid = 'xfg' + (fid++), t = Math.floor(rnd() * 3), c1 = darkBg ? '#FFFFFF' : '#1B3FA8', c2 = darkBg ? '#9FE3FF' : '#17AEDF';
+      html += '<svg class="xf' + (darkBg ? ' on-dark' : '') + (big ? ' big' : '') + '" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + Math.round(cx - r) + 'px;top:' + Math.round(cy - r) + 'px;--fd:' + Math.round(60 + rnd() * 70) + 's;--fl:' + (6 + rnd() * 5).toFixed(1) + 's;animation-direction:' + (placed.length % 2 ? 'reverse' : 'normal') + ',alternate"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c1 + '"/><stop offset="1" stop-color="' + c2 + '"/></linearGradient></defs>' + flakeSvg(t, gid) + '</svg>';
+      if (big) for (var z = 0; z < 3; z++) { var ang = rnd() * 6.283, dist = r * (1.05 + rnd() * .3); html += '<i class="xf-spark' + (darkBg ? ' on-dark' : '') + '" style="left:' + Math.round(cx + Math.cos(ang) * dist) + 'px;top:' + Math.round(cy + Math.sin(ang) * dist) + 'px;animation-delay:-' + (rnd() * 3).toFixed(2) + 's"></i>'; }
     }
     layer.innerHTML = html;
     sec.insertBefore(layer, sec.firstChild);
