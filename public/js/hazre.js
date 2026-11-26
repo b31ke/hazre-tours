@@ -843,10 +843,17 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     if (cs.position === 'static') sec.style.position = 'relative';
     sec.style.isolation = 'isolate';
     var layer = document.createElement('div'); layer.className = 'xf-layer'; layer.setAttribute('aria-hidden', 'true');
-    var n = sec.offsetHeight > 700 ? 3 : 2, html = '';
-    for (var k = 0; k < n; k++) {
-      var size = Math.round(150 + rnd() * 170), left = k % 2 ? 72 + rnd() * 22 : -6 + rnd() * 18, top = (k + .3) / n * 100 - 10 + rnd() * 12;
-      html += '<svg class="xf' + (darkBg ? ' on-dark' : '') + '" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + left.toFixed(1) + '%;top:' + top.toFixed(1) + '%;animation-duration:' + Math.round(70 + rnd() * 60) + 's;animation-direction:' + (k % 2 ? 'reverse' : 'normal') + '">' + flake + '</svg>';
+    // više pahulja različitih veličina, cijele unutar sekcije (bez odsijecanja) i bez međusobnog preklapanja
+    var W = sec.clientWidth, H = sec.offsetHeight, mob = W < 700, placed = [], html = '';
+    var want = Math.max(3, Math.min(mob ? 6 : 10, Math.round(W * H / (mob ? 70000 : 110000))));
+    for (var tries = 0; placed.length < want && tries < want * 25; tries++) {
+      var big = placed.length % 3 === 0, size = Math.round(big ? (mob ? 110 : 170) + rnd() * (mob ? 60 : 110) : (mob ? 44 : 56) + rnd() * (mob ? 46 : 70));
+      if (size + 16 > W || size + 16 > H) continue;
+      var r = size / 2, cx = r + 8 + rnd() * (W - size - 16), cy = r + 8 + rnd() * (H - size - 16), ok = true;
+      for (var p = 0; p < placed.length; p++) { var q = placed[p]; if (Math.hypot(q.x - cx, q.y - cy) < q.r + r + 14) { ok = false; break; } }
+      if (!ok) continue;
+      placed.push({ x: cx, y: cy, r: r });
+      html += '<svg class="xf' + (darkBg ? ' on-dark' : '') + (big ? ' big' : '') + '" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + Math.round(cx - r) + 'px;top:' + Math.round(cy - r) + 'px;animation-duration:' + Math.round(60 + rnd() * 70) + 's;animation-direction:' + (placed.length % 2 ? 'reverse' : 'normal') + '">' + flake + '</svg>';
     }
     layer.innerHTML = html;
     sec.insertBefore(layer, sec.firstChild);

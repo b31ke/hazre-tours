@@ -1890,3 +1890,10 @@ details[open] > summary i::after { rotate: 0deg; }
   .hs-ring text { font-size: 9px; }
 }
 @media (prefers-reduced-motion: reduce) { .hs .hs-cta .btn, .hs .hs-cta .hs-price, .hs-ring, .hs-title .w:last-child > span { animation: none; } }
+
+/* Pahulje u pozadini: deblje, cijele (pozicija u pikselima, bez pomaka), male malo jače vidljive */
+.xf { translate: none; stroke-width: 3.2; opacity: .085; }
+.xf.big { stroke-width: 2.6; opacity: .075; }
+.xf.on-dark { opacity: .1; }
+.xf.on-dark.big { opacity: .09; }
+@media (max-width: 640px) { .xf { scale: 1; } }
