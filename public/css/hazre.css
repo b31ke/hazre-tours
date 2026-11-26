@@ -1831,3 +1831,11 @@ details[open] > summary i::after { rotate: 0deg; }
 .hs .xl-greet { top: 80px; }
 @media (max-width: 640px) { .is-festive .hs-top { top: 62px; } }
 @media (max-width: 640px) { .is-festive .hs-dest { top: 120px; } }
+/* Kapa na logu: obod preko cijele širine slova H */
+.xl-hat { left: 5px; top: -18px; width: 51px; height: 32px; rotate: -5deg; transform-origin: 30% 90%; animation-name: xl-hat2; }
+@keyframes xl-hat2 { 0%, 100% { rotate: -5deg; } 50% { rotate: -1deg; } }
+@media (max-width: 480px) { .xl-hat { left: 4px; top: -14px; width: 40px; height: 25px; } }
+/* Kapa: obod od lijevog do desnog kraja slova H (izmjereno na logu) */
+.xl-hat { left: 8px; top: -29px; width: 68px; height: 42px; rotate: -3deg; animation-name: xl-hat3; }
+@keyframes xl-hat3 { 0%, 100% { rotate: -3deg; } 50% { rotate: 0deg; } }
+@media (max-width: 480px) { .xl-hat { left: 6px; top: -23px; width: 54px; height: 34px; } }

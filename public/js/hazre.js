@@ -751,7 +751,7 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
 
   // Kapa Djeda Mraza na logu
   var logo = document.querySelector('.site-head .logo');
-  if (logo) logo.insertAdjacentHTML('beforeend', '<svg class="xl-hat" viewBox="0 0 40 34" aria-hidden="true"><path d="M5 25C7 13 15 4 27 3c5 0 8 3 9 7-4-2-8-1-10 2-2 4-1 9 0 13z" fill="#D7262E"/><path d="M27 3c5 0 8 3 9 7-2-1-4-1-6 0-1-3-2-5-3-7z" fill="#B01E25"/><rect x="2" y="23" width="27" height="8" rx="4" fill="#fff"/><circle cx="36" cy="11" r="3.6" fill="#fff"/></svg>');
+  if (logo) logo.insertAdjacentHTML('beforeend', '<svg class="xl-hat" viewBox="0 0 48 30" aria-hidden="true"><path d="M4 22C6 10 16 3 28 3c6 0 11 3 13 8-4-2-8-1-10 2-2 3-1 6 0 9z" fill="#D7262E"/><path d="M28 3c6 0 11 3 13 8-2-1-5-1-7 0-1-3-3-6-6-8z" fill="#AC1C24"/><rect x="1" y="21" width="34" height="8" rx="4" fill="#fff"/><circle cx="42" cy="13" r="4" fill="#fff"/></svg>');
 
   // Zaglavlje stranice: čestitka, bokeh svjetla i snijeg u tri sloja
   var hosts = document.querySelectorAll('.hs, .page-hero');
