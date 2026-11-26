@@ -844,7 +844,7 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   var fid = 0;
   function lum(c) { var m = c.match(/\d+(\.\d+)?/g); if (!m) return 1; return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; }
   var seed = 7; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-  var secs = document.querySelectorAll('main > section, main > div > section, .site-foot, footer');
+  var secs = document.querySelectorAll('main > section, main > div > section');
   Array.prototype.forEach.call(secs, function (sec) {
     if (sec.matches('.hs, .hero, .page-hero') || sec.offsetHeight < 160 || sec.querySelector(':scope > .xf-layer')) return;
     var cs = getComputedStyle(sec), darkBg = lum(cs.color) > .6;
