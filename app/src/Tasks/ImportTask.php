@@ -181,13 +181,13 @@ class ImportTask extends BuildTask
 
     /** Opšta česta pitanja, iz opštih uslova putovanja i napomena u programima agencije. */
     private const FAQ = [
-        ['Kako se prijavljujem za putovanje?', "Telefonom, e-mailom, formom na sajtu ili lično u agenciji u Srebreniku. Prijava je važeća kad je potvrdi agencija i kad zaključimo ugovor (potvrdu) o putovanju, a može biti i elektronski."],
-        ['Da li je putničko zdravstveno osiguranje obavezno?', "Da. Svaki putnik mora imati uplaćeno putničko zdravstveno osiguranje, vlastito ili putem agencije. Cijena je navedena u programu svakog putovanja, a osobe starije od 60 godina plaćaju duplu policu."],
-        ['Kako se raspoređuju sjedišta u autobusu?', "Redoslijed prijava određuje raspored sjedišta, s tim da agencija pravi raspored po strukturi i broju putnika. Željeno sjedište možete uzeti uz doplatu."],
-        ['Odakle su polasci i u koliko sati?', "Polasci su iz Tuzle, Srebrenika, Gračanice, Gradačca, Brčkog i Orašja, a za Istanbul i iz Bijeljine. Tačno vrijeme i mjesto polaska za svaki grad su u programu putovanja."],
-        ['Šta ako se ne prijavi dovoljno putnika?', "Cijene su računate na 40 do 45 prijavljenih putnika. S manjim brojem agencija zadržava pravo otkaza putovanja ili korekcije cijene, o čemu vas obavještavamo na vrijeme. Fakultativni izleti se realizuju uz najmanje 25 prijavljenih."],
-        ['Koje dokumente trebam?', "Svaki putnik je dužan sam provjeriti važnost svojih putnih isprava i pravila za ulazak u zemlje Evropske unije prije polaska. Ako niste sigurni, pitajte nas prije prijave."],
-        ['Ko odgovara za prtljag i lične stvari?', "Putnici sami vode računa o putnim ispravama, novcu i ličnim stvarima tokom putovanja. Prtljag možete osigurati kod osiguravajuće kuće po njihovim uslovima."],
+        ['Kako se prijavljujem za putovanje?', "Telefonom, e-mailom, formom na sajtu ili lično u agenciji u Srebreniku. Prijava je važeća kada je agencija potvrdi i kada zaključimo ugovor (potvrdu) o putovanju, što može biti i elektronskim putem."],
+        ['Da li je putničko zdravstveno osiguranje obavezno?', "Da. Svaki putnik mora imati uplaćeno putničko zdravstveno osiguranje, vlastito ili putem agencije. Cijena je navedena u programu svakog putovanja, a osobe starije od 60 godina plaćaju dvostruku cijenu police."],
+        ['Kako se raspoređuju sjedišta u autobusu?', "Redoslijed prijava određuje raspored sjedišta, s tim da agencija pravi raspored po strukturi i broju putnika. Željeno sjedište možete rezervisati uz doplatu."],
+        ['Odakle su polasci i u koliko sati?', "Polasci su iz Tuzle, Srebrenika, Gračanice, Gradačca, Brčkog i Orašja, a za Istanbul i iz Bijeljine. Tačno vrijeme i mjesto polaska za svaki grad navedeni su u programu putovanja."],
+        ['Šta ako se ne prijavi dovoljno putnika?', "Cijene su računate na 40 do 45 prijavljenih putnika. U slučaju manjeg broja prijava agencija zadržava pravo otkaza putovanja ili korekcije cijene, o čemu vas blagovremeno obavještavamo. Fakultativni izleti realizuju se uz najmanje 25 prijavljenih putnika."],
+        ['Koji su mi dokumenti potrebni?', "Svaki putnik dužan je sam provjeriti važenje svojih putnih isprava i pravila za ulazak u zemlje Evropske unije prije polaska. Ako niste sigurni, pitajte nas prije prijave."],
+        ['Ko odgovara za prtljag i lične stvari?', "Putnici sami vode računa o putnim ispravama, novcu i ličnim stvarima tokom putovanja. Prtljag možete osigurati kod osiguravajuće kuće, prema njenim uslovima."],
     ];
 
     protected function execute(InputInterface $input, PolyOutput $output): int
@@ -470,12 +470,12 @@ HTML;
 <p>Hazre Tours je osnovan 1996. godine kao prevoznička firma. Vlastiti vozni park i iskusni vozači su temelj svega što radimo, pa autobus iznajmljujemo i za vaša putovanja.</p>
 <h2>Za koga vozimo</h2>
 <ul>
-<li><strong>Škole:</strong> ekskurzije i izleti, po programu škole ili našem.</li>
-<li><strong>Sportski klubovi:</strong> utakmice, turniri i pripreme u BiH i Evropi.</li>
-<li><strong>Firme i udruženja:</strong> službena putovanja, team building, sajmovi.</li>
-<li><strong>Privatne grupe:</strong> svadbe, proslave, transferi do aerodroma.</li>
+<li><strong>Škole:</strong> Ekskurzije i izleti, po programu škole ili po našem programu.</li>
+<li><strong>Sportski klubovi:</strong> Utakmice, turniri i pripreme u BiH i Evropi.</li>
+<li><strong>Firme i udruženja:</strong> Službena putovanja, team building i sajmovi.</li>
+<li><strong>Privatne grupe:</strong> Svadbe, proslave i transferi do aerodroma.</li>
 </ul>
-<p>Pošaljite nam relaciju, datum i broj putnika, a mi vam šaljemo ponudu.</p>
+<p>Pošaljite nam relaciju, datum i broj putnika, a mi ćemo vam poslati ponudu.</p>
 HTML;
     }
 
@@ -598,19 +598,19 @@ HTML;
 <p>Priča o nama počinje 1996. godine, kada je Hazre Tours osnovan kao prevoznička firma s ciljem da putnicima pruži udobnost i sigurnost na putu. Prateći potrebe naših vjernih klijenata i želju da ponudimo kompletnu uslugu, od 2016. godine uspješno poslujemo i kao putnička agencija. Spajanjem dugogodišnjeg prevoznog iskustva i ljubavi prema turizmu danas kreiramo aranžmane koji se pamte.</p>
 <h2>Naša ponuda</h2>
 <ul>
-<li><strong>Jednodnevna i višednevna putovanja:</strong> obilasci evropskih metropola i skrivenih dragulja regije.</li>
-<li><strong>Ljetovanja:</strong> odmor na najpopularnijim destinacijama.</li>
-<li><strong>Hoteli:</strong> rezervacija smještaja u više od 200.000 hotela u 140 zemalja svijeta, od odabira i plaćanja do vaučera.</li>
-<li><strong>Iznajmljivanje autobusa:</strong> moderna i tehnički opremljena flota za grupna putovanja, ekskurzije i transfere.</li>
+<li><strong>Jednodnevna i višednevna putovanja:</strong> Obilasci evropskih metropola i skrivenih dragulja regije.</li>
+<li><strong>Ljetovanja:</strong> Odmor na najpopularnijim destinacijama.</li>
+<li><strong>Hoteli:</strong> Rezervacija smještaja u više od 200.000 hotela u 140 zemalja svijeta, od odabira i plaćanja do vaučera.</li>
+<li><strong>Iznajmljivanje autobusa:</strong> Moderna i tehnički opremljena flota za grupna putovanja, ekskurzije i transfere.</li>
 </ul>
 <h2>Zašto Hazre Tours?</h2>
 <ul>
-<li><strong>Tradicija i iskustvo:</strong> prevoznik od 1996. i putnička agencija od 2016., spoj pouzdanog prevoza i moderne turističke usluge.</li>
-<li><strong>Vlastiti moderan vozni park:</strong> tehnička ispravnost, udobnost i sigurnost na svakom kilometru.</li>
-<li><strong>Profesionalan i iskusan tim:</strong> iskusni vozači, licencirani vodiči i ljubazno osoblje.</li>
-<li><strong>Dobar omjer cijene i kvaliteta:</strong> aranžmani dostupni svima, uz visok nivo usluge.</li>
-<li><strong>Putovanja po mjeri i najam autobusa:</strong> složimo putovanje po vašim željama ili vam damo autobus s vozačem za vašu grupu.</li>
-<li><strong>Sigurnost i poštovanje dogovora:</strong> polazimo na vrijeme i držimo se dogovorenog plana puta, programa i cijene.</li>
+<li><strong>Tradicija i iskustvo:</strong> Prevoznik od 1996. i putnička agencija od 2016. Spajamo pouzdan prevoz i modernu turističku uslugu.</li>
+<li><strong>Vlastiti moderan vozni park:</strong> Tehnička ispravnost, udobnost i sigurnost na svakom kilometru.</li>
+<li><strong>Profesionalan i iskusan tim:</strong> Iskusni vozači, licencirani vodiči i ljubazno osoblje.</li>
+<li><strong>Dobar omjer cijene i kvaliteta:</strong> Aranžmani dostupni svima, uz visok nivo usluge.</li>
+<li><strong>Putovanja po mjeri i najam autobusa:</strong> Organizujemo putovanje po vašim željama ili vam ustupamo autobus s vozačem za vašu grupu.</li>
+<li><strong>Sigurnost i poštovanje dogovora:</strong> Polazimo na vrijeme i držimo se dogovorenog plana puta, programa i cijene.</li>
 </ul>
 HTML;
     }
