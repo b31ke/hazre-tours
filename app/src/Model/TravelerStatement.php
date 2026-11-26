@@ -295,8 +295,9 @@ class TravelerStatement extends DataObject
         $first = explode(' ', trim((string) $this->HolderName))[0];
         $phone = \SilverStripe\SiteConfig\SiteConfig::current_site_config()->MainPhone();
         $lines = ['Poštovani/a ' . $first . ',', '', 'zahvaljujemo vam na rezervaciji putovanja s agencijom Hazre Tours.'];
+        $lines[] = '';
+        $lines[] = 'Nosilac rezervacije: ' . trim((string) $this->HolderName);
         if ($this->Term()->exists()) {
-            $lines[] = '';
             $lines[] = 'Aranžman: ' . $this->getTripTitle();
             $lines[] = 'Termin: ' . $this->getTermLabel();
         }

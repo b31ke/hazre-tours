@@ -15,6 +15,7 @@
                 <p class="stmt-hello">Poštovani/a <b>$HolderName</b>,</p>
                 <p>prije potvrde ove izjave molimo vas da <b>pažljivo pročitate</b> Opšte uslove putovanja i Politiku privatnosti Hazre Toursa (linkovi su ispod) i provjerite tačnost svojih podataka.</p>
                 <dl class="stmt-data">
+                    <div><dt>Nosilac rezervacije</dt><dd>$HolderName</dd></div>
                     <% if not $NeedsTerm %>
                     <div><dt>Aranžman</dt><dd>$Trip</dd></div>
                     <div><dt>Termin</dt><dd>$Term</dd></div>
