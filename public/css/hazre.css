@@ -1971,3 +1971,5 @@ details[open] > summary i::after { rotate: 0deg; }
 
 /* Zadnja riječ naslova: ujednačen zlatni prelaz odozgo prema dolje (bez oštrog reza boje usred riječi) */
 .hs-title .w:last-child > span { background: linear-gradient(180deg, #FFE9B0 0%, #FFC95A 45%, #F7A11A 100%); background-size: 100% 100%; animation: none; }
+/* Zadnja riječ naslova: puna zlatna boja sa sjajem (bez background-clip, koji pravi pravougaonik tokom animacije) */
+.hs-title .w:last-child > span { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #FFC23F; -webkit-text-fill-color: #FFC23F; text-shadow: 0 0 28px rgba(255, 190, 60, .45); }
