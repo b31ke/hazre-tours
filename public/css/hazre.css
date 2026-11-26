@@ -1919,3 +1919,5 @@ details[open] > summary i::after { rotate: 0deg; }
 .hs .hs-cta .hs-price::before { inset: 14px; }
 .hs .hs-cta .hs-pv b { font-size: 52px; }
 @media (max-width: 640px) { .hs .hs-cta .hs-price::before { inset: 10px; } .hs .hs-cta .hs-pv b { font-size: 36px; } }
+/* Naslov slidera: mjesta za kvačice slova (j, g, p) da ne budu odsječene */
+.hs-title .w { padding-bottom: .24em; margin-bottom: -.24em; }
