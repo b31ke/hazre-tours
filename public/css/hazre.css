@@ -1846,3 +1846,11 @@ details[open] > summary i::after { rotate: 0deg; }
 @keyframes xl-santa { 0%, 100% { translate: 0 0; } 50% { translate: 0 -3px; } }
 @media (max-width: 480px) { .xl-santa { width: 40px; height: 53px; bottom: -4px; } }
 @media (prefers-reduced-motion: reduce) { .xl-santa, .xl-santa .xl-wave { animation: none; } }
+
+/* Praznična tema: veliki prozirni obrisi pahulja u pozadini sekcija */
+.xf-layer { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.xf { position: absolute; translate: -50% -50%; stroke: #1B3FA8; stroke-width: 1.4; opacity: .07; animation: xf-spin 90s linear infinite; }
+.xf.on-dark { stroke: #FFFFFF; opacity: .09; }
+@keyframes xf-spin { to { rotate: 360deg; } }
+@media (max-width: 640px) { .xf { scale: .7; } }
+@media (prefers-reduced-motion: reduce) { .xf { animation: none; } }

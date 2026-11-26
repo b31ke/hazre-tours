@@ -757,7 +757,11 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   var hosts = document.querySelectorAll('.hs, .page-hero');
   Array.prototype.forEach.call(hosts, function (host) {
     if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
-    host.insertAdjacentHTML('beforeend', '<div class="xl-greet" aria-hidden="true"><i></i><span>Sretni praznici i sretna ' + YEAR + '.</span><i></i></div>');
+    var greet = body.getAttribute('data-greet');
+    if (greet) {
+      host.insertAdjacentHTML('beforeend', '<div class="xl-greet" aria-hidden="true"><i></i><span></span><i></i></div>');
+      host.querySelector('.xl-greet span').textContent = greet;
+    }
     if (reduce) return;
     var cv = document.createElement('canvas'); cv.className = 'xs-snow'; cv.setAttribute('aria-hidden', 'true');
     host.appendChild(cv);
@@ -820,5 +824,31 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { on = false; cancelAnimationFrame(raf); } else if (host._xv && !on) { on = true; raf = requestAnimationFrame(frame); }
     });
+  });
+})();
+
+/* Praznična tema: veliki prozirni obrisi pahulja u pozadini sekcija (bijelih i plavih), ispod sadržaja */
+(function () {
+  if (!document.body.classList.contains('is-festive')) return;
+  var arm = 'M50 50V6M50 18l-8-8M50 18l8-8M50 31l-12-10M50 31l12-10M50 41l-6-4M50 41l6-4';
+  var flake = '<g fill="none" stroke-linecap="round" stroke-linejoin="round">';
+  for (var i = 0; i < 6; i++) flake += '<path d="' + arm + '" transform="rotate(' + (i * 60) + ' 50 50)"/>';
+  flake += '<path d="M50 40l8.7 5v10L50 60l-8.7-5V45z"/></g>';
+  function lum(c) { var m = c.match(/\d+(\.\d+)?/g); if (!m) return 1; return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; }
+  var seed = 7; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var secs = document.querySelectorAll('main > section, main > div > section, .site-foot, footer');
+  Array.prototype.forEach.call(secs, function (sec) {
+    if (sec.matches('.hs, .hero, .page-hero') || sec.offsetHeight < 160 || sec.querySelector(':scope > .xf-layer')) return;
+    var cs = getComputedStyle(sec), darkBg = lum(cs.color) > .6;
+    if (cs.position === 'static') sec.style.position = 'relative';
+    sec.style.isolation = 'isolate';
+    var layer = document.createElement('div'); layer.className = 'xf-layer'; layer.setAttribute('aria-hidden', 'true');
+    var n = sec.offsetHeight > 700 ? 3 : 2, html = '';
+    for (var k = 0; k < n; k++) {
+      var size = Math.round(150 + rnd() * 170), left = k % 2 ? 72 + rnd() * 22 : -6 + rnd() * 18, top = (k + .3) / n * 100 - 10 + rnd() * 12;
+      html += '<svg class="xf' + (darkBg ? ' on-dark' : '') + '" viewBox="0 0 100 100" style="width:' + size + 'px;height:' + size + 'px;left:' + left.toFixed(1) + '%;top:' + top.toFixed(1) + '%;animation-duration:' + Math.round(70 + rnd() * 60) + 's;animation-direction:' + (k % 2 ? 'reverse' : 'normal') + '">' + flake + '</svg>';
+    }
+    layer.innerHTML = html;
+    sec.insertBefore(layer, sec.firstChild);
   });
 })();

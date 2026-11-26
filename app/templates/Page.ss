@@ -26,7 +26,7 @@
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     $AgencyJsonLD
 </head>
-<body class="$BodyClass<% if $SiteConfig.IsFestive %> is-festive<% end_if %>" data-ga="$SiteConfig.GA4Id.ATT" data-pixel="$SiteConfig.MetaPixelId.ATT">
+<body class="$BodyClass<% if $SiteConfig.IsFestive %> is-festive<% end_if %>"<% if $SiteConfig.IsFestive %> data-greet="$SiteConfig.FestiveGreetingText.ATT"<% end_if %> data-ga="$SiteConfig.GA4Id.ATT" data-pixel="$SiteConfig.MetaPixelId.ATT">
     <a class="skip" href="#sadrzaj">Preskoči na sadržaj</a>
     <% if $SiteConfig.PromoVisible %><% if $BodyClass != 'HomePageController' %><% include PromoBar %><% end_if %><% end_if %>
     <% include Header %>

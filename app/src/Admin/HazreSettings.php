@@ -43,10 +43,26 @@ class HazreSettings extends Extension
         'GA4Id' => 'Varchar(30)',
         'MetaPixelId' => 'Varchar(30)',
         'FestiveMode' => "Enum('auto,ukljuceno,iskljuceno','auto')",
+        'FestiveGreetingOff' => 'Boolean',
+        'FestiveGreeting' => 'Varchar(80)',
     ];
 
     /**
-     * Praznična (božićno-novogodišnja) tema: lampice ispod menija, snijeg u zaglavlju stranica i kapa na logu.
+     * Tekst praznične čestitke u slideru; prazno = "Sretni praznici i sretna <iduća godina>.", a {godina} se zamijeni godinom.
+     * Prazan rezultat znači da je čestitka isključena.
+     */
+    public function FestiveGreetingText(): string
+    {
+        if ($this->owner->FestiveGreetingOff) {
+            return '';
+        }
+        $year = (int) date('n') === 1 ? (int) date('Y') : (int) date('Y') + 1;
+        $text = trim((string) $this->owner->FestiveGreeting) ?: 'Sretni praznici i sretna {godina}.';
+        return str_replace('{godina}', (string) $year, $text);
+    }
+
+    /**
+     * Praznična (božićno-novogodišnja) tema: lampice ispod menija, snijeg u zaglavlju stranica i Djed Mraz pored loga.
      * Automatski je uključena od 1. decembra do 10. januara, a u Settings se može stalno uključiti ili isključiti.
      */
     public function IsFestive(): bool
@@ -95,7 +111,15 @@ class HazreSettings extends Extension
                 'auto' => 'Automatski (od 1. decembra do 10. januara)',
                 'ukljuceno' => 'Uvijek uključeno',
                 'iskljuceno' => 'Isključeno',
-            ])->setDescription('Snježni rub s ledenicama i lampice ispod menija, snijeg i svjetla u zaglavlju, zlatna čestitka i kapa na logu.'),
+            ])->setDescription('Snježni rub s ledenicama i lampice ispod menija, snijeg i svjetla u zaglavlju, čestitka i Djed Mraz pored loga.'),
+            \SilverStripe\Forms\DropdownField::create('FestiveGreetingOff', 'Čestitka u zaglavlju', [
+                0 => 'Uključena',
+                1 => 'Isključena',
+            ])->setDescription('Zlatna poruka na sredini velikog slidera i zaglavlja stranica (vidi se na većim ekranima, dok je praznična tema uključena).'),
+            TextField::create('FestiveGreeting', 'Tekst čestitke')
+                ->setAttribute('placeholder', 'Sretni praznici i sretna {godina}.')
+                ->setAttribute('maxlength', 80)
+                ->setDescription('Prazno = "Sretni praznici i sretna 2027." {godina} se sam zamijeni godinom koja dolazi. Najbolje do 40 znakova.'),
         ]);
         $fields->addFieldsToTab('Root.Analitika', [
             LiteralField::create('AnaInfo', '<p>Mjerenje posjeta i oglasa. Pokreće se tek kad posjetilac prihvati kolačiće.</p>'),
