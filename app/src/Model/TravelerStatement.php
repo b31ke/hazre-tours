@@ -152,8 +152,8 @@ class TravelerStatement extends DataObject
         $fields->push(TextField::create('HolderName', 'Ime i prezime nosioca rezervacije')->setAttribute('maxlength', 120));
         $fields->push(TextField::create('Phone', 'Broj telefona')->setAttribute('maxlength', 40)
             ->setDescription('Na ovaj broj šaljete link. Putniku se na stranici prikazuje samo djelimično (npr. 061 *** 529).'));
-        $fields->push(DropdownField::create('TermID', 'Aranžman i termin', $terms)->setEmptyString('Izaberite termin')
-            ->setDescription('Prikazani su termini od prije 60 dana nadalje.'));
+        $fields->push(DropdownField::create('TermID', 'Aranžman i termin', $terms)->setEmptyString('Putnik bira sam (u izjavi)')
+            ->setDescription('Ako ostavite prazno, putnik pri potvrdi izabere aranžman i termin s liste aktuelnih polazaka.'));
         $fields->push(TextareaField::create('Companions', 'Saputnici (nije obavezno)')->setRows(5)
             ->setDescription('Jedno ime i prezime u jednom redu, najviše ' . self::MAX_COMPANIONS . '. Putnik može dopuniti spisak pri potvrdi. Upisujte samo ime i prezime, bez JMBG-a, broja pasoša i sličnih podataka.'));
         $fields->push(TextField::create('Note', 'Interna napomena (putnik je ne vidi)')->setAttribute('maxlength', 255));
@@ -173,9 +173,6 @@ class TravelerStatement extends DataObject
         }
         if (strlen(preg_replace('/\D/', '', (string) $this->Phone)) < 6) {
             $result->addFieldError('Phone', 'Upišite broj telefona.');
-        }
-        if (!$this->TermID) {
-            $result->addFieldError('TermID', 'Izaberite aranžman i termin.');
         }
         if (count(self::parseCompanions((string) $this->Companions)) > self::MAX_COMPANIONS) {
             $result->addFieldError('Companions', 'Najviše ' . self::MAX_COMPANIONS . ' saputnika na jednoj izjavi.');
@@ -232,11 +229,23 @@ class TravelerStatement extends DataObject
         return $this->Status === 'potvrdjena';
     }
 
-    /** Link istekne 30 dana nakon polaska (ako izjava nije potvrđena). */
+    /** Link istekne 30 dana nakon polaska, a bez izabranog termina 90 dana nakon pravljenja izjave. */
     public function IsExpired(): bool
     {
-        $start = $this->Term()->exists() ? $this->Term()->StartDate : null;
-        return $start && strtotime($start . ' +30 days') < time();
+        if ($this->Term()->exists()) {
+            return strtotime($this->Term()->StartDate . ' +30 days') < time();
+        }
+        return $this->Created && strtotime($this->Created . ' +90 days') < time();
+    }
+
+    /** Termini koje putnik može izabrati sam: aktivni aranžmani, polasci od danas nadalje. */
+    public static function selectableTerms(): array
+    {
+        $out = [];
+        foreach (TripTerm::get()->filter(['StartDate:GreaterThanOrEqual' => date('Y-m-d'), 'Trip.Active' => true])->sort('StartDate') as $term) {
+            $out[$term->ID] = $term->Trip()->Title . ' – ' . $term->Label();
+        }
+        return $out;
     }
 
     public function Link(): string
@@ -246,7 +255,7 @@ class TravelerStatement extends DataObject
 
     public function getTripTitle(): string
     {
-        return $this->Trip()->exists() ? (string) $this->Trip()->Title : '';
+        return $this->Trip()->exists() ? (string) $this->Trip()->Title : ($this->IsConfirmed() ? '' : 'Bira putnik');
     }
 
     public function getTermLabel(): string
@@ -281,9 +290,25 @@ class TravelerStatement extends DataObject
 
     private function shareText(): string
     {
+        // Poruka za Viber/WhatsApp/SMS: link u posebnom redu (tako je klikabilan), *zvjezdice* = podebljano u Viberu i WhatsAppu
         $first = explode(' ', trim((string) $this->HolderName))[0];
-        return 'Poštovani/a ' . $first . ', molimo vas da potvrdite izjavu o prihvatanju Opštih uslova putovanja za aranžman '
-            . $this->getTripTitle() . ' (' . $this->getTermLabel() . '): ' . $this->Link();
+        $phone = \SilverStripe\SiteConfig\SiteConfig::current_site_config()->MainPhone();
+        $lines = ['Poštovani/a ' . $first . ',', '', 'zahvaljujemo vam na rezervaciji putovanja s agencijom Hazre Tours.'];
+        if ($this->Term()->exists()) {
+            $lines[] = '';
+            $lines[] = 'Aranžman: *' . $this->getTripTitle() . '*';
+            $lines[] = 'Termin: *' . $this->getTermLabel() . '*';
+        }
+        $lines[] = '';
+        $lines[] = 'Prije polaska molimo vas da pročitate i potvrdite izjavu o prihvatanju Opštih uslova putovanja. Potvrda traje manje od minute:';
+        $lines[] = '';
+        $lines[] = $this->Link();
+        $lines[] = '';
+        $lines[] = 'Za sva pitanja stojimo vam na raspolaganju' . ($phone && $phone->Number ? ' na ' . $phone->Number : '') . '.';
+        $lines[] = '';
+        $lines[] = 'Srdačan pozdrav,';
+        $lines[] = 'Hazre Tours';
+        return implode("\n", $lines);
     }
 
     private function linkPanelHTML(): string

@@ -236,7 +236,7 @@ class HomePage extends Page
 
     public function DestinationCount(): int
     {
-        return count(array_unique(array_filter(Trip::get()->filter('Active', true)->column('DestinationName'))));
+        return count(array_unique(array_filter(Trip::liveList()->column('DestinationName'))));
     }
 
     public function CityCount(): int

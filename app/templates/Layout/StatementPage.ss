@@ -15,8 +15,10 @@
                 <p class="stmt-hello">Poštovani/a <b>$HolderName</b>,</p>
                 <p>prije polaska molimo vas da pročitate dokumente ispod i potvrdite izjavu. Potvrda traje manje od minute.</p>
                 <dl class="stmt-data">
+                    <% if not $NeedsTerm %>
                     <div><dt>Aranžman</dt><dd>$Trip</dd></div>
                     <div><dt>Termin</dt><dd>$Term</dd></div>
+                    <% end_if %>
                     <% if $Phone %><div><dt>Telefon</dt><dd>$Phone</dd></div><% end_if %>
                 </dl>
             </div>
@@ -30,6 +32,17 @@
             <form class="stmt-form" method="post" action="$Link" novalidate>
                 <input type="hidden" name="SecurityID" value="$SecurityID">
                 <% if $FormError %><p class="stmt-err" role="alert">$FormError</p><% end_if %>
+
+                <% with $Stmt %><% if $NeedsTerm %>
+                <fieldset class="stmt-fs">
+                    <legend>Aranžman i termin</legend>
+                    <p class="stmt-help">Izaberite putovanje i datum polaska na koji ste prijavljeni.</p>
+                    <select name="term" required>
+                        <option value="">Izaberite aranžman i termin</option>
+                        <% loop $TermOptions %><option value="$ID">$Label</option><% end_loop %>
+                    </select>
+                </fieldset>
+                <% end_if %><% end_with %>
 
                 <fieldset class="stmt-fs">
                     <legend>Saputnici</legend>

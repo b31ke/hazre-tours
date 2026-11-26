@@ -135,7 +135,7 @@ class Trip extends DataObject
         'TypeLabel' => 'Vrsta',
         'NextTermLabel' => 'Sljedeći polazak',
         'PriceLabel' => 'Cijena',
-        'Active.Nice' => 'Na sajtu',
+        'SiteStatus' => 'Na sajtu',
         'HomeLabel' => 'Na početnoj',
     ];
 
@@ -809,8 +809,26 @@ class Trip extends DataObject
         ];
     }
 
+    /**
+     * Javno se vidi samo aktivan aranžman koji ima bar jedan budući polazak.
+     * Kad prođe zadnji polazak, aranžman se sam skloni sa sajta (ostaje u adminu, ništa se ne briše);
+     * urednici ga i dalje vide i mogu dodati novi termin, pa se opet pojavi.
+     */
+    public function IsLive(): bool
+    {
+        return $this->Active && $this->NextTerm() !== null;
+    }
+
+    public function getSiteStatus(): string
+    {
+        if (!$this->Active) {
+            return 'Ne (isključeno)';
+        }
+        return $this->NextTerm() ? 'Da' : 'Ne (polasci prošli)';
+    }
+
     public function canView($member = null): bool
     {
-        return $this->Active || parent::canView($member);
+        return $this->IsLive() || parent::canView($member);
     }
 }

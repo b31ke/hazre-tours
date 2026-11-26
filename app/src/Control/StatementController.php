@@ -84,6 +84,14 @@ class StatementController extends PageController
             $this->errors['form'] = 'Stranica je bila dugo otvorena. Osvježite je i potvrdite ponovo.';
             return;
         }
+        // Bez termina iz admina: putnik bira aranžman i termin (samo aktuelni polasci aktivnih aranžmana)
+        $termId = 0;
+        if (!$s->TermID) {
+            $termId = (int) $request->postVar('term');
+            if (!isset(TravelerStatement::selectableTerms()[$termId])) {
+                $this->errors['term'] = 'Izaberite aranžman i termin na koji putujete.';
+            }
+        }
         $checked = (array) $request->postVar('check');
         foreach (array_keys(TravelerStatement::CHECKS) as $key) {
             if (empty($checked[$key])) {
@@ -98,6 +106,9 @@ class StatementController extends PageController
             return;
         }
 
+        if ($termId) {
+            $s->TermID = $termId;
+        }
         $s->Companions = implode("\n", $companions);
         $s->Status = 'potvrdjena';
         $s->ConfirmedAt = date('Y-m-d H:i:s');
@@ -177,6 +188,12 @@ class StatementController extends PageController
             'Trip' => $s->getTripTitle(),
             'TripLink' => $s->Trip()->exists() ? $s->Trip()->Link() : '',
             'Term' => $s->getTermLabel(),
+            'NeedsTerm' => !$s->TermID,
+            'TermOptions' => ArrayList::create(array_map(
+                fn ($id, $label) => ArrayData::create(['ID' => $id, 'Label' => $label]),
+                array_keys(TravelerStatement::selectableTerms()),
+                TravelerStatement::selectableTerms()
+            )),
             'Companions' => implode("\n", $s->CompanionList()),
             'CompanionList' => ArrayList::create(array_map(fn ($n) => ArrayData::create(['Name' => $n]), $s->CompanionList())),
         ]);
@@ -198,7 +215,7 @@ class StatementController extends PageController
 
     public function FormError(): string
     {
-        return $this->errors['form'] ?? ($this->errors['checks'] ?? ($this->errors['companions'] ?? ''));
+        return $this->errors['form'] ?? ($this->errors['term'] ?? ($this->errors['checks'] ?? ($this->errors['companions'] ?? '')));
     }
 
     public function MaxCompanions(): int
