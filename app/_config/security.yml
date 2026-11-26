@@ -21,3 +21,15 @@ SilverStripe\Core\Injector\Injector:
       ForceSSL: true
 # Adrese na koje sajt odgovara su u .env na serveru (SS_ALLOWED_HOSTS), jer je sajt
 # prvo na privremenoj adresi na našem hostingu, a kasnije na hazretours.ba.
+
+---
+Name: hazre-security-headers
+After:
+  - '#coresecurity'
+---
+# Sigurnosna zaglavlja na svim stranicama i u adminu (vidi SecurityHeadersMiddleware)
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        HazreSecurityHeaders: '%$HazreTours\Control\SecurityHeadersMiddleware'
