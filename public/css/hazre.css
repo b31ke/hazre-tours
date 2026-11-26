@@ -1897,3 +1897,4 @@ details[open] > summary i::after { rotate: 0deg; }
 .xf.on-dark { opacity: .1; }
 .xf.on-dark.big { opacity: .09; }
 @media (max-width: 640px) { .xf { scale: 1; } }
+@media (min-width: 641px) { .is-festive .hs-in { padding-top: 84px; } }
