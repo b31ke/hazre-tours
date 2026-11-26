@@ -42,7 +42,22 @@ class HazreSettings extends Extension
         'PromoLink' => 'Varchar(255)',
         'GA4Id' => 'Varchar(30)',
         'MetaPixelId' => 'Varchar(30)',
+        'FestiveMode' => "Enum('auto,ukljuceno,iskljuceno','auto')",
     ];
+
+    /**
+     * Praznična (božićno-novogodišnja) tema: lampice ispod menija, snijeg u zaglavlju stranica i kapa na logu.
+     * Automatski je uključena od 1. decembra do 10. januara, a u Settings se može stalno uključiti ili isključiti.
+     */
+    public function IsFestive(): bool
+    {
+        $mode = $this->owner->FestiveMode ?: 'auto';
+        if ($mode !== 'auto') {
+            return $mode === 'ukljuceno';
+        }
+        $md = (int) date('nd');
+        return $md >= 1201 || $md <= 110;
+    }
 
     protected function updateCMSFields(FieldList $fields): void
     {
@@ -73,6 +88,14 @@ class HazreSettings extends Extension
             TextField::create('PromoText', 'Tekst')->setDescription('Npr. "Do 20% popusta na zimska putovanja".'),
             DateField::create('PromoUntil', 'Traje do (odbrojavanje)'),
             TextField::create('PromoLink', 'Link')->setDescription('Npr. /putovanja/akcija ili prazno = aranžmani na početnoj.'),
+        ]);
+        $fields->addFieldsToTab('Root.Akcija', [
+            HeaderField::create('FestiveH', 'Praznična tema', 3),
+            \SilverStripe\Forms\DropdownField::create('FestiveMode', 'Božićno-novogodišnji ukrasi', [
+                'auto' => 'Automatski (od 1. decembra do 10. januara)',
+                'ukljuceno' => 'Uvijek uključeno',
+                'iskljuceno' => 'Isključeno',
+            ])->setDescription('Lampice ispod menija, snijeg u zaglavlju stranica i kapa na logu.'),
         ]);
         $fields->addFieldsToTab('Root.Analitika', [
             LiteralField::create('AnaInfo', '<p>Mjerenje posjeta i oglasa. Pokreće se tek kad posjetilac prihvati kolačiće.</p>'),

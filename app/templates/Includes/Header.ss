@@ -65,4 +65,5 @@
             </button>
         </div>
     </div>
+    <% if $SiteConfig.IsFestive %><div class="xl" aria-hidden="true"></div><% end_if %>
 </header>

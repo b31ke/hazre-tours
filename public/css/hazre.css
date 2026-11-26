@@ -1794,3 +1794,23 @@ details[open] > summary i::after { rotate: 0deg; }
 /* Polja forme: dugačak tekst u padajućem meniju (npr. termin s cijenom) ne smije izaći iz svoje kolone i preklopiti susjedno polje */
 .field { grid-template-columns: minmax(0, 1fr); }
 .field select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
+
+/* Praznična tema (body.is-festive): lampice ispod menija, snijeg u zaglavlju stranica, kapa na logu */
+.is-festive .site-head { border-bottom-color: transparent; }
+.xl { position: absolute; left: 0; right: 0; top: 100%; height: 30px; margin-top: -6px; pointer-events: none; z-index: 2; overflow: hidden; }
+.xl svg { display: block; width: 100%; height: 30px; overflow: visible; }
+.xl .xl-wire { fill: none; stroke: #2C3B4E; stroke-width: 1.6; opacity: .75; }
+.xl .xl-cap { fill: #4B5B6E; }
+.xl .xl-glow { opacity: .55; transform-box: fill-box; transform-origin: center; animation: xl-glow 2.4s ease-in-out infinite; }
+.xl .xl-bulb { animation: xl-bulb 2.4s ease-in-out infinite; }
+.xl .d1 { animation-delay: -.8s; } .xl .d2 { animation-delay: -1.6s; } .xl .d3 { animation-delay: -.4s; } .xl .d4 { animation-delay: -2s; }
+@keyframes xl-glow { 0%, 100% { opacity: .65; scale: 1; } 50% { opacity: .15; scale: .7; } }
+@keyframes xl-bulb { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+.xs-snow { position: absolute; inset: 0; z-index: 3; pointer-events: none; width: 100%; height: 100%; }
+
+.is-festive .logo { position: relative; }
+.xl-hat { position: absolute; left: -11px; top: -13px; width: 34px; height: 30px; rotate: -18deg; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .18)); }
+@media (max-width: 480px) { .xl-hat { width: 28px; height: 25px; left: -9px; top: -11px; } .xl { height: 24px; } .xl svg { height: 24px; } }
+
+@media (prefers-reduced-motion: reduce) { .xl .xl-glow, .xl .xl-bulb { animation: none; } }

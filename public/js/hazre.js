@@ -664,3 +664,93 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
   }, { threshold: .6 });
   els.forEach(function (el) { io.observe(el); });
 })();
+
+/* Praznična tema: lampice ispod menija, snijeg u zaglavlju stranice, kapa na logu (samo kad je body.is-festive) */
+(function () {
+  if (!document.body.classList.contains('is-festive')) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLORS = ['#FF3B3B', '#FFC23A', '#2BD46B', '#36B5FF', '#FF7AD9'];
+
+  // Lampice: žica u lukovima i sijalice na njoj, broj se prilagođava širini
+  var box = document.querySelector('.xl');
+  function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function lights() {
+    if (!box) return;
+    var w = box.clientWidth, h = box.clientHeight || 30, span = w < 600 ? 62 : 84, n = Math.max(4, Math.round(w / span)), step = w / n, sag = h * 0.42;
+    var svg = el('svg', { viewBox: '0 0 ' + w + ' ' + h, preserveAspectRatio: 'none' }), defs = el('defs', {});
+    COLORS.forEach(function (c, i) {
+      var g = el('radialGradient', { id: 'xlg' + i });
+      g.appendChild(el('stop', { offset: '0', 'stop-color': c, 'stop-opacity': '.9' }));
+      g.appendChild(el('stop', { offset: '1', 'stop-color': c, 'stop-opacity': '0' }));
+      defs.appendChild(g);
+    });
+    svg.appendChild(defs);
+    var d = 'M0 4', i, k = 0;
+    for (i = 0; i < n; i++) d += ' Q' + (i * step + step / 2) + ' ' + (4 + sag * 2) + ' ' + ((i + 1) * step) + ' 4';
+    svg.appendChild(el('path', { d: d, class: 'xl-wire' }));
+    // dvije sijalice po luku (na 1/3 i 2/3), nagnute prema žici
+    for (i = 0; i < n; i++) {
+      [0.3, 0.7].forEach(function (t) {
+        var x0 = i * step, cx = x0 + step / 2, x1 = x0 + step, cy = 4 + sag * 2;
+        var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * cx + t * t * x1, y = (1 - t) * (1 - t) * 4 + 2 * (1 - t) * t * cy + t * t * 4;
+        var dx = 2 * (1 - t) * (cx - x0) + 2 * t * (x1 - cx), dy = 2 * (1 - t) * (cy - 4) + 2 * t * (4 - cy);
+        var ang = Math.atan2(dy, dx) * 180 / Math.PI, ci = k % COLORS.length, cls = 'd' + (k % 5);
+        var g = el('g', { transform: 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ')' });
+        var glow = el('circle', { cx: 0, cy: 9, r: 11, fill: 'url(#xlg' + ci + ')', class: 'xl-glow ' + cls });
+        var bulb = el('ellipse', { cx: 0, cy: 8.5, rx: 3.4, ry: 5.2, fill: COLORS[ci], class: 'xl-bulb ' + cls });
+        var shine = el('ellipse', { cx: -1.1, cy: 7, rx: .9, ry: 1.8, fill: '#fff', opacity: '.6' });
+        var cap = el('rect', { x: -2.2, y: 1, width: 4.4, height: 3.2, rx: 1, class: 'xl-cap' });
+        g.appendChild(glow); g.appendChild(bulb); g.appendChild(shine); g.appendChild(cap);
+        svg.appendChild(g);
+        k++;
+      });
+    }
+    box.innerHTML = '';
+    box.appendChild(svg);
+  }
+  lights();
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(lights, 200); });
+
+  // Kapa Djeda Mraza na logu
+  var logo = document.querySelector('.site-head .logo');
+  if (logo) {
+    logo.insertAdjacentHTML('beforeend', '<svg class="xl-hat" viewBox="0 0 40 34" aria-hidden="true"><path d="M5 25C7 13 15 4 27 3c5 0 8 3 9 7-4-2-8-1-10 2-2 4-1 9 0 13z" fill="#D7262E"/><path d="M27 3c5 0 8 3 9 7-2-1-4-1-6 0-1-3-2-5-3-7z" fill="#B01E25"/><rect x="2" y="23" width="27" height="8" rx="4" fill="#fff"/><circle cx="36" cy="11" r="3.6" fill="#fff"/></svg>');
+  }
+
+  // Snijeg u zaglavlju stranice (slider, početni hero ili zaglavlje podstranice)
+  if (reduce) return;
+  var hosts = document.querySelectorAll('.hs, .hero, .page-hero');
+  Array.prototype.forEach.call(hosts, function (host) {
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    var cv = document.createElement('canvas'); cv.className = 'xs-snow'; cv.setAttribute('aria-hidden', 'true');
+    host.appendChild(cv);
+    var ctx = cv.getContext('2d'), W, H, dpr, flakes = [], on = false, raf;
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2); W = host.clientWidth; H = host.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(90, W * H / 14000));
+      flakes = [];
+      for (var i = 0; i < n; i++) flakes.push(mk(true));
+    }
+    function mk(any) { var r = Math.random() * 2.4 + .8; return { x: Math.random() * W, y: any ? Math.random() * H : -6, r: r, v: .35 + r * .28, s: Math.random() * 6.28, a: .45 + Math.random() * .5 }; }
+    var dark = host.classList.contains('hero') ? 'rgba(160,200,235,' : 'rgba(255,255,255,';
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < flakes.length; i++) {
+        var f = flakes[i]; f.y += f.v; f.s += .012; f.x += Math.sin(f.s) * .35;
+        if (f.y > H + 6) flakes[i] = f = mk(false);
+        ctx.beginPath(); ctx.fillStyle = dark + f.a + ')'; ctx.arc(f.x, f.y, f.r, 0, 6.283); ctx.fill();
+      }
+      if (on) raf = requestAnimationFrame(frame);
+    }
+    size();
+    var rs; window.addEventListener('resize', function () { clearTimeout(rs); rs = setTimeout(size, 250); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) {
+        var vis = e[0].isIntersecting;
+        if (vis && !on) { on = true; raf = requestAnimationFrame(frame); } else if (!vis) { on = false; cancelAnimationFrame(raf); }
+      }).observe(host);
+    } else { on = true; frame(); }
+  });
+})();
