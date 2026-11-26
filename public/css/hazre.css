@@ -1898,3 +1898,20 @@ details[open] > summary i::after { rotate: 0deg; }
 .xf.on-dark.big { opacity: .09; }
 @media (max-width: 640px) { .xf { scale: 1; } }
 @media (min-width: 641px) { .is-festive .hs-in { padding-top: 84px; } }
+
+/* Pečat s cijenom: natpis miruje (gore oznaka, dolje HAZRE TOURS), cijena tačno u sredini */
+.hs-ring { animation: none; }
+.hs-ring text { font: 800 9px var(--head); letter-spacing: .18em; fill: #7A3A00; }
+.hs-ring .hs-ring-b { font-size: 7.4px; letter-spacing: .2em; }
+.hs .hs-cta .hs-price::before { inset: 27px; }
+.hs .hs-cta .hs-price small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hs .hs-cta .hs-pv { justify-content: center; margin-left: 4px; }
+.hs .hs-cta .hs-pv b { font-size: 46px; }
+@media (max-width: 640px) {
+  .hs .hs-cta .hs-price::before { inset: 19px; }
+  .hs .hs-cta .hs-pv b { font-size: 32px; }
+  .hs-ring text { font-size: 9.5px; }
+  .hs-ring .hs-ring-b { font-size: 8px; }
+}
+.hs .hs-cta .hs-price { rotate: 0deg; animation: hs-seal2 4s ease-in-out infinite; }
+@keyframes hs-seal2 { 0%, 100% { scale: 1; } 50% { scale: 1.04; } }

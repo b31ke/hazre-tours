@@ -15,7 +15,7 @@
                     <% if $Highlight %><p class="hs-lead">$Highlight</p><% else_if $Summary %><p class="hs-lead">$Summary.LimitCharacters(150)</p><% end_if %>
                     <div class="hs-cta">
                         <a class="btn btn-orange btn-lg" href="$Link">Pogledaj aranžman <span aria-hidden="true">→</span></a>
-                        <p class="hs-price"><svg class="hs-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="hsr-$ID" d="M50 50m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/></defs><text><textPath href="#hsr-$ID" textLength="255"><% if $HasPriceFrom %>VEĆ OD<% else %>CIJENA<% end_if %> ✦ $MinPrice KM ✦ <% if $HasPriceFrom %>VEĆ OD<% else %>CIJENA<% end_if %> ✦ $MinPrice KM ✦</textPath></text></svg><small><% if $HasPriceFrom %>Već od<% else %>Cijena<% end_if %></small><span class="hs-pv"><b>$MinPrice</b><sup>KM</sup></span></p>
+                        <p class="hs-price"><svg class="hs-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="hsrt-$ID" d="M14 50a36 36 0 0 1 72 0"/><path id="hsrb-$ID" d="M8 50a42 42 0 0 0 84 0"/></defs><text text-anchor="middle"><textPath href="#hsrt-$ID" startOffset="50%"><% if $HasPriceFrom %>VEĆ OD<% else %>CIJENA<% end_if %></textPath></text><text text-anchor="middle" class="hs-ring-b"><textPath href="#hsrb-$ID" startOffset="50%">HAZRE TOURS</textPath></text><path d="M10.5 44l1.6 1.6-1.6 1.6-1.6-1.6zM89.5 44l1.6 1.6-1.6 1.6-1.6-1.6z" fill="#7A3A00"/></svg><small><% if $HasPriceFrom %>Već od<% else %>Cijena<% end_if %></small><span class="hs-pv"><b>$MinPrice</b><sup>KM</sup></span></p>
                     </div>
                 </div>
             </div>
