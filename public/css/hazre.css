@@ -1787,3 +1787,6 @@ details[open] > summary i::after { rotate: 0deg; }
 .why-stats li { padding-inline: 8px; }
 .why-stats span { white-space: nowrap; font-size: 13px !important; }
 @media (max-width: 420px) { .why-stats span { white-space: normal; font-size: 12px !important; } }
+
+/* Kontakt kartice s telefonima: ikona i tekst centrirani (na telefonu ostaje red s ikonom lijevo) */
+@media (min-width: 481px) { .cc-tile:not(.wide) { align-items: center; text-align: center; } .cc-tile:not(.wide) > span:not(.cc-ico):not(.cc-map) { justify-items: center; } }
