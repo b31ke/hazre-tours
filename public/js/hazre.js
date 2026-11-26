@@ -570,6 +570,29 @@ document.querySelectorAll('.to-top, a[href="#top"]').forEach(a => a.addEventList
     d.style.setProperty('--len', Math.max(t.length, 4));
   });
 
+  /* veliki natpis destinacije ne smije ići ispod cijene i dugmeta: smanji ga koliko treba (duga imena, uži ekrani) */
+  function fitDest() {
+    slides.forEach(function (s) {
+      var d = s.querySelector('.hs-dest'), cta = s.querySelector('.hs-cta');
+      if (!d) return;
+      d.style.fontSize = '';
+      if (!cta || window.innerWidth <= 640) return;
+      var r = 0, t = Infinity, b = 0;
+      Array.prototype.forEach.call(cta.children, function (c) { var x = c.getBoundingClientRect(); if (!x.width) return; r = Math.max(r, x.right); t = Math.min(t, x.top); b = Math.max(b, x.bottom); });
+      if (!r) return;
+      var fs = parseFloat(getComputedStyle(d).fontSize);
+      for (var k = 0; k < 30 && fs > 44; k++) {
+        var x = d.getBoundingClientRect();
+        if (!(x.left < r + 36 && x.top < b + 30 && x.bottom > t - 30)) break;
+        fs *= 0.93; d.style.fontSize = fs + 'px';
+      }
+    });
+  }
+  fitDest();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitDest);
+  window.addEventListener('load', fitDest);
+  var fdT; window.addEventListener('resize', function () { clearTimeout(fdT); fdT = setTimeout(fitDest, 200); });
+
   if (n < 2) { var nav = hs.querySelector('.hs-nav'); if (nav) nav.hidden = true; var cnt = hs.querySelector('.hs-count'); if (cnt) cnt.hidden = true; return; }
 
   /* sve slike unaprijed, da prelaz nikad ne pokaže praznu pozadinu */
